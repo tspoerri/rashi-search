@@ -22,8 +22,13 @@ python3 -m http.server 8641      # then open http://localhost:8641/index.html
 - Two modes: fielded search (dibbur hamaschil, sefer, parsha, perek, passuk,
   keywords — all optional) and smart single-box search that parses book/parsha
   names, Hebrew or Arabic numerals, and free text in any order.
-- Selecting a result shows the vocalized passuk, source (ספר פרק:פסוק + פרשה),
-  the Rashi, and a link to that exact Rashi on Sefaria.
+- Selecting a result expands it in place: the vocalized passuk, source
+  (ספר פרק:פסוק + פרשה), the Rashi, and a link to that exact Rashi on Sefaria.
+- Near-ties are broken toward this/last/next week's parsha (Sefaria calendar
+  API at load time) and toward Rashis more commonly linked on Sefaria
+  (per-segment link counts fetched by `build.py`).
+- The ⌨ עברית button opens an on-screen Hebrew keyboard for typing without
+  switching the system layout.
 
 Text: Rosenbaum–Silbermann vocalized Rashi (Public Domain, via Sefaria).
 
