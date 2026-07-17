@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>חיפוש רש"י על התורה</title>
+<style>
+:root {
+  --bg: #f7f5f0; --panel: #ffffff; --ink: #2b2620; --muted: #8a8074;
+  --accent: #7a5c2e; --accent-soft: #f0e8d8; --border: #e3ddd2;
+  --hl: #fdeec7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1a17; --panel: #26231f; --ink: #e8e2d8; --muted: #9a917f;
+    --accent: #d4b476; --accent-soft: #3a3223; --border: #3a362f;
+    --hl: #4a3d1e;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: "Frank Ruhl Libre", "Times New Roman", "SBL Hebrew", serif;
+  font-size: 17px; line-height: 1.55;
+}
+header {
+  padding: 1.1rem 1.5rem .4rem;
+  display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+}
+header h1 { font-size: 1.5rem; color: var(--accent); font-weight: 700; }
+header .count { color: var(--muted); font-size: .85rem; }
+.tabs { margin-inline-start: auto; display: flex; gap: .4rem; }
+.tabs button {
+  font: inherit; font-size: .85rem; padding: .25rem .8rem; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel); color: var(--muted);
+  border-radius: 999px;
+}
+.tabs button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+#controls { padding: .5rem 1.5rem 1rem; }
+.fields { display: flex; gap: .6rem; flex-wrap: wrap; }
+.field { display: flex; flex-direction: column; gap: .15rem; }
+.field label { font-size: .72rem; color: var(--muted); }
+input, select {
+  font: inherit; padding: .45rem .6rem; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--panel); color: var(--ink);
+}
+input:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+#f-dh { width: 15rem; } #f-kw { width: 15rem; }
+#f-perek, #f-passuk { width: 4.5rem; }
+#smartbar { display: none; }
+#f-smart { width: min(34rem, 100%); font-size: 1.1rem; padding: .6rem .8rem; }
+.hint { font-size: .75rem; color: var(--muted); margin-top: .35rem; }
+main {
+  display: grid; grid-template-columns: minmax(20rem, 26rem) 1fr;
+  gap: 1rem; padding: 0 1.5rem 1.5rem; align-items: start;
+}
+#results { display: flex; flex-direction: column; gap: .45rem; max-height: calc(100vh - 180px); overflow-y: auto; padding-inline-end: .2rem; }
+.hit {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .8rem; cursor: pointer;
+}
+.hit:hover { border-color: var(--accent); }
+.hit.sel { border-color: var(--accent); background: var(--accent-soft); }
+.hit .dh { font-weight: 700; }
+.hit .ref { font-size: .78rem; color: var(--muted); }
+.hit .snip { font-size: .82rem; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px; }
+#detail {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.2rem 1.5rem; min-height: 12rem; position: sticky; top: 1rem;
+  max-height: calc(100vh - 180px); overflow-y: auto;
+}
+#detail .placeholder { color: var(--muted); }
+#detail .ref-line { color: var(--accent); font-weight: 700; margin-bottom: .35rem; }
+#detail .verse {
+  font-size: 1.15rem; background: var(--accent-soft); border-radius: 8px;
+  padding: .6rem .9rem; margin-bottom: .9rem;
+}
+#detail .rashi-dh { font-weight: 700; }
+#detail .rashi-text { margin-top: .3rem; white-space: pre-wrap; }
+#detail .links { margin-top: 1rem; font-size: .85rem; }
+#detail a { color: var(--accent); }
+#empty { color: var(--muted); padding: 1rem 0; }
+@media (max-width: 800px) { main { grid-template-columns: 1fr; } #detail { position: static; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>חיפוש רש"י על התורה</h1>
+  <span class="count" id="count">טוען…</span>
+  <nav class="tabs">
+    <button id="tab-fields" class="active">שדות</button>
+    <button id="tab-smart">חיפוש חכם</button>
+  </nav>
+</header>
+
+<div id="controls">
+  <div class="fields" id="fieldbar">
+    <div class="field"><label for="f-dh">דיבור המתחיל</label>
+      <input id="f-dh" placeholder='למשל: ויאמר'></div>
+    <div class="field"><label for="f-sefer">ספר</label>
+      <select id="f-sefer"><option value="">הכל</option></select></div>
+    <div class="field"><label for="f-parsha">פרשה</label>
+      <select id="f-parsha"><option value="">הכל</option></select></div>
+    <div class="field"><label for="f-perek">פרק</label>
+      <input id="f-perek" placeholder="ג / 3"></div>
+    <div class="field"><label for="f-passuk">פסוק</label>
+      <input id="f-passuk" placeholder="יד / 14"></div>
+    <div class="field"><label for="f-kw">מילות מפתח</label>
+      <input id="f-kw" placeholder="בגוף הרש״י"></div>
+  </div>
+  <div id="smartbar">
+    <input id="f-smart" placeholder='למשל: בראשית ג יד עפר תאכל'>
+    <div class="hint">אפשר לשלב ספר, פרשה, פרק ופסוק (באותיות או במספרים) ומילים מהדיבור המתחיל או מגוף הרש"י — בכל סדר.</div>
+  </div>
+</div>
+
+<main>
+  <div id="results"><div id="empty">הקלידו כדי לחפש.</div></div>
+  <div id="detail"><div class="placeholder">בחרו רש"י מהרשימה כדי לראות את הפסוק, המקור והפירוש.</div></div>
+</main>
+
+<script>
+"use strict";
+let DB = [];          // records
+let NORM = [];        // normalized {dh, t, vt} per record
+let selected = -1;
+let mode = "fields";
+
+const BOOKS = [];     // [{en, he}]
+const PARSHAS = [];   // [{en, he, book}]
+
+/* ---------- Hebrew utilities ---------- */
+const NIKUD_RE = /[֑-ֽֿ-ׇ]/g;   // taamim+nikud, keep maqaf
+function normalize(s) {
+  return s.replace(/־/g, " ")
+          .replace(NIKUD_RE, "")
+          .replace(/[״"׳'.,:;!?()\[\]{}]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+}
+// ktiv-insensitive skeleton: drop ו/י so מוקדם matches מֻקְדָּם
+function skel(s) {
+  return s.replace(/[וי]/g, "").replace(/\s+/g, " ").trim();
+}
+// normalize but keep a map from normalized index -> display index
+function normalizeWithMap(s) {
+  let out = "", map = [];
+  let lastSpace = true;
+  for (let i = 0; i < s.length; i++) {
+    let ch = s[i];
+    if (ch === "־") ch = " ";
+    if (NIKUD_RE.test(ch)) { NIKUD_RE.lastIndex = 0; continue; }
+    NIKUD_RE.lastIndex = 0;
+    if (/[״"׳'.,:;!?()\[\]{}]/.test(ch)) continue;
+    if (/\s/.test(ch)) {
+      if (lastSpace) continue;
+      out += " "; map.push(i); lastSpace = true;
+    } else {
+      out += ch; map.push(i); lastSpace = false;
+    }
+  }
+  return { norm: out, map };
+}
+
+const GEM = {"א":1,"ב":2,"ג":3,"ד":4,"ה":5,"ו":6,"ז":7,"ח":8,"ט":9,"י":10,
+  "כ":20,"ך":20,"ל":30,"מ":40,"ם":40,"נ":50,"ן":50,"ס":60,"ע":70,"פ":80,"ף":80,
+  "צ":90,"ץ":90,"ק":100,"ר":200,"ש":300,"ת":400};
+function parseHebNum(tok) {
+  tok = tok.replace(/[״"׳']/g, "");
+  if (/^\d+$/.test(tok)) return parseInt(tok, 10);
+  if (!tok || tok.length > 3) return null;
+  let sum = 0, prev = Infinity;
+  for (const ch of tok) {
+    const v = GEM[ch];
+    if (!v || v > prev) return null;   // must be non-increasing (e.g. קכג)
+    // allow טו/טז style exception (9 then 6/7... actually 9<10 fine)
+    sum += v; prev = v;
+  }
+  return sum >= 1 && sum <= 999 ? sum : null;
+}
+function toHebNum(n) {
+  if (n === 15) return "טו"; if (n === 16) return "טז";
+  const H = [[400,"ת"],[300,"ש"],[200,"ר"],[100,"ק"],[90,"צ"],[80,"פ"],[70,"ע"],
+    [60,"ס"],[50,"נ"],[40,"מ"],[30,"ל"],[20,"כ"],[10,"י"],[9,"ט"],[8,"ח"],[7,"ז"],
+    [6,"ו"],[5,"ה"],[4,"ד"],[3,"ג"],[2,"ב"],[1,"א"]];
+  let out = "";
+  for (const [v, ch] of H) {
+    while (n >= v) { out += ch; n -= v; }
+  }
+  return out.replace(/יה$/, "טו").replace(/יו$/, "טז");
+}
+
+/* ---------- load ---------- */
+fetch("data/rashi.json").then(r => r.json()).then(data => {
+  DB = data;
+  const t0 = performance.now();
+  NORM = data.map(r => {
+    const dh = normalize(r.dh), t = normalize(r.t), vt = normalize(r.vt);
+    return { dh, t, vt, dhS: skel(dh), tS: skel(t), vtS: skel(vt) };
+  });
+  for (const r of data) {
+    if (!BOOKS.some(b => b.en === r.b)) BOOKS.push({ en: r.b, he: r.bh });
+    if (!PARSHAS.some(p => p.en === r.p)) PARSHAS.push({ en: r.p, he: r.ph, book: r.b });
+  }
+  const selS = document.getElementById("f-sefer");
+  for (const b of BOOKS) selS.add(new Option(b.he, b.en));
+  fillParshas("");
+  document.getElementById("count").textContent =
+    DB.length.toLocaleString("he") + ' רש"ים · ' + Math.round(performance.now() - t0) + ' מ"ש לאינדוקס';
+  runSearch();
+});
+
+function fillParshas(book) {
+  const sel = document.getElementById("f-parsha");
+  const cur = sel.value;
+  sel.length = 0; sel.add(new Option("הכל", ""));
+  for (const p of PARSHAS) if (!book || p.book === book) sel.add(new Option(p.he, p.en));
+  sel.value = [...sel.options].some(o => o.value === cur) ? cur : "";
+}
+
+/* ---------- scoring ---------- */
+function wordMatch(hay, tok) {
+  // word-prefix match; returns index in hay or -1
+  if (!tok) return -1;
+  let i = hay.indexOf(tok);
+  while (i !== -1) {
+    if (i === 0 || hay[i - 1] === " ") return i;
+    i = hay.indexOf(tok, i + 1);
+  }
+  return -1;
+}
+
+function search(q) {
+  // q: {book, parsha, perek, passuk, dh, kw} — dh/kw normalized strings
+  const dhToks = q.dh ? q.dh.split(" ") : [];
+  const kwToks = q.kw ? q.kw.split(" ") : [];
+  const dhS = skel(q.dh || ""), kwS = skel(q.kw || "");
+  const kwPairs = kwToks.map(t => [t, skel(t)]);
+  const hits = [];
+  for (let i = 0; i < DB.length; i++) {
+    const r = DB[i], n = NORM[i];
+    if (q.book && r.b !== q.book) continue;
+    if (q.parsha && r.p !== q.parsha) continue;
+    if (q.perek && r.c !== q.perek) continue;
+    if (q.passuk && r.v !== q.passuk) continue;
+    let score = 0;
+    if (dhToks.length) {
+      if (n.dh === q.dh) score += 1000;
+      else if (n.dh.startsWith(q.dh)) score += 600;
+      else if (n.dh.includes(q.dh)) score += 400;
+      else if (n.dhS === dhS) score += 800;          // ktiv-insensitive
+      else if (n.dhS.startsWith(dhS)) score += 450;
+      else if (n.dhS.includes(dhS)) score += 300;
+      else {
+        let all = true, any = false;
+        for (const t of dhToks) {
+          if (wordMatch(n.dh, t) !== -1) { score += 120; any = true; }
+          else if (wordMatch(n.dhS, skel(t)) !== -1) { score += 80; any = true; }
+          else if (wordMatch(n.t, t) !== -1) { score += 15; all = false; }
+          else if (n.t.includes(t)) { score += 8; all = false; }
+          else { all = false; }
+        }
+        if (!any && score === 0) continue;
+        if (all) score += 100;
+      }
+    }
+    if (kwToks.length) {
+      // phrase-level boost against the dibbur hamaschil
+      if (n.dh === q.kw) score += 1000;
+      else if (n.dh.startsWith(q.kw)) score += 600;
+      else if (n.dh.includes(q.kw)) score += 400;
+      else if (n.dhS === kwS) score += 800;          // ktiv-insensitive
+      else if (n.dhS.startsWith(kwS)) score += 450;
+      else if (n.dhS.includes(kwS)) score += 300;
+      let matched = 0;
+      if (kwToks.length > 1) {  // whole phrase inside body or verse
+        if (n.t.includes(q.kw)) { score += 300; matched++; }
+        else if (n.tS.includes(kwS)) { score += 250; matched++; }
+        if (n.vt.includes(q.kw)) { score += 200; matched++; }
+        else if (n.vtS.includes(kwS)) { score += 150; matched++; }
+      }
+      for (const [t, tS] of kwPairs) {
+        const inDh = wordMatch(n.dh, t) !== -1 || wordMatch(n.dhS, tS) !== -1;
+        const inT = wordMatch(n.t, t) !== -1 || n.t.includes(t);
+        const inV = wordMatch(n.vt, t) !== -1 || wordMatch(n.vtS, tS) !== -1;
+        if (inDh) { score += 60; matched++; }
+        if (inT) { score += 30; matched++; }
+        else if (inV) { score += 15; matched++; }
+      }
+      // an exact perek:passuk pin keeps that passuk's Rashis visible
+      // even when the free-text terms only appear in the verse or nowhere
+      if (!matched) {
+        if (q.perek && q.passuk) score = Math.max(score, 1);
+        else continue;
+      }
+    }
+    if (!dhToks.length && !kwToks.length) score = 1;  // pure filter browse
+    if (score > 0) hits.push({ i, score });
+  }
+  hits.sort((a, b) => b.score - a.score || a.i - b.i);
+  return hits.slice(0, 60);
+}
+
+/* ---------- smart parse ---------- */
+function smartParse(raw) {
+  const q = { book: "", parsha: "", perek: 0, passuk: 0, dh: "", kw: "" };
+  let toks = normalize(raw).split(" ").filter(Boolean);
+  const rest = [];
+  const nums = [];
+  let i = 0;
+  while (i < toks.length) {
+    const tok = toks[i];
+    const two = toks[i + 1] !== undefined ? tok + " " + toks[i + 1] : null;
+    // parsha (2-word names first: לך לך, חיי שרה, כי תשא…)
+    const p2 = two && PARSHAS.find(p => normalize(p.he) === two);
+    if (!q.parsha && p2) { q.parsha = p2.en; q.book = p2.book; i += 2; continue; }
+    if (tok === "פרשת" && toks[i + 1]) {
+      const pn = PARSHAS.find(p => normalize(p.he) === toks[i + 1] ||
+        (toks[i + 2] && normalize(p.he) === toks[i + 1] + " " + toks[i + 2]));
+      if (pn) {
+        q.parsha = pn.en; q.book = pn.book;
+        i += 1 + normalize(pn.he).split(" ").length; continue;
+      }
+    }
+    const b = BOOKS.find(b => b.he === tok);
+    if (!q.book && !q.parsha && b && i === 0) { q.book = b.en; i++; continue; }
+    const p1 = PARSHAS.find(p => normalize(p.he) === tok);
+    if (!q.parsha && !q.book && p1 && i === 0) { q.parsha = p1.en; q.book = p1.book; i++; continue; }
+    const n = parseHebNum(tok);
+    if (n !== null && nums.length < 2 && (q.book || q.parsha || nums.length === 1)) {
+      nums.push(n); i++; continue;
+    }
+    rest.push(tok); i++;
+  }
+  if (nums.length >= 1) q.perek = nums[0];
+  if (nums.length >= 2) q.passuk = nums[1];
+  // free text goes to kw: it ranks across dibbur, body, and verse,
+  // with phrase-level dibbur boosts applied in search()
+  q.kw = rest.join(" ");
+  return q;
+}
+
+/* ---------- rendering ---------- */
+function highlight(display, toks) {
+  if (!toks.length) return esc(display);
+  const { norm, map } = normalizeWithMap(display);
+  const spans = [];
+  for (const t of toks) {
+    if (!t) continue;
+    let idx = norm.indexOf(t);
+    while (idx !== -1) {
+      const from = map[idx];
+      const to = idx + t.length - 1 < map.length ? map[idx + t.length - 1] + 1 : display.length;
+      spans.push([from, to]);
+      idx = norm.indexOf(t, idx + 1);
+    }
+  }
+  if (!spans.length) return esc(display);
+  spans.sort((a, b) => a[0] - b[0]);
+  let out = "", pos = 0;
+  for (const [f, t] of spans) {
+    if (f < pos) continue;
+    out += esc(display.slice(pos, f)) + "<mark>" + esc(display.slice(f, t)) + "</mark>";
+    pos = t;
+  }
+  return out + esc(display.slice(pos));
+}
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function refHe(r) {
+  return r.bh + " " + toHebNum(r.c) + ":" + toHebNum(r.v);
+}
+function sefariaUrl(r) {
+  return "https://www.sefaria.org/Rashi_on_" + r.b + "." + r.c + "." + r.v + "." + r.i + "?lang=he";
+}
+
+let lastHits = [];
+function renderResults(hits, toks) {
+  lastHits = hits;
+  const box = document.getElementById("results");
+  if (!hits.length) {
+    box.innerHTML = '<div id="empty">לא נמצאו תוצאות.</div>';
+    renderDetail(-1);
+    return;
+  }
+  box.innerHTML = hits.map((h, k) => {
+    const r = DB[h.i];
+    return '<div class="hit' + (h.i === selected ? " sel" : "") + '" data-i="' + h.i + '">' +
+      '<span class="dh">' + highlight(r.dh, toks) + '</span> ' +
+      '<span class="ref">· ' + refHe(r) + " · " + esc(r.ph) + "</span>" +
+      '<div class="snip">' + highlight(r.t.slice(0, 220), toks) + "</div></div>";
+  }).join("");
+  if (!hits.some(h => h.i === selected)) renderDetail(hits[0].i, toks);
+}
+
+function renderDetail(i, toks = []) {
+  selected = i;
+  const d = document.getElementById("detail");
+  document.querySelectorAll(".hit").forEach(el =>
+    el.classList.toggle("sel", +el.dataset.i === i));
+  if (i < 0) {
+    d.innerHTML = '<div class="placeholder">בחרו רש"י מהרשימה כדי לראות את הפסוק, המקור והפירוש.</div>';
+    return;
+  }
+  const r = DB[i];
+  d.innerHTML =
+    '<div class="ref-line">' + refHe(r) + " · פרשת " + esc(r.ph) + "</div>" +
+    '<div class="verse">' + esc(r.vt) + "</div>" +
+    '<div><span class="rashi-dh">' + highlight(r.dh, toks) + ".</span></div>" +
+    '<div class="rashi-text">' + highlight(r.t, toks) + "</div>" +
+    '<div class="links"><a href="' + sefariaUrl(r) + '" target="_blank" rel="noopener">פתיחה בספריא ↗</a></div>';
+}
+
+/* ---------- wiring ---------- */
+let currentToks = [];
+function runSearch() {
+  let q;
+  if (mode === "smart") {
+    q = smartParse(document.getElementById("f-smart").value);
+  } else {
+    q = {
+      book: document.getElementById("f-sefer").value,
+      parsha: document.getElementById("f-parsha").value,
+      perek: parseHebNum(document.getElementById("f-perek").value.trim()) || 0,
+      passuk: parseHebNum(document.getElementById("f-passuk").value.trim()) || 0,
+      dh: normalize(document.getElementById("f-dh").value),
+      kw: normalize(document.getElementById("f-kw").value),
+    };
+  }
+  const hasAny = q.book || q.parsha || q.perek || q.passuk || q.dh || q.kw;
+  if (!hasAny) {
+    document.getElementById("results").innerHTML = '<div id="empty">הקלידו כדי לחפש.</div>';
+    renderDetail(-1);
+    return;
+  }
+  currentToks = (q.dh + " " + q.kw).split(" ").filter(Boolean);
+  const t0 = performance.now();
+  const hits = search(q);
+  renderResults(hits, currentToks);
+  document.getElementById("count").textContent =
+    hits.length + " תוצאות · " + (performance.now() - t0).toFixed(1) + ' מ"ש';
+}
+
+let deb;
+function onInput() { clearTimeout(deb); deb = setTimeout(runSearch, 80); }
+
+for (const id of ["f-dh", "f-perek", "f-passuk", "f-kw", "f-smart"])
+  document.getElementById(id).addEventListener("input", onInput);
+document.getElementById("f-sefer").addEventListener("change", () => {
+  fillParshas(document.getElementById("f-sefer").value); runSearch();
+});
+document.getElementById("f-parsha").addEventListener("change", () => {
+  const p = PARSHAS.find(p => p.en === document.getElementById("f-parsha").value);
+  if (p) { document.getElementById("f-sefer").value = p.book; fillParshas(p.book);
+           document.getElementById("f-parsha").value = p.en; }
+  runSearch();
+});
+document.getElementById("results").addEventListener("click", e => {
+  const hit = e.target.closest(".hit");
+  if (hit) renderDetail(+hit.dataset.i, currentToks);
+});
+document.getElementById("tab-fields").addEventListener("click", () => setMode("fields"));
+document.getElementById("tab-smart").addEventListener("click", () => setMode("smart"));
+function setMode(m) {
+  mode = m;
+  document.getElementById("tab-fields").classList.toggle("active", m === "fields");
+  document.getElementById("tab-smart").classList.toggle("active", m === "smart");
+  document.getElementById("fieldbar").style.display = m === "fields" ? "flex" : "none";
+  document.getElementById("smartbar").style.display = m === "smart" ? "block" : "none";
+  (m === "smart" ? document.getElementById("f-smart") : document.getElementById("f-dh")).focus();
+  runSearch();
+}
+</script>
+</body>
+</html>

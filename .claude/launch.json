@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "rashi-search",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8641", "--directory", "/Users/tamar/Documents/Projects/rashi-search"],
+      "port": 8641
+    }
+  ]
+}
