@@ -70,6 +70,29 @@ def get_parshiyot(book):
     return out
 
 
+def get_link_counts(book_en, n_chapters):
+    """Sefaria links per Rashi segment -> {(perek, passuk, idx): count}.
+
+    Used as a popularity signal for ranking ties.
+    """
+    counts = {}
+    seg = re.compile(rf"^Rashi on {book_en} (\d+):(\d+):(\d+)")
+    for c in range(1, n_chapters + 1):
+        url = ("https://www.sefaria.org/api/links/"
+               + urllib.parse.quote(f"Rashi on {book_en}") + f".{c}?with_text=0")
+        try:
+            links = fetch_json(url, f"links_{book_en}_{c}.json")
+        except Exception as e:
+            print(f"  links {book_en} {c} failed: {e}")
+            continue
+        for link in links:
+            m = seg.match(link.get("anchorRef", ""))
+            if m:
+                key = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+                counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
 def parsha_for(parshiyot, perek, passuk):
     for p in parshiyot:
         if p["start"] <= (perek, passuk) <= p["end"]:
@@ -84,6 +107,7 @@ def main():
         rashi = get_text(f"Rashi on {book_en}", f"rashi_{book_en}.json")
         verses = get_text(book_en, f"text_{book_en}.json")
         parshiyot = get_parshiyot(book_en)
+        link_counts = get_link_counts(book_en, len(rashi))
 
         for ci, chapter in enumerate(rashi):
             for vi, comments in enumerate(chapter):
@@ -109,6 +133,7 @@ def main():
                         "dh": dh,   # display forms, with nikud;
                         "t": body,  # the app normalizes for search
                         "vt": verse,
+                        "lk": link_counts.get((perek, passuk, ri + 1), 0),
                     })
         print(f"  {sum(1 for r in records if r['b'] == book_en)} comments")
 

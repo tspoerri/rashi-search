@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חיפוש רש"י על התורה</title>
+<title>Rashi Search</title>
 <style>
 :root {
   --bg: #f7f5f0; --panel: #ffffff; --ink: #2b2620; --muted: #8a8074;
@@ -20,112 +20,124 @@
 * { box-sizing: border-box; margin: 0; }
 body {
   background: var(--bg); color: var(--ink);
-  font-family: "Frank Ruhl Libre", "Times New Roman", "SBL Hebrew", serif;
+  font-family: "Frank Ruhl Libre", Georgia, "Times New Roman", "SBL Hebrew", serif;
   font-size: 17px; line-height: 1.55;
 }
-header {
-  padding: 1.1rem 1.5rem .4rem;
-  display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
-}
-header h1 { font-size: 1.5rem; color: var(--accent); font-weight: 700; }
-header .count { color: var(--muted); font-size: .85rem; }
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.2rem 3rem; }
+header { padding: 1.1rem 0 .4rem; display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap; }
+header h1 { font-size: 1.45rem; color: var(--accent); font-weight: 700; }
+header .count { color: var(--muted); font-size: .82rem; }
 .tabs { margin-inline-start: auto; display: flex; gap: .4rem; }
-.tabs button {
-  font: inherit; font-size: .85rem; padding: .25rem .8rem; cursor: pointer;
+.tabs button, #kbd-btn {
+  font: inherit; font-size: .82rem; padding: .25rem .8rem; cursor: pointer;
   border: 1px solid var(--border); background: var(--panel); color: var(--muted);
   border-radius: 999px;
 }
 .tabs button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-#controls { padding: .5rem 1.5rem 1rem; }
-.fields { display: flex; gap: .6rem; flex-wrap: wrap; }
+#controls { padding: .4rem 0 .9rem; }
+.fields { display: flex; gap: .6rem; flex-wrap: wrap; align-items: flex-end; }
 .field { display: flex; flex-direction: column; gap: .15rem; }
 .field label { font-size: .72rem; color: var(--muted); }
 input, select {
   font: inherit; padding: .45rem .6rem; border: 1px solid var(--border);
   border-radius: 8px; background: var(--panel); color: var(--ink);
 }
+input.he { direction: rtl; }
 input:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
-#f-dh { width: 15rem; } #f-kw { width: 15rem; }
-#f-perek, #f-passuk { width: 4.5rem; }
+#f-dh { width: 13.5rem; } #f-kw { width: 13.5rem; }
+#f-perek, #f-passuk { width: 4.6rem; }
 #smartbar { display: none; }
-#f-smart { width: min(34rem, 100%); font-size: 1.1rem; padding: .6rem .8rem; }
+#f-smart { width: 100%; font-size: 1.1rem; padding: .6rem .8rem; }
 .hint { font-size: .75rem; color: var(--muted); margin-top: .35rem; }
-main {
-  display: grid; grid-template-columns: minmax(20rem, 26rem) 1fr;
-  gap: 1rem; padding: 0 1.5rem 1.5rem; align-items: start;
+
+/* Hebrew keyboard dropdown */
+#kbd-wrap { position: relative; display: inline-block; }
+#kbd {
+  display: none; position: absolute; top: calc(100% + 6px); inset-inline-end: 0; z-index: 20;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: .6rem; box-shadow: 0 6px 24px rgba(0,0,0,.15); width: 21rem; max-width: 90vw;
 }
-#results { display: flex; flex-direction: column; gap: .45rem; max-height: calc(100vh - 180px); overflow-y: auto; padding-inline-end: .2rem; }
+#kbd.open { display: block; }
+#kbd .krow { display: flex; gap: .25rem; justify-content: center; margin-bottom: .25rem; direction: rtl; }
+#kbd button {
+  font: inherit; font-size: 1.05rem; min-width: 2rem; padding: .3rem 0; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink);
+}
+#kbd button:hover { background: var(--accent-soft); }
+#kbd button.wide { min-width: 5rem; font-size: .8rem; color: var(--muted); }
+
+#results { display: flex; flex-direction: column; gap: .45rem; }
 .hit {
   background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
   padding: .55rem .8rem; cursor: pointer;
 }
 .hit:hover { border-color: var(--accent); }
-.hit.sel { border-color: var(--accent); background: var(--accent-soft); }
+.hit.open { border-color: var(--accent); cursor: default; }
+.hit .sum { direction: rtl; text-align: right; }
 .hit .dh { font-weight: 700; }
 .hit .ref { font-size: .78rem; color: var(--muted); }
 .hit .snip { font-size: .82rem; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.hit.open .snip { display: none; }
 mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px; }
-#detail {
-  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
-  padding: 1.2rem 1.5rem; min-height: 12rem; position: sticky; top: 1rem;
-  max-height: calc(100vh - 180px); overflow-y: auto;
+.exp { display: none; direction: rtl; text-align: right; margin-top: .6rem; border-top: 1px solid var(--border); padding-top: .7rem; }
+.hit.open .exp { display: block; }
+.exp .verse {
+  font-size: 1.12rem; background: var(--accent-soft); border-radius: 8px;
+  padding: .55rem .9rem; margin-bottom: .8rem;
 }
-#detail .placeholder { color: var(--muted); }
-#detail .ref-line { color: var(--accent); font-weight: 700; margin-bottom: .35rem; }
-#detail .verse {
-  font-size: 1.15rem; background: var(--accent-soft); border-radius: 8px;
-  padding: .6rem .9rem; margin-bottom: .9rem;
-}
-#detail .rashi-dh { font-weight: 700; }
-#detail .rashi-text { margin-top: .3rem; white-space: pre-wrap; }
-#detail .links { margin-top: 1rem; font-size: .85rem; }
-#detail a { color: var(--accent); }
+.exp .rashi-dh { font-weight: 700; }
+.exp .rashi-text { margin-top: .25rem; white-space: pre-wrap; }
+.exp .links { margin-top: .8rem; direction: ltr; text-align: left; font-size: .82rem; }
+.exp a { color: var(--accent); }
 #empty { color: var(--muted); padding: 1rem 0; }
-@media (max-width: 800px) { main { grid-template-columns: 1fr; } #detail { position: static; } }
 </style>
 </head>
 <body>
+<div class="wrap">
 <header>
-  <h1>חיפוש רש"י על התורה</h1>
-  <span class="count" id="count">טוען…</span>
+  <h1>Rashi Search</h1>
+  <span class="count" id="count">Loading…</span>
   <nav class="tabs">
-    <button id="tab-fields" class="active">שדות</button>
-    <button id="tab-smart">חיפוש חכם</button>
+    <button id="tab-fields" class="active">Fields</button>
+    <button id="tab-smart">Smart search</button>
+    <span id="kbd-wrap">
+      <button id="kbd-btn" title="Hebrew keyboard">⌨ עברית</button>
+      <div id="kbd"></div>
+    </span>
   </nav>
 </header>
 
 <div id="controls">
   <div class="fields" id="fieldbar">
-    <div class="field"><label for="f-dh">דיבור המתחיל</label>
-      <input id="f-dh" placeholder='למשל: ויאמר'></div>
-    <div class="field"><label for="f-sefer">ספר</label>
-      <select id="f-sefer"><option value="">הכל</option></select></div>
-    <div class="field"><label for="f-parsha">פרשה</label>
-      <select id="f-parsha"><option value="">הכל</option></select></div>
-    <div class="field"><label for="f-perek">פרק</label>
-      <input id="f-perek" placeholder="ג / 3"></div>
-    <div class="field"><label for="f-passuk">פסוק</label>
-      <input id="f-passuk" placeholder="יד / 14"></div>
-    <div class="field"><label for="f-kw">מילות מפתח</label>
-      <input id="f-kw" placeholder="בגוף הרש״י"></div>
+    <div class="field"><label for="f-dh">Dibbur hamatchil</label>
+      <input id="f-dh" class="he" placeholder="ויאמר"></div>
+    <div class="field"><label for="f-sefer">Sefer</label>
+      <select id="f-sefer"><option value="">All</option></select></div>
+    <div class="field"><label for="f-parsha">Parsha</label>
+      <select id="f-parsha"><option value="">All</option></select></div>
+    <div class="field"><label for="f-perek">Perek</label>
+      <input id="f-perek" class="he" placeholder="ג / 3"></div>
+    <div class="field"><label for="f-passuk">Passuk</label>
+      <input id="f-passuk" class="he" placeholder="יד / 14"></div>
+    <div class="field"><label for="f-kw">Keywords</label>
+      <input id="f-kw" class="he" placeholder="in the Rashi text"></div>
   </div>
   <div id="smartbar">
-    <input id="f-smart" placeholder='למשל: בראשית ג יד עפר תאכל'>
-    <div class="hint">אפשר לשלב ספר, פרשה, פרק ופסוק (באותיות או במספרים) ומילים מהדיבור המתחיל או מגוף הרש"י — בכל סדר.</div>
+    <input id="f-smart" class="he" placeholder="בראשית ג יד עפר תאכל">
+    <div class="hint">Combine sefer, parsha, perek and passuk (Hebrew letters or numbers) with words from the dibbur hamatchil or the Rashi text — in any order.</div>
   </div>
 </div>
 
-<main>
-  <div id="results"><div id="empty">הקלידו כדי לחפש.</div></div>
-  <div id="detail"><div class="placeholder">בחרו רש"י מהרשימה כדי לראות את הפסוק, המקור והפירוש.</div></div>
-</main>
+<div id="results"><div id="empty">Type to search.</div></div>
+</div>
 
 <script>
 "use strict";
 let DB = [];          // records
-let NORM = [];        // normalized {dh, t, vt} per record
-let selected = -1;
+let NORM = [];        // normalized {dh, t, vt} + skeleton per record
+let openHit = -1;
 let mode = "fields";
+const WEEK = { cur: new Set(), adj: new Set() };  // this week's / adjacent parshas
 
 const BOOKS = [];     // [{en, he}]
 const PARSHAS = [];   // [{en, he, book}]
@@ -174,13 +186,11 @@ function parseHebNum(tok) {
   for (const ch of tok) {
     const v = GEM[ch];
     if (!v || v > prev) return null;   // must be non-increasing (e.g. קכג)
-    // allow טו/טז style exception (9 then 6/7... actually 9<10 fine)
     sum += v; prev = v;
   }
   return sum >= 1 && sum <= 999 ? sum : null;
 }
 function toHebNum(n) {
-  if (n === 15) return "טו"; if (n === 16) return "טז";
   const H = [[400,"ת"],[300,"ש"],[200,"ר"],[100,"ק"],[90,"צ"],[80,"פ"],[70,"ע"],
     [60,"ס"],[50,"נ"],[40,"מ"],[30,"ל"],[20,"כ"],[10,"י"],[9,"ט"],[8,"ח"],[7,"ז"],
     [6,"ו"],[5,"ה"],[4,"ד"],[3,"ג"],[2,"ב"],[1,"א"]];
@@ -207,14 +217,41 @@ fetch("data/rashi.json").then(r => r.json()).then(data => {
   for (const b of BOOKS) selS.add(new Option(b.he, b.en));
   fillParshas("");
   document.getElementById("count").textContent =
-    DB.length.toLocaleString("he") + ' רש"ים · ' + Math.round(performance.now() - t0) + ' מ"ש לאינדוקס';
+    DB.length.toLocaleString("en") + " Rashis · indexed in " + Math.round(performance.now() - t0) + " ms";
   runSearch();
 });
+
+// this / last / next week's parsha, via Sefaria's calendar (skipped if offline)
+(async () => {
+  const norm = s => s.toLowerCase().replace(/[^a-z]/g, "");
+  for (const off of [0, -7, 7]) {
+    try {
+      const d = new Date(Date.now() + off * 864e5);
+      const j = await (await fetch("https://www.sefaria.org/api/calendars?year=" +
+        d.getFullYear() + "&month=" + (d.getMonth() + 1) + "&day=" + d.getDate())).json();
+      const item = j.calendar_items.find(i => i.title.en === "Parashat Hashavua");
+      for (const part of item.displayValue.en.split("-")) {
+        const p = PARSHAS.find(p => norm(p.en) === norm(part)) ||
+                  { en: part.trim() };
+        (off === 0 ? WEEK.cur : WEEK.adj).add(p.en);
+      }
+    } catch (e) { /* offline: no parsha boost */ }
+  }
+})();
+
+function weekBoost(r) {
+  if (WEEK.cur.has(r.p)) return 40;
+  if (WEEK.adj.has(r.p)) return 20;
+  return 0;
+}
+function popBoost(r) {
+  return Math.min(20, Math.log2(1 + (r.lk || 0)) * 3.5);
+}
 
 function fillParshas(book) {
   const sel = document.getElementById("f-parsha");
   const cur = sel.value;
-  sel.length = 0; sel.add(new Option("הכל", ""));
+  sel.length = 0; sel.add(new Option("All", ""));
   for (const p of PARSHAS) if (!book || p.book === book) sel.add(new Option(p.he, p.en));
   sel.value = [...sel.options].some(o => o.value === cur) ? cur : "";
 }
@@ -266,7 +303,7 @@ function search(q) {
       }
     }
     if (kwToks.length) {
-      // phrase-level boost against the dibbur hamaschil
+      // phrase-level boost against the dibbur hamatchil
       if (n.dh === q.kw) score += 1000;
       else if (n.dh.startsWith(q.kw)) score += 600;
       else if (n.dh.includes(q.kw)) score += 400;
@@ -296,7 +333,7 @@ function search(q) {
       }
     }
     if (!dhToks.length && !kwToks.length) score = 1;  // pure filter browse
-    if (score > 0) hits.push({ i, score });
+    if (score > 0) hits.push({ i, score: score + weekBoost(r) + popBoost(r) });
   }
   hits.sort((a, b) => b.score - a.score || a.i - b.i);
   return hits.slice(0, 60);
@@ -376,41 +413,75 @@ function sefariaUrl(r) {
   return "https://www.sefaria.org/Rashi_on_" + r.b + "." + r.c + "." + r.v + "." + r.i + "?lang=he";
 }
 
-let lastHits = [];
 function renderResults(hits, toks) {
-  lastHits = hits;
   const box = document.getElementById("results");
+  openHit = -1;
   if (!hits.length) {
-    box.innerHTML = '<div id="empty">לא נמצאו תוצאות.</div>';
-    renderDetail(-1);
+    box.innerHTML = '<div id="empty">No results.</div>';
     return;
   }
-  box.innerHTML = hits.map((h, k) => {
+  box.innerHTML = hits.map(h => {
     const r = DB[h.i];
-    return '<div class="hit' + (h.i === selected ? " sel" : "") + '" data-i="' + h.i + '">' +
-      '<span class="dh">' + highlight(r.dh, toks) + '</span> ' +
+    return '<div class="hit" data-i="' + h.i + '">' +
+      '<div class="sum"><span class="dh">' + highlight(r.dh, toks) + '</span> ' +
       '<span class="ref">· ' + refHe(r) + " · " + esc(r.ph) + "</span>" +
-      '<div class="snip">' + highlight(r.t.slice(0, 220), toks) + "</div></div>";
+      '<div class="snip">' + highlight(r.t.slice(0, 220), toks) + "</div></div>" +
+      '<div class="exp"></div></div>';
   }).join("");
-  if (!hits.some(h => h.i === selected)) renderDetail(hits[0].i, toks);
 }
 
-function renderDetail(i, toks = []) {
-  selected = i;
-  const d = document.getElementById("detail");
-  document.querySelectorAll(".hit").forEach(el =>
-    el.classList.toggle("sel", +el.dataset.i === i));
-  if (i < 0) {
-    d.innerHTML = '<div class="placeholder">בחרו רש"י מהרשימה כדי לראות את הפסוק, המקור והפירוש.</div>';
-    return;
-  }
+function toggleHit(el, toks) {
+  const i = +el.dataset.i;
+  if (el.classList.contains("open")) { el.classList.remove("open"); openHit = -1; return; }
+  document.querySelectorAll(".hit.open").forEach(o => o.classList.remove("open"));
   const r = DB[i];
-  d.innerHTML =
-    '<div class="ref-line">' + refHe(r) + " · פרשת " + esc(r.ph) + "</div>" +
+  el.querySelector(".exp").innerHTML =
     '<div class="verse">' + esc(r.vt) + "</div>" +
     '<div><span class="rashi-dh">' + highlight(r.dh, toks) + ".</span></div>" +
     '<div class="rashi-text">' + highlight(r.t, toks) + "</div>" +
-    '<div class="links"><a href="' + sefariaUrl(r) + '" target="_blank" rel="noopener">פתיחה בספריא ↗</a></div>';
+    '<div class="links"><a href="' + sefariaUrl(r) + '" target="_blank" rel="noopener">Open in Sefaria ↗</a></div>';
+  el.classList.add("open");
+  openHit = i;
+}
+
+/* ---------- Hebrew keyboard ---------- */
+const KBD_ROWS = [
+  ["ק","ר","א","ט","ו","ן","ם","פ"],
+  ["ש","ד","ג","כ","ע","י","ח","ל","ך","ף"],
+  ["ז","ס","ב","ה","נ","מ","צ","ת","ץ"],
+];
+let lastInput = null;
+function buildKbd() {
+  const kbd = document.getElementById("kbd");
+  kbd.innerHTML = KBD_ROWS.map(row =>
+    '<div class="krow">' + row.map(ch => '<button data-ch="' + ch + '">' + ch + "</button>").join("") + "</div>"
+  ).join("") +
+  '<div class="krow"><button data-ch=" " class="wide">space</button>' +
+  '<button data-act="bs" class="wide">⌫</button>' +
+  '<button data-act="clear" class="wide">clear</button></div>';
+  kbd.addEventListener("mousedown", e => e.preventDefault());  // keep input focus
+  kbd.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const el = lastInput || defaultInput();
+    if (b.dataset.act === "clear") el.value = "";
+    else if (b.dataset.act === "bs") {
+      const p = el.selectionStart;
+      if (p > 0) {
+        el.value = el.value.slice(0, p - 1) + el.value.slice(el.selectionEnd);
+        el.setSelectionRange(p - 1, p - 1);
+      }
+    } else {
+      const p = el.selectionStart;
+      el.value = el.value.slice(0, p) + b.dataset.ch + el.value.slice(el.selectionEnd);
+      el.setSelectionRange(p + 1, p + 1);
+    }
+    el.focus();
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+}
+function defaultInput() {
+  return document.getElementById(mode === "smart" ? "f-smart" : "f-dh");
 }
 
 /* ---------- wiring ---------- */
@@ -431,8 +502,7 @@ function runSearch() {
   }
   const hasAny = q.book || q.parsha || q.perek || q.passuk || q.dh || q.kw;
   if (!hasAny) {
-    document.getElementById("results").innerHTML = '<div id="empty">הקלידו כדי לחפש.</div>';
-    renderDetail(-1);
+    document.getElementById("results").innerHTML = '<div id="empty">Type to search.</div>';
     return;
   }
   currentToks = (q.dh + " " + q.kw).split(" ").filter(Boolean);
@@ -440,14 +510,17 @@ function runSearch() {
   const hits = search(q);
   renderResults(hits, currentToks);
   document.getElementById("count").textContent =
-    hits.length + " תוצאות · " + (performance.now() - t0).toFixed(1) + ' מ"ש';
+    hits.length + " results · " + (performance.now() - t0).toFixed(1) + " ms";
 }
 
 let deb;
 function onInput() { clearTimeout(deb); deb = setTimeout(runSearch, 80); }
 
-for (const id of ["f-dh", "f-perek", "f-passuk", "f-kw", "f-smart"])
-  document.getElementById(id).addEventListener("input", onInput);
+for (const id of ["f-dh", "f-perek", "f-passuk", "f-kw", "f-smart"]) {
+  const el = document.getElementById(id);
+  el.addEventListener("input", onInput);
+  el.addEventListener("focus", () => { lastInput = el; });
+}
 document.getElementById("f-sefer").addEventListener("change", () => {
   fillParshas(document.getElementById("f-sefer").value); runSearch();
 });
@@ -458,8 +531,9 @@ document.getElementById("f-parsha").addEventListener("change", () => {
   runSearch();
 });
 document.getElementById("results").addEventListener("click", e => {
+  if (e.target.closest("a")) return;           // let the Sefaria link work
   const hit = e.target.closest(".hit");
-  if (hit) renderDetail(+hit.dataset.i, currentToks);
+  if (hit) toggleHit(hit, currentToks);
 });
 document.getElementById("tab-fields").addEventListener("click", () => setMode("fields"));
 document.getElementById("tab-smart").addEventListener("click", () => setMode("smart"));
@@ -469,9 +543,18 @@ function setMode(m) {
   document.getElementById("tab-smart").classList.toggle("active", m === "smart");
   document.getElementById("fieldbar").style.display = m === "fields" ? "flex" : "none";
   document.getElementById("smartbar").style.display = m === "smart" ? "block" : "none";
-  (m === "smart" ? document.getElementById("f-smart") : document.getElementById("f-dh")).focus();
+  defaultInput().focus();
   runSearch();
 }
+buildKbd();
+document.getElementById("kbd-btn").addEventListener("click", () => {
+  document.getElementById("kbd").classList.toggle("open");
+  (lastInput || defaultInput()).focus();
+});
+document.addEventListener("click", e => {
+  if (!e.target.closest("#kbd-wrap"))
+    document.getElementById("kbd").classList.remove("open");
+});
 </script>
 </body>
 </html>
