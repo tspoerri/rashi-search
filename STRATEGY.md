@@ -43,6 +43,11 @@ The Chumash coupling sits at enumerable seams:
 - **M4 — Shas UX.** Daf/amud parsing in smartParse (gematria dapim, א/ב amud, "2a"), daf-yomi boost, Sefaria deep links, fields-mode daf input.
 - **M5 — Perf + polish.** 100K-record benchmark, worker if needed, mobile memory check, Rashi-on-Avot as a freebie if trivial.
 
+## Addendum (2026-07-19, from /sefaria-api skill)
+
+- **Hosted-search option for Shas:** `POST /api/search-wrapper` (Hebrew-aware `naive_lemmatizer`, CORS-open, filterable to Rashi) could ship as an "M2.5" — Shas queries proxied to Sefaria search while Chumash+Nach stay local. Loses chipus translit/typo/ktiv folding and local latency, but validates demand before investing in M3's pipeline.
+- **Build details:** validate titles/refs via `/api/name` + `/api/ref` (use for the BB 29a / Makkot 19b check); `fill_in_missing_segments=1` for sparse Nach texts; expect footnote markup (`<sup class="footnote-marker">`, `<i class="footnote">`) beyond the `<b>` tags `clean()` was tuned on; `/api/texts/versions/{title}` is the endpoint for the license check.
+
 ## Must verify before building
 
 1. **License of "Sefaria vocalized edition"** (currently "unknown" in version metadata) — the repo already bundles it privately; confirm with Sefaria before any public flip or Nach expansion. Vilna Talmud is clean PD.
