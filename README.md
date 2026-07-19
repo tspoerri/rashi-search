@@ -1,6 +1,7 @@
 # rashi-search
 
-חיפוש רש"י על התורה — lightning-fast local search over all 7,816 Rashis on Chumash.
+חיפוש רש"י על התורה
+Lightning-fast local search over all 7,816 Rashis on Chumash.
 
 ## Run
 
