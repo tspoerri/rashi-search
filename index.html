@@ -423,13 +423,16 @@ function smartParse(raw) {
           if (hit && hit !== AMBIG) { found = hit; break outer; }
         }
       }
+      let fuzzy = false;
       if (!found) {
         const cands = [];
         for (const k1 of foldToken(tok)) for (const k2 of foldToken(toks[i + 1])) cands.push(k1 + "|" + k2);
         found = fuzzyAlias(PARSHA_ALIAS2, cands);
+        fuzzy = !!found;
       }
       if (found) {
         (q._softToks ||= []).push(tok, toks[i + 1]);
+        if (fuzzy) q._softFuzzy = true;
         q.parsha = found.en; q.book = found.book; i += 2; continue;
       }
     }
@@ -452,8 +455,13 @@ function smartParse(raw) {
         const hit = BOOK_ALIAS.get(k);
         if (hit && hit !== AMBIG) { found = hit; break; }
       }
+      const wasExact = !!found;
       if (!found) found = fuzzyAlias(BOOK_ALIAS, foldToken(tok));
-      if (found) { (q._softToks ||= []).push(tok); q.book = found.en; i++; continue; }
+      if (found) {
+        (q._softToks ||= []).push(tok);
+        if (!wasExact) q._softFuzzy = true;
+        q.book = found.en; i++; continue;
+      }
     }
     const p1 = PARSHAS.find(p => normalize(p.he) === tok);
     if (!q.parsha && !q.book && p1 && i === 0) { q.parsha = p1.en; q.book = p1.book; i++; continue; }
@@ -465,9 +473,11 @@ function smartParse(raw) {
         const hit = PARSHA_ALIAS1.get(k);
         if (hit && hit !== AMBIG) { found = hit; break; }
       }
+      const wasExact = !!found;
       if (!found) found = fuzzyAlias(PARSHA_ALIAS1, foldToken(tok));
       if (found) {
         (q._softToks ||= []).push(tok);
+        if (!wasExact) q._softFuzzy = true;
         q.parsha = found.en; q.book = found.book; i++; continue;
       }
     }
@@ -489,9 +499,13 @@ function smartParse(raw) {
 // query as free text and keep the filter only if the corpus agrees
 // (top unfiltered hit falls inside the captured scope).
 function resolveSoft(q) {
-  if (!q._softToks || !q.kw || q.perek || q.passuk) return q;
+  if (!q._softToks || q.perek || q.passuk) return q;
+  // Pure filter queries (no extra kw) from an EXACT alias hit are trusted
+  // as-is — there's no free text to verify against. Fuzzy hits are riskier
+  // (short-key edit-distance collisions), so always verify those.
+  if (!q.kw && !q._softFuzzy) return q;
   const alt = { book: "", parsha: "", perek: 0, passuk: 0, dh: "",
-                kw: q._softToks.join(" ") + " " + q.kw };
+                kw: (q._softToks.join(" ") + " " + q.kw).trim() };
   const altHits = search(alt);
   if (!altHits.length) return q;
   const top = DB[altHits[0].i];
