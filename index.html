@@ -133,7 +133,7 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 
 <script type="module">
 "use strict";
-import { ChipusIndex, foldToken, tokenize } from "./lib/chipus/index.js";
+import { ChipusIndex, foldToken, tokenize, boundedEditDistance } from "./lib/chipus/index.js";
 
 let DB = [];          // records
 let NORM = [];        // normalized {dh, t, vt} + skeleton per record
@@ -160,6 +160,24 @@ function registerParshaAliases(words, p) {
       for (const k2 of foldToken(words[1])) PARSHA_ALIAS2.set(k1 + "|" + k2, p);
     }
   }
+}
+// Typo fallback for alias lookup: only called after an exact-key lookup misses.
+// Scans the map's folded keys for the closest match within a bounded edit
+// distance; a tie between two different books/parshas is treated as no match
+// (ambiguous) rather than guessed at.
+function fuzzyAlias(map, keyCandidates) {
+  let bestD = Infinity, bestVal = null, ambiguous = false;
+  for (const cand of keyCandidates) {
+    if (cand.length < 3) continue;
+    const maxD = cand.length >= 6 ? 2 : 1;
+    for (const [key, val] of map) {
+      const d = boundedEditDistance(cand, key, maxD);
+      if (d === Infinity) continue;
+      if (d < bestD) { bestD = d; bestVal = val; ambiguous = false; }
+      else if (d === bestD && val !== bestVal) ambiguous = true;
+    }
+  }
+  return ambiguous ? null : bestVal;
 }
 function buildAliases() {
   for (const b of BOOKS) {
@@ -397,6 +415,11 @@ function smartParse(raw) {
           if (hit) { found = hit; break outer; }
         }
       }
+      if (!found) {
+        const cands = [];
+        for (const k1 of foldToken(tok)) for (const k2 of foldToken(toks[i + 1])) cands.push(k1 + "|" + k2);
+        found = fuzzyAlias(PARSHA_ALIAS2, cands);
+      }
       if (found) { q.parsha = found.en; q.book = found.book; i += 2; continue; }
     }
     if (tok === "פרשת" && toks[i + 1]) {
@@ -414,6 +437,7 @@ function smartParse(raw) {
     if (!q.book && !q.parsha && isLatin && i === 0) {
       let found = null;
       for (const k of foldToken(tok)) { found = BOOK_ALIAS.get(k); if (found) break; }
+      if (!found) found = fuzzyAlias(BOOK_ALIAS, foldToken(tok));
       if (found) { q.book = found.en; i++; continue; }
     }
     const p1 = PARSHAS.find(p => normalize(p.he) === tok);
@@ -422,6 +446,7 @@ function smartParse(raw) {
     if (!q.parsha && !q.book && isLatin && i === 0) {
       let found = null;
       for (const k of foldToken(tok)) { found = PARSHA_ALIAS1.get(k); if (found) break; }
+      if (!found) found = fuzzyAlias(PARSHA_ALIAS1, foldToken(tok));
       if (found) { q.parsha = found.en; q.book = found.book; i++; continue; }
     }
     const n = parseHebNum(tok);
