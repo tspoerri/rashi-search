@@ -1,0 +1,8 @@
+{
+  "name": "rashi-search",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "havarotjs": "0.25.4"
+  }
+}

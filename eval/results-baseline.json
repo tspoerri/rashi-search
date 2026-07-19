@@ -1,0 +1,3908 @@
+[
+  {
+    "id": "Deuteronomy.22.9.1__000_simple_sefardi__clean",
+    "query": "kil'ayim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 8,
+    "rank": 7,
+    "tie": 1,
+    "topHitRef": "Leviticus 19:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.9.1__000_simple_sefardi__sloppy",
+    "query": "kilayim",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 8,
+    "rank": 7,
+    "tie": 1,
+    "topHitRef": "Leviticus 19:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.9.1__010_simple_ashkenazi__clean",
+    "query": "kil'oyim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 8,
+    "rank": 7,
+    "tie": 1,
+    "topHitRef": "Leviticus 19:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.9.1__010_simple_ashkenazi__sloppy",
+    "query": "kiloyim",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 8,
+    "rank": 7,
+    "tie": 1,
+    "topHitRef": "Leviticus 19:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.23.2.2__000_simple_sefardi__clean",
+    "query": "ucherut shofchah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 23,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 23:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.23.2.2__010_simple_ashkenazi__clean",
+    "query": "ucherus shofchoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 23,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 23:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.18.17.3__000_simple_sefardi__clean",
+    "query": "zimmah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 18,
+      "v": 17,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 6,
+    "rank": 10,
+    "tie": 1,
+    "topHitRef": "Numbers 28:15#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.18.17.3__000_simple_sefardi__sloppy",
+    "query": "zimah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 18,
+      "v": 17,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 6,
+    "rank": 10,
+    "tie": 1,
+    "topHitRef": "Numbers 28:15#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.18.17.3__010_simple_ashkenazi__clean",
+    "query": "zimmoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 18,
+      "v": 17,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 6,
+    "rank": 12,
+    "tie": 2,
+    "topHitRef": "Numbers 28:15#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.18.17.3__010_simple_ashkenazi__sloppy",
+    "query": "zimoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 18,
+      "v": 17,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 6,
+    "rank": 12,
+    "tie": 2,
+    "topHitRef": "Numbers 28:15#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.47.9.2__000_simple_sefardi__clean",
+    "query": "velo hissigu",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 47,
+      "v": 9,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 3,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 3:3#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.47.9.2__000_simple_sefardi__sloppy",
+    "query": "velo hisigu",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 47,
+      "v": 9,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 3,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 3:3#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.3.5.2__000_simple_sefardi__clean",
+    "query": "vih'yitem kelohim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 3,
+      "v": 5,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 3:5#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.3.5.2__000_simple_sefardi__sloppy",
+    "query": "vihyitem kelohim",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 3,
+      "v": 5,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 3:5#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.3.5.2__010_simple_ashkenazi__clean",
+    "query": "vih'yisem kelohim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 3,
+      "v": 5,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 3:5#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.3.5.2__010_simple_ashkenazi__sloppy",
+    "query": "vihyisem kelohim",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 3,
+      "v": 5,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 3:5#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.7.1__000_simple_sefardi__clean",
+    "query": "umashach'ta oto",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.7.1__000_simple_sefardi__sloppy",
+    "query": "umashachta oto",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.7.1__075_artscroll_sephardic__clean",
+    "query": "umashah'ta oto",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": null,
+    "tie": 0,
+    "topHitRef": "Exodus 2:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.7.1__075_artscroll_sephardic__sloppy",
+    "query": "umashahta oto",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": null,
+    "tie": 0,
+    "topHitRef": "Exodus 2:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.7.1__010_simple_ashkenazi__clean",
+    "query": "umoshach'to oso",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.7.1__010_simple_ashkenazi__sloppy",
+    "query": "umoshachto oso",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.35.2__000_simple_sefardi__clean",
+    "query": "otachah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 35,
+      "i": 2
+    },
+    "dhWords": 1,
+    "lk": 1,
+    "rank": 33,
+    "tie": 1,
+    "topHitRef": "Exodus 25:2#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.29.35.2__010_simple_ashkenazi__clean",
+    "query": "osochoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 29,
+      "v": 35,
+      "i": 2
+    },
+    "dhWords": 1,
+    "lk": 1,
+    "rank": 51,
+    "tie": 1,
+    "topHitRef": "Exodus 25:2#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.1.2.3__000_simple_sefardi__clean",
+    "query": "legulgelotam",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 1,
+      "v": 2,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 1:2#3",
+    "hitsReturned": 24
+  },
+  {
+    "id": "Numbers.1.2.3__010_simple_ashkenazi__clean",
+    "query": "legulgelosom",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 1,
+      "v": 2,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 1:2#3",
+    "hitsReturned": 24
+  },
+  {
+    "id": "Leviticus.14.41.3__000_simple_sefardi__clean",
+    "query": "saviv",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 41,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 5,
+    "rank": 41,
+    "tie": 5,
+    "topHitRef": "Deuteronomy 21:18#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.41.3__010_simple_ashkenazi__clean",
+    "query": "soviv",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 41,
+      "i": 3
+    },
+    "dhWords": 1,
+    "lk": 5,
+    "rank": 54,
+    "tie": 5,
+    "topHitRef": "Deuteronomy 21:18#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.22.11.1__000_simple_sefardi__clean",
+    "query": "avraham avraham",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 22,
+      "v": 11,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 2,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Genesis 25:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.22.11.1__010_simple_ashkenazi__clean",
+    "query": "avrohom avrohom",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 22,
+      "v": 11,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 2,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Genesis 25:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.22.5.1__000_simple_sefardi__clean",
+    "query": "petorah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 10,
+    "rank": 4,
+    "tie": 1,
+    "topHitRef": "Exodus 24:12#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.22.5.1__010_simple_ashkenazi__clean",
+    "query": "pesoroh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 10,
+    "rank": 15,
+    "tie": 2,
+    "topHitRef": "Deuteronomy 21:18#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.27.3.7__000_simple_sefardi__clean",
+    "query": "lechol kelayv",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 27,
+      "v": 3,
+      "i": 7
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 27:3#7",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.27.3.7__010_simple_ashkenazi__clean",
+    "query": "lechol keloyv",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 27,
+      "v": 3,
+      "i": 7
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 27:3#7",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.11.37.1__000_simple_sefardi__clean",
+    "query": "zera zeru'a",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 11,
+      "v": 37,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 2,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Leviticus 27:16#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.11.37.1__000_simple_sefardi__sloppy",
+    "query": "zera zerua",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 11,
+      "v": 37,
+      "i": 1
+    },
+    "dhWords": 2,
+    "lk": 2,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Leviticus 27:16#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.19.5.1__000_simple_sefardi__clean",
+    "query": "ve'attah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 19,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 10,
+    "rank": 34,
+    "tie": 2,
+    "topHitRef": "Genesis 28:17#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.19.5.1__000_simple_sefardi__sloppy",
+    "query": "veatah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 19,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 10,
+    "rank": 34,
+    "tie": 2,
+    "topHitRef": "Genesis 28:17#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.19.5.1__010_simple_ashkenazi__clean",
+    "query": "ve'attoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 19,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 10,
+    "rank": 56,
+    "tie": 3,
+    "topHitRef": "Genesis 28:17#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.19.5.1__010_simple_ashkenazi__sloppy",
+    "query": "veatoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 19,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 10,
+    "rank": 56,
+    "tie": 3,
+    "topHitRef": "Genesis 28:17#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.25.13.2__000_simple_sefardi__clean",
+    "query": "gedolah uketannah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 25,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.25.13.2__000_simple_sefardi__sloppy",
+    "query": "gedolah uketanah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 25,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.25.13.2__010_simple_ashkenazi__clean",
+    "query": "gedoloh uketannoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 25,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.25.13.2__010_simple_ashkenazi__sloppy",
+    "query": "gedoloh uketanoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 25,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 6,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.23.26.2__000_simple_sefardi__clean",
+    "query": "meshakkelah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 23,
+      "v": 26,
+      "i": 2
+    },
+    "dhWords": 1,
+    "lk": 2,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Exodus 23:26#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.23.26.2__000_simple_sefardi__sloppy",
+    "query": "meshakelah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 23,
+      "v": 26,
+      "i": 2
+    },
+    "dhWords": 1,
+    "lk": 2,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Exodus 23:26#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.23.26.2__010_simple_ashkenazi__clean",
+    "query": "meshakkeloh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 23,
+      "v": 26,
+      "i": 2
+    },
+    "dhWords": 1,
+    "lk": 2,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Exodus 23:26#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.23.26.2__010_simple_ashkenazi__sloppy",
+    "query": "meshakeloh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 23,
+      "v": 26,
+      "i": 2
+    },
+    "dhWords": 1,
+    "lk": 2,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Exodus 23:26#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.5.25.2__000_simple_sefardi__clean",
+    "query": "vehikriv otah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 5,
+      "v": 25,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 5:25#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.5.25.2__010_simple_ashkenazi__clean",
+    "query": "vehikriv osoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 5,
+      "v": 25,
+      "i": 2
+    },
+    "dhWords": 2,
+    "lk": 8,
+    "rank": null,
+    "tie": 0,
+    "topHitRef": "Leviticus 22:3#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.23.12.4__000_simple_sefardi__clean",
+    "query": "vehagger",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 23,
+      "v": 12,
+      "i": 4
+    },
+    "dhWords": 1,
+    "lk": 4,
+    "rank": 5,
+    "tie": 1,
+    "topHitRef": "Exodus 23:9#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.23.12.4__000_simple_sefardi__sloppy",
+    "query": "vehager",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 23,
+      "v": 12,
+      "i": 4
+    },
+    "dhWords": 1,
+    "lk": 4,
+    "rank": 5,
+    "tie": 1,
+    "topHitRef": "Exodus 23:9#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.11.42.5__000_simple_sefardi__clean",
+    "query": "marbeh raglayim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 11,
+      "v": 42,
+      "i": 5
+    },
+    "dhWords": 2,
+    "lk": 3,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 11:42#5",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.20.11.1__000_simple_sefardi__clean",
+    "query": "pa'amayim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 20,
+      "v": 11,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 12,
+    "rank": 11,
+    "tie": 1,
+    "topHitRef": "Genesis 2:4#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.20.11.1__000_simple_sefardi__sloppy",
+    "query": "pamayim",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 20,
+      "v": 11,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 12,
+    "rank": 11,
+    "tie": 1,
+    "topHitRef": "Genesis 2:4#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.20.11.1__010_simple_ashkenazi__clean",
+    "query": "pa'amoyim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 20,
+      "v": 11,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 12,
+    "rank": 12,
+    "tie": 3,
+    "topHitRef": "Genesis 2:4#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.20.11.1__010_simple_ashkenazi__sloppy",
+    "query": "pamoyim",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 20,
+      "v": 11,
+      "i": 1
+    },
+    "dhWords": 1,
+    "lk": 12,
+    "rank": 12,
+    "tie": 3,
+    "topHitRef": "Genesis 2:4#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.7.8__000_simple_sefardi__clean",
+    "query": "ad hannahar haggadol",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 7,
+      "i": 8
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:7#8",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.7.8__000_simple_sefardi__sloppy",
+    "query": "ad hanahar hagadol",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 7,
+      "i": 8
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:7#8",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.7.8__010_simple_ashkenazi__clean",
+    "query": "ad hannohor haggodol",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 7,
+      "i": 8
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:7#8",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.7.8__010_simple_ashkenazi__sloppy",
+    "query": "ad hanohor hagodol",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 7,
+      "i": 8
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:7#8",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.34.7.4__000_simple_sefardi__clean",
+    "query": "venakkeh lo yenakkeh",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 34,
+      "v": 7,
+      "i": 4
+    },
+    "dhWords": 3,
+    "lk": 7,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 34:7#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.34.7.4__000_simple_sefardi__sloppy",
+    "query": "venakeh lo yenakeh",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 34,
+      "v": 7,
+      "i": 4
+    },
+    "dhWords": 3,
+    "lk": 7,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 34:7#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.33.3.7__000_simple_sefardi__clean",
+    "query": "vehem tukku leraglecha",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 33,
+      "v": 3,
+      "i": 7
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 33:3#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.33.3.7__000_simple_sefardi__sloppy",
+    "query": "vehem tuku leraglecha",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 33,
+      "v": 3,
+      "i": 7
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 33:3#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.33.3.7__010_simple_ashkenazi__clean",
+    "query": "vehem tukku leraglecho",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 33,
+      "v": 3,
+      "i": 7
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 33:3#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.33.3.7__010_simple_ashkenazi__sloppy",
+    "query": "vehem tuku leraglecho",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 33,
+      "v": 3,
+      "i": 7
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 33:3#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.28.1__000_simple_sefardi__clean",
+    "query": "arim gedolot uvetzurot bashshamayim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 28,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:28#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.28.1__075_artscroll_sephardic__clean",
+    "query": "arim gedolot uvesurot bashshamayim",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 28,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:28#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.1.28.1__010_simple_ashkenazi__clean",
+    "query": "orim gedolos uvetzuros bashshomoyim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 1,
+      "v": 28,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 1:28#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.8.3__000_simple_sefardi__clean",
+    "query": "ki yippol hannofel",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 8,
+      "i": 3
+    },
+    "dhWords": 3,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:8#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.8.3__000_simple_sefardi__sloppy",
+    "query": "ki yipol hanofel",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 8,
+      "i": 3
+    },
+    "dhWords": 3,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:8#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.32.4.1__000_simple_sefardi__clean",
+    "query": "vayyatzar oto bacheret",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 32,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 32:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.32.4.1__000_simple_sefardi__sloppy",
+    "query": "vayatzar oto bacheret",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 32,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 32:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.32.4.1__075_artscroll_sephardic__clean",
+    "query": "vayyasar oto baheret",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 32,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 11,
+    "rank": 35,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 21:18#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.32.4.1__075_artscroll_sephardic__sloppy",
+    "query": "vayasar oto baheret",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 32,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 11,
+    "rank": 35,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 21:18#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.32.4.1__010_simple_ashkenazi__clean",
+    "query": "vayyotzar oso bacheret",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 32,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 32:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.32.4.1__010_simple_ashkenazi__sloppy",
+    "query": "vayotzar oso bacheret",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 32,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 32:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.28.38.3__000_simple_sefardi__clean",
+    "query": "vehayah al mitzcho tamid",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 28,
+      "v": 38,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 28:38#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.28.38.3__075_artscroll_sephardic__clean",
+    "query": "vehayah al misho tamid",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 28,
+      "v": 38,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 21,
+    "tie": 1,
+    "topHitRef": "Exodus 40:35#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.28.38.3__010_simple_ashkenazi__clean",
+    "query": "vehoyoh al mitzcho tomid",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 28,
+      "v": 38,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 28:38#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.29.7.1__000_simple_sefardi__clean",
+    "query": "hen od hayyom gadol",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.29.7.1__000_simple_sefardi__sloppy",
+    "query": "hen od hayom gadol",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.29.7.1__010_simple_ashkenazi__clean",
+    "query": "hen od hayyom godol",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.29.7.1__010_simple_ashkenazi__sloppy",
+    "query": "hen od hayom godol",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 29,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 29:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.27.8.3__000_simple_sefardi__clean",
+    "query": "al pi asher tassig",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 27,
+      "v": 8,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 4,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 27:8#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.27.8.3__000_simple_sefardi__sloppy",
+    "query": "al pi asher tasig",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 27,
+      "v": 8,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 4,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 27:8#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.3.4.4__000_simple_sefardi__clean",
+    "query": "al hakkaved al hakkelayot",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 3,
+      "v": 4,
+      "i": 4
+    },
+    "dhWords": 4,
+    "lk": 4,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 3:4#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.3.4.4__000_simple_sefardi__sloppy",
+    "query": "al hakaved al hakelayot",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 3,
+      "v": 4,
+      "i": 4
+    },
+    "dhWords": 4,
+    "lk": 4,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 3:4#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.3.4.4__010_simple_ashkenazi__clean",
+    "query": "al hakkoved al hakkeloyos",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 3,
+      "v": 4,
+      "i": 4
+    },
+    "dhWords": 4,
+    "lk": 4,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 3:4#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.3.4.4__010_simple_ashkenazi__sloppy",
+    "query": "al hakoved al hakeloyos",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 3,
+      "v": 4,
+      "i": 4
+    },
+    "dhWords": 4,
+    "lk": 4,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 3:4#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.7.1__000_simple_sefardi__clean",
+    "query": "lema'an yitav lach",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.7.1__000_simple_sefardi__sloppy",
+    "query": "leman yitav lach",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.7.1__010_simple_ashkenazi__clean",
+    "query": "lema'an yitav loch",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.7.1__010_simple_ashkenazi__sloppy",
+    "query": "leman yitav loch",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 7,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:7#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.4.9.1__000_simple_sefardi__clean",
+    "query": "e hevel achicha",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 4,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 4:9#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.4.9.1__075_artscroll_sephardic__clean",
+    "query": "e hevel ahicha",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 4,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 37:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.4.9.1__010_simple_ashkenazi__clean",
+    "query": "e hevel ochicho",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 4,
+      "v": 9,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Genesis 37:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.22.19.1__000_simple_sefardi__clean",
+    "query": "vayyashov avraham biv'er shava",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 22,
+      "v": 19,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 22:19#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.22.19.1__000_simple_sefardi__sloppy",
+    "query": "vayashov avraham biver shava",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 22,
+      "v": 19,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 22:19#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.22.19.1__010_simple_ashkenazi__clean",
+    "query": "vayyoshov avrohom biv'er shova",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 22,
+      "v": 19,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 22:19#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.22.19.1__010_simple_ashkenazi__sloppy",
+    "query": "vayoshov avrohom biver shova",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 22,
+      "v": 19,
+      "i": 1
+    },
+    "dhWords": 4,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 22:19#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.7.2__000_simple_sefardi__clean",
+    "query": "lo tetze ketzet ha'avadim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 7,
+      "i": 2
+    },
+    "dhWords": 4,
+    "lk": 18,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:7#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.7.2__000_simple_sefardi__sloppy",
+    "query": "lo tetze ketzet havadim",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 7,
+      "i": 2
+    },
+    "dhWords": 4,
+    "lk": 18,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:7#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.7.2__075_artscroll_sephardic__clean",
+    "query": "lo tese keset ha'avadim",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 7,
+      "i": 2
+    },
+    "dhWords": 4,
+    "lk": 18,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.7.2__075_artscroll_sephardic__sloppy",
+    "query": "lo tese keset havadim",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 7,
+      "i": 2
+    },
+    "dhWords": 4,
+    "lk": 18,
+    "rank": 3,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.7.2__010_simple_ashkenazi__clean",
+    "query": "lo setze ketzes ho'avodim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 7,
+      "i": 2
+    },
+    "dhWords": 4,
+    "lk": 18,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:7#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.7.2__010_simple_ashkenazi__sloppy",
+    "query": "lo setze ketzes hoavodim",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 7,
+      "i": 2
+    },
+    "dhWords": 4,
+    "lk": 18,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:7#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.36.39.1__000_simple_sefardi__clean",
+    "query": "bat me zahav",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 36,
+      "v": 39,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 3,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 36:39#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.36.39.1__010_simple_ashkenazi__clean",
+    "query": "bas me zohov",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 36,
+      "v": 39,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 3,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 36:39#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.53.1__000_simple_sefardi__clean",
+    "query": "vehorashtem et ha'aretz",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 53,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:53#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.53.1__000_simple_sefardi__sloppy",
+    "query": "vehorashtem et haretz",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 53,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:53#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.53.1__075_artscroll_sephardic__clean",
+    "query": "vehorashtem et ha'ares",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 53,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 6,
+    "tie": 1,
+    "topHitRef": "Leviticus 19:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.53.1__075_artscroll_sephardic__sloppy",
+    "query": "vehorashtem et hares",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 53,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 6,
+    "tie": 1,
+    "topHitRef": "Leviticus 19:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.53.1__010_simple_ashkenazi__clean",
+    "query": "vehorashtem es ho'oretz",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 53,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:53#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.53.1__010_simple_ashkenazi__sloppy",
+    "query": "vehorashtem es horetz",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 53,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:53#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.8.2.3__000_simple_sefardi__clean",
+    "query": "el mul pene hammenorah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 8,
+      "v": 2,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 8:2#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.8.2.3__000_simple_sefardi__sloppy",
+    "query": "el mul pene hamenorah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 8,
+      "v": 2,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 8:2#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.8.2.3__010_simple_ashkenazi__clean",
+    "query": "el mul pene hammenoroh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 8,
+      "v": 2,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 8:2#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.8.2.3__010_simple_ashkenazi__sloppy",
+    "query": "el mul pene hamenoroh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 8,
+      "v": 2,
+      "i": 3
+    },
+    "dhWords": 4,
+    "lk": 8,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 8:2#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.13.10.1__000_simple_sefardi__clean",
+    "query": "ki chullah mashkeh",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 13,
+      "v": 10,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 13:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.13.10.1__000_simple_sefardi__sloppy",
+    "query": "ki chulah mashkeh",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 13,
+      "v": 10,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 13:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.13.10.1__010_simple_ashkenazi__clean",
+    "query": "ki chulloh mashkeh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 13,
+      "v": 10,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 13:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.13.10.1__010_simple_ashkenazi__sloppy",
+    "query": "ki chuloh mashkeh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 13,
+      "v": 10,
+      "i": 1
+    },
+    "dhWords": 3,
+    "lk": 2,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 13:10#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.32.2__000_simple_sefardi__clean",
+    "query": "sheloshim shekalim yitten",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 32,
+      "i": 2
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:32#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.32.2__000_simple_sefardi__sloppy",
+    "query": "sheloshim shekalim yiten",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 32,
+      "i": 2
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:32#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.32.2__010_simple_ashkenazi__clean",
+    "query": "sheloshim shekolim yitten",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 32,
+      "i": 2
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:32#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.32.2__010_simple_ashkenazi__sloppy",
+    "query": "sheloshim shekolim yiten",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 32,
+      "i": 2
+    },
+    "dhWords": 3,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:32#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.22.6__000_simple_sefardi__clean",
+    "query": "ka'asher yashit alayv",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 22,
+      "i": 6
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:22#6",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.22.6__000_simple_sefardi__sloppy",
+    "query": "kasher yashit alayv",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 22,
+      "i": 6
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:22#6",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.22.6__010_simple_ashkenazi__clean",
+    "query": "ka'asher yoshis oloyv",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 22,
+      "i": 6
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:22#6",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.22.6__010_simple_ashkenazi__sloppy",
+    "query": "kasher yoshis oloyv",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 22,
+      "i": 6
+    },
+    "dhWords": 3,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:22#6",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.34.1.1__000_simple_sefardi__clean",
+    "query": "me'arvot mo'av el har nevo",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 34,
+      "v": 1,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 24,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 34:1#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.34.1.1__000_simple_sefardi__sloppy",
+    "query": "mearvot moav el har nevo",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 34,
+      "v": 1,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 24,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 34:1#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.34.1.1__010_simple_ashkenazi__clean",
+    "query": "me'arvos mo'ov el har nevo",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 34,
+      "v": 1,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 24,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 34:1#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.34.1.1__010_simple_ashkenazi__sloppy",
+    "query": "mearvos mov el har nevo",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 34,
+      "v": 1,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 24,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 34:1#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.12.47.1__000_simple_sefardi__clean",
+    "query": "kol adat yisra'el ya'asu oto",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 12,
+      "v": 47,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 12:47#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.12.47.1__000_simple_sefardi__sloppy",
+    "query": "kol adat yisrael yasu oto",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 12,
+      "v": 47,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 12:47#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.12.47.1__010_simple_ashkenazi__clean",
+    "query": "kol adas yisro'el ya'asu oso",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 12,
+      "v": 47,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 12:47#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.12.47.1__010_simple_ashkenazi__sloppy",
+    "query": "kol adas yisroel yasu oso",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 12,
+      "v": 47,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 12:47#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.24.11.2__000_simple_sefardi__clean",
+    "query": "veshem immo shelomit bat divri",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 24,
+      "v": 11,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 24:11#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.24.11.2__000_simple_sefardi__sloppy",
+    "query": "veshem imo shelomit bat divri",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 24,
+      "v": 11,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 24:11#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.24.11.2__010_simple_ashkenazi__clean",
+    "query": "veshem immo shelomis bas divri",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 24,
+      "v": 11,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 24:11#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.24.11.2__010_simple_ashkenazi__sloppy",
+    "query": "veshem imo shelomis bas divri",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 24,
+      "v": 11,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 10,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 24:11#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.29.12.1__000_simple_sefardi__clean",
+    "query": "lema'an hakim otcha hayyom lo le'am",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 29,
+      "v": 12,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 29:12#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.29.12.1__000_simple_sefardi__sloppy",
+    "query": "leman hakim otcha hayom lo leam",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 29,
+      "v": 12,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 29:12#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.29.12.1__010_simple_ashkenazi__clean",
+    "query": "lema'an hokim oscho hayyom lo le'om",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 29,
+      "v": 12,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 5,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Exodus 12:39#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.29.12.1__010_simple_ashkenazi__sloppy",
+    "query": "leman hokim oscho hayom lo leom",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 29,
+      "v": 12,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 5,
+    "rank": 2,
+    "tie": 1,
+    "topHitRef": "Exodus 12:39#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.16.6.1__000_simple_sefardi__clean",
+    "query": "et par hachattat asher lo",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.16.6.1__000_simple_sefardi__sloppy",
+    "query": "et par hachatat asher lo",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.16.6.1__075_artscroll_sephardic__clean",
+    "query": "et par hahattat asher lo",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.16.6.1__075_artscroll_sephardic__sloppy",
+    "query": "et par hahatat asher lo",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.16.6.1__010_simple_ashkenazi__clean",
+    "query": "es par hachattos asher lo",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.16.6.1__010_simple_ashkenazi__sloppy",
+    "query": "es par hachatos asher lo",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 16:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.17.5.3__000_simple_sefardi__clean",
+    "query": "umattecha asher hikkita bo et haye'or",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 17,
+      "v": 5,
+      "i": 3
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 17:5#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.17.5.3__000_simple_sefardi__sloppy",
+    "query": "umatecha asher hikita bo et hayeor",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 17,
+      "v": 5,
+      "i": 3
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 17:5#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.17.5.3__010_simple_ashkenazi__clean",
+    "query": "umattecho asher hikkiso bo es haye'or",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 17,
+      "v": 5,
+      "i": 3
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 17:5#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.17.5.3__010_simple_ashkenazi__sloppy",
+    "query": "umatecho asher hikiso bo es hayeor",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 17,
+      "v": 5,
+      "i": 3
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 17:5#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.16.15.3__000_simple_sefardi__clean",
+    "query": "lo chamor echad mehem nasati",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 16,
+      "v": 15,
+      "i": 3
+    },
+    "dhWords": 5,
+    "lk": 13,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 16:15#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.16.15.3__075_artscroll_sephardic__clean",
+    "query": "lo hamor ehad mehem nasati",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 16,
+      "v": 15,
+      "i": 3
+    },
+    "dhWords": 5,
+    "lk": 13,
+    "rank": 44,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 29:3#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.16.15.3__010_simple_ashkenazi__clean",
+    "query": "lo chamor echod mehem nososi",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 16,
+      "v": 15,
+      "i": 3
+    },
+    "dhWords": 5,
+    "lk": 13,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 16:15#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.11.21.1__000_simple_sefardi__clean",
+    "query": "lema'an yirbu yemechem vime venechem",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 11,
+      "v": 21,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 3,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 11:21#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.11.21.1__000_simple_sefardi__sloppy",
+    "query": "leman yirbu yemechem vime venechem",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 11,
+      "v": 21,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 3,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 11:21#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.23.8.1__000_simple_sefardi__clean",
+    "query": "mah ekkov lo kabboh el",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 23,
+      "v": 8,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 14,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 23:8#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.23.8.1__000_simple_sefardi__sloppy",
+    "query": "mah ekov lo kaboh el",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 23,
+      "v": 8,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 14,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 23:8#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.23.8.1__010_simple_ashkenazi__clean",
+    "query": "moh ekkov lo kabboh el",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 23,
+      "v": 8,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 14,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 23:8#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.23.8.1__010_simple_ashkenazi__sloppy",
+    "query": "moh ekov lo kaboh el",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 23,
+      "v": 8,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 14,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 23:8#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.26.4.3__000_simple_sefardi__clean",
+    "query": "vechen ta'aseh bisfat hayeri'ah hakkitzonah bammach'beret hashshenit",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 26:4#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.26.4.3__000_simple_sefardi__sloppy",
+    "query": "vechen taseh bisfat hayeriah hakitzonah bamachberet hashshenit",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 26:4#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.26.4.3__075_artscroll_sephardic__clean",
+    "query": "vechen ta'aseh bisfat hayeri'ah hakkisonah bammah'beret hashshenit",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 26:4#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.26.4.3__075_artscroll_sephardic__sloppy",
+    "query": "vechen taseh bisfat hayeriah hakisonah bamahberet hashshenit",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 26:4#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.26.4.3__010_simple_ashkenazi__clean",
+    "query": "vechen ta'aseh bisfas hayeri'oh hakkitzonoh bammach'beres hashshenis",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 26:4#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.26.4.3__010_simple_ashkenazi__sloppy",
+    "query": "vechen taseh bisfas hayerioh hakitzonoh bamachberes hashshenis",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 26:4#3",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.26.8.2__000_simple_sefardi__clean",
+    "query": "chamishshah me'ah ume'ah mikkem revavah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 26:8#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.26.8.2__000_simple_sefardi__sloppy",
+    "query": "chamishshah meah umeah mikem revavah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 26:8#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.26.8.2__075_artscroll_sephardic__clean",
+    "query": "hamishshah me'ah ume'ah mikkem revavah",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17,
+    "rank": 4,
+    "tie": 1,
+    "topHitRef": "Exodus 18:13#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.26.8.2__075_artscroll_sephardic__sloppy",
+    "query": "hamishshah meah umeah mikem revavah",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17,
+    "rank": 4,
+    "tie": 1,
+    "topHitRef": "Exodus 18:13#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.26.8.2__010_simple_ashkenazi__clean",
+    "query": "chamishshoh me'oh ume'oh mikkem revovoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 26:8#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.26.8.2__010_simple_ashkenazi__sloppy",
+    "query": "chamishshoh meoh umeoh mikem revovoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 26:8#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.12.2.2__000_simple_sefardi__clean",
+    "query": "et kol hammekomot asher avedu sham",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 12,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 12:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.12.2.2__000_simple_sefardi__sloppy",
+    "query": "et kol hamekomot asher avedu sham",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 12,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 12:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.12.2.2__010_simple_ashkenazi__clean",
+    "query": "es kol hammekomos asher ovedu shom",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 12,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 12:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.12.2.2__010_simple_ashkenazi__sloppy",
+    "query": "es kol hamekomos asher ovedu shom",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 12,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 12:2#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.49.1__000_simple_sefardi__clean",
+    "query": "mibbet hayeshimot ad avel hashshittim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 49,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:49#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.49.1__000_simple_sefardi__sloppy",
+    "query": "mibet hayeshimot ad avel hashshitim",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 49,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:49#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.49.1__010_simple_ashkenazi__clean",
+    "query": "mibbes hayeshimos ad ovel hashshittim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 49,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:49#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Numbers.33.49.1__010_simple_ashkenazi__sloppy",
+    "query": "mibes hayeshimos ad ovel hashshitim",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 49,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Numbers 33:49#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.8.4__000_simple_sefardi__clean",
+    "query": "le'am nochri lo yimshol lemochrah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 8,
+      "i": 4
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:8#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.8.4__000_simple_sefardi__sloppy",
+    "query": "leam nochri lo yimshol lemochrah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 8,
+      "i": 4
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:8#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.8.4__010_simple_ashkenazi__clean",
+    "query": "le'am nochri lo yimshol lemochroh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 8,
+      "i": 4
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:8#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.21.8.4__010_simple_ashkenazi__sloppy",
+    "query": "leam nochri lo yimshol lemochroh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 8,
+      "i": 4
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 21:8#4",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.48.19.2__000_simple_sefardi__clean",
+    "query": "gam hu yiheyeh le'am vegam hu yigdal",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 48,
+      "v": 19,
+      "i": 2
+    },
+    "dhWords": 7,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.48.19.2__000_simple_sefardi__sloppy",
+    "query": "gam hu yiheyeh leam vegam hu yigdal",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 48,
+      "v": 19,
+      "i": 2
+    },
+    "dhWords": 7,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.48.19.2__010_simple_ashkenazi__clean",
+    "query": "gam hu yiheyeh le'om vegam hu yigdol",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 48,
+      "v": 19,
+      "i": 2
+    },
+    "dhWords": 7,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.48.19.2__010_simple_ashkenazi__sloppy",
+    "query": "gam hu yiheyeh leom vegam hu yigdol",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 48,
+      "v": 19,
+      "i": 2
+    },
+    "dhWords": 7,
+    "lk": 5,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Genesis 48:19#2",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.23.13.2__000_simple_sefardi__clean",
+    "query": "ach im attah lu shema'eni",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 23,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 3,
+    "rank": 1,
+    "tie": 2,
+    "topHitRef": "Genesis 23:13#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.23.13.2__000_simple_sefardi__sloppy",
+    "query": "ach im atah lu shemaeni",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 23,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 3,
+    "rank": 1,
+    "tie": 2,
+    "topHitRef": "Genesis 23:13#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.23.13.2__010_simple_ashkenazi__clean",
+    "query": "ach im attoh lu shemo'eni",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Genesis",
+      "c": 23,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 3,
+    "rank": 1,
+    "tie": 2,
+    "topHitRef": "Genesis 23:13#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Genesis.23.13.2__010_simple_ashkenazi__sloppy",
+    "query": "ach im atoh lu shemoeni",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Genesis",
+      "c": 23,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 3,
+    "rank": 1,
+    "tie": 2,
+    "topHitRef": "Genesis 23:13#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.16.4.1__000_simple_sefardi__clean",
+    "query": "velo yalin min habbasar asher tizbach ba'erev bayyom harishon labboker",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 16:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.16.4.1__000_simple_sefardi__sloppy",
+    "query": "velo yalin min habasar asher tizbach baerev bayom harishon laboker",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 16:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.16.4.1__075_artscroll_sephardic__clean",
+    "query": "velo yalin min habbasar asher tizbah ba'erev bayyom harishon labboker",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 16:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.16.4.1__075_artscroll_sephardic__sloppy",
+    "query": "velo yalin min habasar asher tizbah baerev bayom harishon laboker",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 16:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.16.4.1__010_simple_ashkenazi__clean",
+    "query": "velo yolin min habbosor asher tizbach bo'erev bayyom horishon labboker",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 16:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.16.4.1__010_simple_ashkenazi__sloppy",
+    "query": "velo yolin min habosor asher tizbach boerev bayom horishon laboker",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 16:4#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.34.7.5__000_simple_sefardi__clean",
+    "query": "poked avon avot al banim",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 34,
+      "v": 7,
+      "i": 5
+    },
+    "dhWords": 5,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 34:7#5",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Exodus.34.7.5__010_simple_ashkenazi__clean",
+    "query": "poked ovon ovos al bonim",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Exodus",
+      "c": 34,
+      "v": 7,
+      "i": 5
+    },
+    "dhWords": 5,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Exodus 34:7#5",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.6.1__000_simple_sefardi__clean",
+    "query": "et hatztzippor hachayyah yikkach otah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 14:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.6.1__000_simple_sefardi__sloppy",
+    "query": "et hatztzipor hachayah yikach otah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 14:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.6.1__075_artscroll_sephardic__clean",
+    "query": "et hassippor hahayyah yikkah otah",
+    "style": "075_artscroll_sephardic",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 14:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.6.1__075_artscroll_sephardic__sloppy",
+    "query": "et hasipor hahayah yikah otah",
+    "style": "075_artscroll_sephardic",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 14:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.6.1__010_simple_ashkenazi__clean",
+    "query": "es hatztzippor hachayyoh yikkach osoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 14:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Leviticus.14.6.1__010_simple_ashkenazi__sloppy",
+    "query": "es hatztzipor hachayoh yikach osoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Leviticus 14:6#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.5.1__000_simple_sefardi__clean",
+    "query": "lo yih'yeh cheli gever al ishshah",
+    "style": "000_simple_sefardi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:5#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.5.1__000_simple_sefardi__sloppy",
+    "query": "lo yihyeh cheli gever al ishshah",
+    "style": "000_simple_sefardi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:5#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.5.1__010_simple_ashkenazi__clean",
+    "query": "lo yih'yeh cheli gever al ishshoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "clean",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:5#1",
+    "hitsReturned": 60
+  },
+  {
+    "id": "Deuteronomy.22.5.1__010_simple_ashkenazi__sloppy",
+    "query": "lo yihyeh cheli gever al ishshoh",
+    "style": "010_simple_ashkenazi",
+    "variant": "sloppy",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 6,
+    "rank": 1,
+    "tie": 1,
+    "topHitRef": "Deuteronomy 22:5#1",
+    "hitsReturned": 60
+  }
+]

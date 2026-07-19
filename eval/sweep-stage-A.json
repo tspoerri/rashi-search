@@ -1,0 +1,962 @@
+[
+  {
+    "label": "A: coverWeight=10 fullFieldBonus=0",
+    "exp": {
+      "coverWeight": 10,
+      "fullFieldBonus": 0,
+      "refineWeightLatin": 10
+    },
+    "rank": {
+      "bin": 0
+    },
+    "main": {
+      "top1": "79.7%",
+      "top1tied": "81.6%",
+      "top3": "93.1%",
+      "mrr": "0.877",
+      "miss": "1.4%"
+    },
+    "dh12": {
+      "top1": "59.6%",
+      "top3": "89.5%",
+      "n": 57
+    },
+    "partial": {
+      "top1": "45.0%",
+      "top3": "55.0%",
+      "mrr": "0.516"
+    },
+    "worst": [
+      {
+        "query": "umashah'ta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": "MISS",
+        "tie": 0,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "umashahta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": "MISS",
+        "tie": 0,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "et hassippor hahayyah yikkah otah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 6,
+          "i": 1
+        },
+        "rank": "MISS",
+        "tie": 0,
+        "topHitRef": "Exodus 31:13#2"
+      },
+      {
+        "query": "lo hamor ehad mehem nasati",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 16,
+          "v": 15,
+          "i": 3
+        },
+        "rank": 44,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 29:3#2"
+      },
+      {
+        "query": "vayyasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vayasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "osochoh",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 35,
+          "i": 2
+        },
+        "rank": 21,
+        "tie": 1,
+        "topHitRef": "Genesis 11:29#1"
+      },
+      {
+        "query": "vehayah al misho tamid",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 28,
+          "v": 38,
+          "i": 3
+        },
+        "rank": 21,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:14#2"
+      },
+      {
+        "query": "otachah",
+        "style": "000_simple_sefardi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 35,
+          "i": 2
+        },
+        "rank": 8,
+        "tie": 1,
+        "topHitRef": "Exodus 25:2#4"
+      },
+      {
+        "query": "soviv",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 6,
+        "tie": 2,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vehorashtem et ha'ares",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 6,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "vehorashtem et hares",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 6,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "saviv",
+        "style": "000_simple_sefardi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 4,
+        "tie": 2,
+        "topHitRef": "Exodus 15:4#3"
+      },
+      {
+        "query": "hamishshah me'ah ume'ah mikkem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      },
+      {
+        "query": "hamishshah meah umeah mikem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      }
+    ]
+  },
+  {
+    "label": "A: coverWeight=20 fullFieldBonus=0",
+    "exp": {
+      "coverWeight": 20,
+      "fullFieldBonus": 0,
+      "refineWeightLatin": 10
+    },
+    "rank": {
+      "bin": 0
+    },
+    "main": {
+      "top1": "82.5%",
+      "top1tied": "84.3%",
+      "top3": "94.0%",
+      "mrr": "0.894",
+      "miss": "0.5%"
+    },
+    "dh12": {
+      "top1": "70.2%",
+      "top3": "93.0%",
+      "n": 57
+    },
+    "partial": {
+      "top1": "40.0%",
+      "top3": "55.0%",
+      "mrr": "0.486"
+    },
+    "worst": [
+      {
+        "query": "et hassippor hahayyah yikkah otah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 6,
+          "i": 1
+        },
+        "rank": "MISS",
+        "tie": 0,
+        "topHitRef": "Exodus 31:13#2"
+      },
+      {
+        "query": "umashah'ta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": 59,
+        "tie": 1,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "umashahta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": 59,
+        "tie": 1,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "lo hamor ehad mehem nasati",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 16,
+          "v": 15,
+          "i": 3
+        },
+        "rank": 44,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 29:3#2"
+      },
+      {
+        "query": "vayyasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vayasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vehayah al misho tamid",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 28,
+          "v": 38,
+          "i": 3
+        },
+        "rank": 20,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:14#2"
+      },
+      {
+        "query": "osochoh",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 35,
+          "i": 2
+        },
+        "rank": 7,
+        "tie": 1,
+        "topHitRef": "Genesis 11:29#1"
+      },
+      {
+        "query": "vehorashtem et ha'ares",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 6,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "vehorashtem et hares",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 6,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "soviv",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 5,
+        "tie": 2,
+        "topHitRef": "Genesis 18:1#3"
+      },
+      {
+        "query": "hamishshah me'ah ume'ah mikkem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      },
+      {
+        "query": "hamishshah meah umeah mikem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      },
+      {
+        "query": "saviv",
+        "style": "000_simple_sefardi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 3,
+        "tie": 2,
+        "topHitRef": "Exodus 15:4#3"
+      },
+      {
+        "query": "ve'attoh",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 19,
+          "v": 5,
+          "i": 1
+        },
+        "rank": 3,
+        "tie": 1,
+        "topHitRef": "Numbers 2:2#1"
+      }
+    ]
+  },
+  {
+    "label": "A: coverWeight=30 fullFieldBonus=0",
+    "exp": {
+      "coverWeight": 30,
+      "fullFieldBonus": 0,
+      "refineWeightLatin": 10
+    },
+    "rank": {
+      "bin": 0
+    },
+    "main": {
+      "top1": "82.5%",
+      "top1tied": "84.3%",
+      "top3": "94.0%",
+      "mrr": "0.894",
+      "miss": "0.5%"
+    },
+    "dh12": {
+      "top1": "70.2%",
+      "top3": "93.0%",
+      "n": 57
+    },
+    "partial": {
+      "top1": "40.0%",
+      "top3": "50.0%",
+      "mrr": "0.478"
+    },
+    "worst": [
+      {
+        "query": "et hassippor hahayyah yikkah otah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 6,
+          "i": 1
+        },
+        "rank": "MISS",
+        "tie": 0,
+        "topHitRef": "Exodus 31:13#2"
+      },
+      {
+        "query": "umashah'ta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": 59,
+        "tie": 1,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "umashahta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": 59,
+        "tie": 1,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "lo hamor ehad mehem nasati",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 16,
+          "v": 15,
+          "i": 3
+        },
+        "rank": 44,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 29:3#2"
+      },
+      {
+        "query": "vayyasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vayasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vehayah al misho tamid",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 28,
+          "v": 38,
+          "i": 3
+        },
+        "rank": 20,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:14#2"
+      },
+      {
+        "query": "osochoh",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 35,
+          "i": 2
+        },
+        "rank": 7,
+        "tie": 1,
+        "topHitRef": "Genesis 11:29#1"
+      },
+      {
+        "query": "vehorashtem et ha'ares",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 6,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "vehorashtem et hares",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 6,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "soviv",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 5,
+        "tie": 2,
+        "topHitRef": "Genesis 18:1#3"
+      },
+      {
+        "query": "hamishshah me'ah ume'ah mikkem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      },
+      {
+        "query": "hamishshah meah umeah mikem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      },
+      {
+        "query": "saviv",
+        "style": "000_simple_sefardi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 3,
+        "tie": 2,
+        "topHitRef": "Exodus 15:4#3"
+      },
+      {
+        "query": "ve'attoh",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 19,
+          "v": 5,
+          "i": 1
+        },
+        "rank": 3,
+        "tie": 1,
+        "topHitRef": "Numbers 2:2#1"
+      }
+    ]
+  },
+  {
+    "label": "A: coverWeight=60 fullFieldBonus=0",
+    "exp": {
+      "coverWeight": 60,
+      "fullFieldBonus": 0,
+      "refineWeightLatin": 10
+    },
+    "rank": {
+      "bin": 0
+    },
+    "main": {
+      "top1": "82.5%",
+      "top1tied": "84.3%",
+      "top3": "93.1%",
+      "mrr": "0.893",
+      "miss": "0.5%"
+    },
+    "dh12": {
+      "top1": "70.2%",
+      "top3": "93.0%",
+      "n": 57
+    },
+    "partial": {
+      "top1": "40.0%",
+      "top3": "50.0%",
+      "mrr": "0.480"
+    },
+    "worst": [
+      {
+        "query": "et hassippor hahayyah yikkah otah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 6,
+          "i": 1
+        },
+        "rank": "MISS",
+        "tie": 0,
+        "topHitRef": "Exodus 31:13#2"
+      },
+      {
+        "query": "umashah'ta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": 59,
+        "tie": 1,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "umashahta oto",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 7,
+          "i": 1
+        },
+        "rank": 59,
+        "tie": 1,
+        "topHitRef": "Exodus 2:10#1"
+      },
+      {
+        "query": "lo hamor ehad mehem nasati",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 16,
+          "v": 15,
+          "i": 3
+        },
+        "rank": 44,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 29:3#2"
+      },
+      {
+        "query": "vayyasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vayasar oto baheret",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 32,
+          "v": 4,
+          "i": 1
+        },
+        "rank": 31,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:18#3"
+      },
+      {
+        "query": "vehayah al misho tamid",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 28,
+          "v": 38,
+          "i": 3
+        },
+        "rank": 20,
+        "tie": 1,
+        "topHitRef": "Deuteronomy 21:14#2"
+      },
+      {
+        "query": "osochoh",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 29,
+          "v": 35,
+          "i": 2
+        },
+        "rank": 7,
+        "tie": 1,
+        "topHitRef": "Genesis 11:29#1"
+      },
+      {
+        "query": "vehorashtem et ha'ares",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 7,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "vehorashtem et hares",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Numbers",
+          "c": 33,
+          "v": 53,
+          "i": 1
+        },
+        "rank": 7,
+        "tie": 1,
+        "topHitRef": "Leviticus 19:2#2"
+      },
+      {
+        "query": "soviv",
+        "style": "010_simple_ashkenazi",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 14,
+          "v": 41,
+          "i": 3
+        },
+        "rank": 5,
+        "tie": 2,
+        "topHitRef": "Genesis 18:1#3"
+      },
+      {
+        "query": "lo tese keset ha'avadim",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Exodus",
+          "c": 21,
+          "v": 7,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Leviticus 16:6#1"
+      },
+      {
+        "query": "lo tese keset havadim",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Exodus",
+          "c": 21,
+          "v": 7,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Leviticus 16:6#1"
+      },
+      {
+        "query": "hamishshah me'ah ume'ah mikkem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "clean",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      },
+      {
+        "query": "hamishshah meah umeah mikem revavah",
+        "style": "075_artscroll_sephardic",
+        "variant": "sloppy",
+        "expected": {
+          "b": "Leviticus",
+          "c": 26,
+          "v": 8,
+          "i": 2
+        },
+        "rank": 4,
+        "tie": 1,
+        "topHitRef": "Exodus 18:13#2"
+      }
+    ]
+  }
+]

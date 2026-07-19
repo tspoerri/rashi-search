@@ -1,0 +1,282 @@
+[
+  {
+    "id": "Deuteronomy.34.1.1__075_artscroll_sephardic__partial",
+    "query": "me'arvot mo'av",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 34,
+      "v": 1,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 24
+  },
+  {
+    "id": "Exodus.12.47.1__075_artscroll_sephardic__partial",
+    "query": "kol adat",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Exodus",
+      "c": 12,
+      "v": 47,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 6
+  },
+  {
+    "id": "Leviticus.24.11.2__075_artscroll_sephardic__partial",
+    "query": "veshem immo",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Leviticus",
+      "c": 24,
+      "v": 11,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 10
+  },
+  {
+    "id": "Deuteronomy.29.12.1__075_artscroll_sephardic__partial",
+    "query": "lema'an hakim",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 29,
+      "v": 12,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 5
+  },
+  {
+    "id": "Leviticus.16.6.1__075_artscroll_sephardic__partial",
+    "query": "et par",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Leviticus",
+      "c": 16,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 9
+  },
+  {
+    "id": "Exodus.17.5.3__075_artscroll_sephardic__partial",
+    "query": "umattecha asher",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Exodus",
+      "c": 17,
+      "v": 5,
+      "i": 3
+    },
+    "dhWords": 6,
+    "lk": 6
+  },
+  {
+    "id": "Numbers.16.15.3__075_artscroll_sephardic__partial",
+    "query": "lo hamor",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Numbers",
+      "c": 16,
+      "v": 15,
+      "i": 3
+    },
+    "dhWords": 5,
+    "lk": 13
+  },
+  {
+    "id": "Deuteronomy.11.21.1__075_artscroll_sephardic__partial",
+    "query": "lema'an yirbu",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 11,
+      "v": 21,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 3
+  },
+  {
+    "id": "Numbers.23.8.1__075_artscroll_sephardic__partial",
+    "query": "mah ekkov",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Numbers",
+      "c": 23,
+      "v": 8,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 14
+  },
+  {
+    "id": "Exodus.26.4.3__075_artscroll_sephardic__partial",
+    "query": "vechen ta'aseh",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Exodus",
+      "c": 26,
+      "v": 4,
+      "i": 3
+    },
+    "dhWords": 7,
+    "lk": 1
+  },
+  {
+    "id": "Leviticus.26.8.2__075_artscroll_sephardic__partial",
+    "query": "hamishshah me'ah",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Leviticus",
+      "c": 26,
+      "v": 8,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 17
+  },
+  {
+    "id": "Deuteronomy.12.2.2__075_artscroll_sephardic__partial",
+    "query": "et kol",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 12,
+      "v": 2,
+      "i": 2
+    },
+    "dhWords": 6,
+    "lk": 6
+  },
+  {
+    "id": "Numbers.33.49.1__075_artscroll_sephardic__partial",
+    "query": "mibbet hayeshimot",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Numbers",
+      "c": 33,
+      "v": 49,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 5
+  },
+  {
+    "id": "Exodus.21.8.4__075_artscroll_sephardic__partial",
+    "query": "le'am nochri",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Exodus",
+      "c": 21,
+      "v": 8,
+      "i": 4
+    },
+    "dhWords": 5,
+    "lk": 11
+  },
+  {
+    "id": "Genesis.48.19.2__075_artscroll_sephardic__partial",
+    "query": "gam hu",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Genesis",
+      "c": 48,
+      "v": 19,
+      "i": 2
+    },
+    "dhWords": 7,
+    "lk": 5
+  },
+  {
+    "id": "Genesis.23.13.2__075_artscroll_sephardic__partial",
+    "query": "ach im",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Genesis",
+      "c": 23,
+      "v": 13,
+      "i": 2
+    },
+    "dhWords": 5,
+    "lk": 3
+  },
+  {
+    "id": "Deuteronomy.16.4.1__075_artscroll_sephardic__partial",
+    "query": "velo yalin",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 16,
+      "v": 4,
+      "i": 1
+    },
+    "dhWords": 10,
+    "lk": 17
+  },
+  {
+    "id": "Exodus.34.7.5__075_artscroll_sephardic__partial",
+    "query": "poked avon",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Exodus",
+      "c": 34,
+      "v": 7,
+      "i": 5
+    },
+    "dhWords": 5,
+    "lk": 6
+  },
+  {
+    "id": "Leviticus.14.6.1__075_artscroll_sephardic__partial",
+    "query": "et hassippor",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Leviticus",
+      "c": 14,
+      "v": 6,
+      "i": 1
+    },
+    "dhWords": 5,
+    "lk": 11
+  },
+  {
+    "id": "Deuteronomy.22.5.1__075_artscroll_sephardic__partial",
+    "query": "lo yih'yeh",
+    "style": "075_artscroll_sephardic",
+    "variant": "partial",
+    "expected": {
+      "b": "Deuteronomy",
+      "c": 22,
+      "v": 5,
+      "i": 1
+    },
+    "dhWords": 6,
+    "lk": 6
+  }
+]

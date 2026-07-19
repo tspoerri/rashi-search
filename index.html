@@ -273,12 +273,18 @@ fetch("data/rashi.json").then(r => r.json()).then(data => {
   for (const b of BOOKS) selS.add(new Option(b.he, b.en));
   fillParshas("");
   buildAliases();
+  // Winning chipus v3 ranking opts from the 2026-07-19 sweep (see chipus
+  // DESIGN-v3.md "Sweep results"): coverageWeight=20, refineWeightLatin=40.
+  // Overridable via globalThis.CHIPUS_OPTS so the eval/sweep harness can
+  // test other configs without editing this file.
+  const CHIPUS_OPTS = globalThis.CHIPUS_OPTS || { coverageWeight: 20, refineWeightLatin: 40 };
   chipusIndex = new ChipusIndex({
     fields: [
       { name: "dh", weight: 3 },
       { name: "t", weight: 1 },
       { name: "vt", weight: 1 },
     ],
+    ...CHIPUS_OPTS,
   });
   chipusIndex.add(DB);
   DOC_INDEX = new Map();
@@ -306,9 +312,14 @@ fetch("data/rashi.json").then(r => r.json()).then(data => {
   }
 })();
 
+// Sized below the vowel-evidence quantum: chipus separates exact skeleton-
+// mates (e.g. "saviv" → סביב vs יסף, both key SB) by ~10+ pts of refined-
+// similarity + coverage; weekBoost must break true ties without letting a
+// current-parsha skeleton-mate leapfrog a vowel-perfect match. (Was 40/20,
+// which outvoted the evidence — see DESIGN-v3 D3 postscript.)
 function weekBoost(r) {
-  if (WEEK.cur.has(r.p)) return 40;
-  if (WEEK.adj.has(r.p)) return 20;
+  if (WEEK.cur.has(r.p)) return 8;
+  if (WEEK.adj.has(r.p)) return 4;
   return 0;
 }
 function popBoost(r) {
