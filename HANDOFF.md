@@ -1,24 +1,20 @@
 # HANDOFF — rashi-search (updated 2026-07-19)
 
-**Next action:** Either (a) re-vendor `lib/chipus/` when chipus v2 lands (see ../chipus/HANDOFF.md), or (b) start M1 of STRATEGY.md (corpus-config refactor, no behavior change) — order flexible, but land M1 against whichever chipus is current.
-
-## Expansion strategy (2026-07-19)
-- STRATEGY.md written: full plan for extending to all of Rashi (Nach = small lift, same vocalized edition; Shas = ~100K comments, needs schema v2 + sharded lazy loading + Sefaria-Export bulk build; skip responsa/Siddur). Milestones M1–M5, each shippable.
-- Before building: verify "Sefaria vocalized edition" license (unknown — repo bundles it), raw comment counts, BB 29a/Makkot 19b authorship transitions in Sefaria data.
+**Next action:** Profile and fix the chipus v2 search-latency regression (~0.7–1.4 s/query, was 1.4–34 ms on v0.1) — suspect the refine pass × `search(q, {limit: DB.length})`; then run the calibration session with `node scripts/sample-rashis.mjs 10 --seed 1 --spread`.
 
 ## Current state
-- Pushed to GitHub (private): https://github.com/tspoerri/rashi-search
-- Fuzzy alias matching committed (02316b7): typo'd book/parsha names ("toldois", "lech lecho", "noahc") resolve as filters via boundedEditDistance fallback in smartParse; ambiguous ties fall through to free text; Hebrew paths byte-for-byte unchanged. Verified with Node script, 7/7 cases pass.
-- v2 committed on `main` (017dcd7): smart search + fields keyword box run on vendored chipus v0.1 (`lib/chipus/`, copied from `../chipus/src` — re-copy to pick up upstream changes, never edit in place).
-- Transliterated queries work: "bereishis", "toldos", "chayei sara" resolve as parsha filters via folded-key alias maps; "lech lecha 12" adds perek filter; "בראשית א א" exact-pins; typos ("berelshit") fall through to chipus fuzzy free-text and still surface Gen 1:1.
-- Verified live in browser 2026-07-18: 7 query classes, all correct, 1.4–34 ms steady state (one ~55 ms cold-cache outlier); no console errors. Index build over 7,816 records ~1.5 s at load.
-- Highlighting for translit-only matches is a no-op by design (chipus `matches` carries field+wordIndex if precise highlighting is ever wanted).
-- `.claude/launch.json` here AND in `~/Documents/Projects/.claude/launch.json` (preview_start reads the latter when the session cwd is Projects/): must use `sh -c "cd … && exec /opt/homebrew/bin/python3 -m http.server 8641"` — Xcode's python fails on `os.getcwd()` under TCC.
+- All committed and pushed (main = 5f77bf4): https://github.com/tspoerri/rashi-search — clean tree.
+- `lib/chipus/` is now a **git submodule** of https://github.com/tspoerri/chipus (chipus v2, vowel-aware ranking). Edit in place → commit/push inside `lib/chipus` → commit the pointer bump here. Pages workflow checks out submodules. Import path: `./lib/chipus/src/index.js`.
+- Alias-guard tiers landed (42cbe2e): AMBIG sentinel on colliding alias keys, ≥3-char min on exact translit lookups, soft capture with corpus-agreement check (`resolveSoft`). "vhabor rek ein bo" → Gen 37:24 first; regression cases ("toldos", "lech lecha", "bereishis 12", typo "toldois") pass. Verified in Node harness + live browser.
+- **Latency regression** (task chip task_eb21f8f4): steady-state queries ~689–1391 ms on chipus v2 (Hebrew control "ויאמר משה" = 1391 ms, on a path untouched by the alias work). Was 1.4–34 ms on v0.1.
+- Known bug (task chip task_ac5aa2c6, pre-existing from 02316b7): "noach teiva" fuzzy 2-word alias false-positives to Ki Tavo and eats the query (kw empty → resolveSoft guard skips).
+- `scripts/sample-rashis.mjs` ready for calibration: prints random Rashis (`--spread` stratifies by popularity) with transliteration prompts; Tamar's transliterations become test queries to tune params (e.g. popBoost, now capped at 50).
+- STRATEGY.md: Nach + Shas expansion plan (M1–M5), plus Sefaria hosted-search note (5f77bf4).
+- Test harness pattern (not in repo, rebuildable): extract inline module script from index.html, rewrite chipus import to absolute file path, stub DOM, load data/rashi.json, exercise smartParse/resolveSoft/search directly.
 
 ## Open questions
-- Repo is private (bundles Sefaria Rashi text) — flip with `gh repo edit --visibility public` if desired.
+- Repo is private (bundles Sefaria Rashi text) — flip public? Also verify vocalized-edition license before Nach expansion.
 - Precise `<mark>` highlighting for translit matches — worth the complexity?
-- Extend keyword search to Onkelos / other meforshim? (carried from v1)
 
 ## Resume command
 ```sh
