@@ -150,14 +150,22 @@ const BOOK_ALIAS = new Map();     // folded key -> book {en, he}
 const PARSHA_ALIAS1 = new Map();  // folded key -> parsha {en, he, book} (single-word names)
 const PARSHA_ALIAS2 = new Map();  // "key1|key2" -> parsha (two-word names, e.g. "lech lecha")
 
+// A folded key claimed by two different books/parshas identifies nothing —
+// mirrors fuzzyAlias's ambiguity-tie rule below, but at registration time.
+const AMBIG = Symbol("ambiguous-alias");
+function aliasSet(map, key, val) {
+  const cur = map.get(key);
+  map.set(key, cur === undefined || cur === val ? val : AMBIG);
+}
+
 // Build Latin/Hebrew alias maps for book & parsha names so transliterated
 // queries ("lech lecha", "toldos", "bereishis") resolve in smartParse.
 function registerParshaAliases(words, p) {
   if (words.length === 1) {
-    for (const k of foldToken(words[0])) PARSHA_ALIAS1.set(k, p);
+    for (const k of foldToken(words[0])) aliasSet(PARSHA_ALIAS1, k, p);
   } else if (words.length === 2) {
     for (const k1 of foldToken(words[0])) {
-      for (const k2 of foldToken(words[1])) PARSHA_ALIAS2.set(k1 + "|" + k2, p);
+      for (const k2 of foldToken(words[1])) aliasSet(PARSHA_ALIAS2, k1 + "|" + k2, p);
     }
   }
 }
@@ -173,16 +181,16 @@ function fuzzyAlias(map, keyCandidates) {
     for (const [key, val] of map) {
       const d = boundedEditDistance(cand, key, maxD);
       if (d === Infinity) continue;
-      if (d < bestD) { bestD = d; bestVal = val; ambiguous = false; }
-      else if (d === bestD && val !== bestVal) ambiguous = true;
+      if (d < bestD) { bestD = d; bestVal = val === AMBIG ? null : val; ambiguous = val === AMBIG; }
+      else if (d === bestD && (val === AMBIG || val !== bestVal)) ambiguous = true;
     }
   }
   return ambiguous ? null : bestVal;
 }
 function buildAliases() {
   for (const b of BOOKS) {
-    for (const k of foldToken(b.he)) BOOK_ALIAS.set(k, b);
-    for (const w of tokenize(b.en)) for (const k of foldToken(w)) BOOK_ALIAS.set(k, b);
+    for (const k of foldToken(b.he)) aliasSet(BOOK_ALIAS, k, b);
+    for (const w of tokenize(b.en)) for (const k of foldToken(w)) aliasSet(BOOK_ALIAS, k, b);
   }
   for (const p of PARSHAS) {
     registerParshaAliases(tokenize(p.he), p);
@@ -412,7 +420,7 @@ function smartParse(raw) {
       outer: for (const k1 of foldToken(tok)) {
         for (const k2 of foldToken(toks[i + 1])) {
           const hit = PARSHA_ALIAS2.get(k1 + "|" + k2);
-          if (hit) { found = hit; break outer; }
+          if (hit && hit !== AMBIG) { found = hit; break outer; }
         }
       }
       if (!found) {
@@ -420,7 +428,10 @@ function smartParse(raw) {
         for (const k1 of foldToken(tok)) for (const k2 of foldToken(toks[i + 1])) cands.push(k1 + "|" + k2);
         found = fuzzyAlias(PARSHA_ALIAS2, cands);
       }
-      if (found) { q.parsha = found.en; q.book = found.book; i += 2; continue; }
+      if (found) {
+        (q._softToks ||= []).push(tok, toks[i + 1]);
+        q.parsha = found.en; q.book = found.book; i += 2; continue;
+      }
     }
     if (tok === "פרשת" && toks[i + 1]) {
       const pn = PARSHAS.find(p => normalize(p.he) === toks[i + 1] ||
@@ -436,18 +447,29 @@ function smartParse(raw) {
     // book falls through to the parsha check below since it's a parsha name)
     if (!q.book && !q.parsha && isLatin && i === 0) {
       let found = null;
-      for (const k of foldToken(tok)) { found = BOOK_ALIAS.get(k); if (found) break; }
+      for (const k of foldToken(tok)) {
+        if (k.length < 3) continue;
+        const hit = BOOK_ALIAS.get(k);
+        if (hit && hit !== AMBIG) { found = hit; break; }
+      }
       if (!found) found = fuzzyAlias(BOOK_ALIAS, foldToken(tok));
-      if (found) { q.book = found.en; i++; continue; }
+      if (found) { (q._softToks ||= []).push(tok); q.book = found.en; i++; continue; }
     }
     const p1 = PARSHAS.find(p => normalize(p.he) === tok);
     if (!q.parsha && !q.book && p1 && i === 0) { q.parsha = p1.en; q.book = p1.book; i++; continue; }
     // transliterated single-word parsha name ("noach", "toldos", "bereishis")
     if (!q.parsha && !q.book && isLatin && i === 0) {
       let found = null;
-      for (const k of foldToken(tok)) { found = PARSHA_ALIAS1.get(k); if (found) break; }
+      for (const k of foldToken(tok)) {
+        if (k.length < 3) continue;
+        const hit = PARSHA_ALIAS1.get(k);
+        if (hit && hit !== AMBIG) { found = hit; break; }
+      }
       if (!found) found = fuzzyAlias(PARSHA_ALIAS1, foldToken(tok));
-      if (found) { q.parsha = found.en; q.book = found.book; i++; continue; }
+      if (found) {
+        (q._softToks ||= []).push(tok);
+        q.parsha = found.en; q.book = found.book; i++; continue;
+      }
     }
     const n = parseHebNum(tok);
     if (n !== null && nums.length < 2 && (q.book || q.parsha || nums.length === 1)) {
@@ -461,6 +483,21 @@ function smartParse(raw) {
   // with phrase-level dibbur boosts applied in search()
   q.kw = rest.join(" ");
   return q;
+}
+
+// A transliterated filter capture is only a hypothesis: rerun the full
+// query as free text and keep the filter only if the corpus agrees
+// (top unfiltered hit falls inside the captured scope).
+function resolveSoft(q) {
+  if (!q._softToks || !q.kw || q.perek || q.passuk) return q;
+  const alt = { book: "", parsha: "", perek: 0, passuk: 0, dh: "",
+                kw: q._softToks.join(" ") + " " + q.kw };
+  const altHits = search(alt);
+  if (!altHits.length) return q;
+  const top = DB[altHits[0].i];
+  if (q.parsha ? top.p === q.parsha : top.b === q.book) return q;
+  alt._softHits = altHits;
+  return alt;
 }
 
 /* ---------- rendering ---------- */
@@ -574,7 +611,7 @@ let currentToks = [];
 function runSearch() {
   let q;
   if (mode === "smart") {
-    q = smartParse(document.getElementById("f-smart").value);
+    q = resolveSoft(smartParse(document.getElementById("f-smart").value));
   } else {
     q = {
       book: document.getElementById("f-sefer").value,
@@ -592,7 +629,7 @@ function runSearch() {
   }
   currentToks = (q.dh + " " + q.kw).split(" ").filter(Boolean);
   const t0 = performance.now();
-  const hits = search(q);
+  const hits = q._softHits || search(q);
   renderResults(hits, currentToks);
   document.getElementById("count").textContent =
     hits.length + " results · " + (performance.now() - t0).toFixed(1) + " ms";
