@@ -42,7 +42,6 @@ input, select {
   font: inherit; padding: .45rem .6rem; border: 1px solid var(--border);
   border-radius: 8px; background: var(--panel); color: var(--ink);
 }
-input.he { dir: auto; }
 input:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
 #f-dh { width: 13.5rem; } #f-kw { width: 13.5rem; }
 #f-perek, #f-passuk { width: 4.6rem; }
@@ -110,20 +109,20 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 <div id="controls">
   <div class="fields" id="fieldbar">
     <div class="field"><label for="f-dh">Dibbur hamatchil</label>
-      <input id="f-dh" class="he" placeholder="ויאמר"></div>
+      <input id="f-dh" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="ויאמר"></div>
     <div class="field"><label for="f-sefer">Sefer</label>
       <select id="f-sefer"><option value="">All</option></select></div>
     <div class="field"><label for="f-parsha">Parsha</label>
       <select id="f-parsha"><option value="">All</option></select></div>
     <div class="field"><label for="f-perek">Perek</label>
-      <input id="f-perek" class="he" placeholder="ג / 3"></div>
+      <input id="f-perek" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false"  placeholder="ג / 3"></div>
     <div class="field"><label for="f-passuk">Passuk</label>
-      <input id="f-passuk" class="he" placeholder="יד / 14"></div>
+      <input id="f-passuk" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false"  placeholder="יד / 14"></div>
     <div class="field"><label for="f-kw">Keywords</label>
-      <input id="f-kw" class="he" placeholder="in the Rashi text"></div>
+      <input id="f-kw" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false"  placeholder="in the Rashi text"></div>
   </div>
   <div id="smartbar">
-    <input id="f-smart" class="he" placeholder="בראשית ג יד עפר תאכל">
+    <input id="f-smart" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false"  placeholder="בראשית ג יד עפר תאכל">
     <div class="hint">Combine sefer, parsha, perek and passuk (Hebrew letters or numbers) with words from the dibbur hamatchil or the Rashi text — in any order.</div>
   </div>
 </div>
