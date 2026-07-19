@@ -131,8 +131,10 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 <div id="results"><div id="empty">Type to search.</div></div>
 </div>
 
-<script>
+<script type="module">
 "use strict";
+import { ChipusIndex, foldToken, tokenize } from "./lib/chipus/index.js";
+
 let DB = [];          // records
 let NORM = [];        // normalized {dh, t, vt} + skeleton per record
 let openHit = -1;
@@ -141,6 +143,34 @@ const WEEK = { cur: new Set(), adj: new Set() };  // this week's / adjacent pars
 
 const BOOKS = [];     // [{en, he}]
 const PARSHAS = [];   // [{en, he, book}]
+
+let chipusIndex = null;
+let DOC_INDEX = null;             // Map<doc, i> — maps chipus result docs back to DB index
+const BOOK_ALIAS = new Map();     // folded key -> book {en, he}
+const PARSHA_ALIAS1 = new Map();  // folded key -> parsha {en, he, book} (single-word names)
+const PARSHA_ALIAS2 = new Map();  // "key1|key2" -> parsha (two-word names, e.g. "lech lecha")
+
+// Build Latin/Hebrew alias maps for book & parsha names so transliterated
+// queries ("lech lecha", "toldos", "bereishis") resolve in smartParse.
+function registerParshaAliases(words, p) {
+  if (words.length === 1) {
+    for (const k of foldToken(words[0])) PARSHA_ALIAS1.set(k, p);
+  } else if (words.length === 2) {
+    for (const k1 of foldToken(words[0])) {
+      for (const k2 of foldToken(words[1])) PARSHA_ALIAS2.set(k1 + "|" + k2, p);
+    }
+  }
+}
+function buildAliases() {
+  for (const b of BOOKS) {
+    for (const k of foldToken(b.he)) BOOK_ALIAS.set(k, b);
+    for (const w of tokenize(b.en)) for (const k of foldToken(w)) BOOK_ALIAS.set(k, b);
+  }
+  for (const p of PARSHAS) {
+    registerParshaAliases(tokenize(p.he), p);
+    registerParshaAliases(tokenize(p.en), p);
+  }
+}
 
 /* ---------- Hebrew utilities ---------- */
 const NIKUD_RE = /[֑-ֽֿ-ׇ]/g;   // taamim+nikud, keep maqaf
@@ -216,6 +246,17 @@ fetch("data/rashi.json").then(r => r.json()).then(data => {
   const selS = document.getElementById("f-sefer");
   for (const b of BOOKS) selS.add(new Option(b.he, b.en));
   fillParshas("");
+  buildAliases();
+  chipusIndex = new ChipusIndex({
+    fields: [
+      { name: "dh", weight: 3 },
+      { name: "t", weight: 1 },
+      { name: "vt", weight: 1 },
+    ],
+  });
+  chipusIndex.add(DB);
+  DOC_INDEX = new Map();
+  DB.forEach((d, i) => DOC_INDEX.set(d, i));
   document.getElementById("count").textContent =
     DB.length.toLocaleString("en") + " Rashis · indexed in " + Math.round(performance.now() - t0) + " ms";
   runSearch();
@@ -271,10 +312,22 @@ function wordMatch(hay, tok) {
 function search(q) {
   // q: {book, parsha, perek, passuk, dh, kw} — dh/kw normalized strings
   const dhToks = q.dh ? q.dh.split(" ") : [];
-  const kwToks = q.kw ? q.kw.split(" ") : [];
-  const dhS = skel(q.dh || ""), kwS = skel(q.kw || "");
-  const kwPairs = kwToks.map(t => [t, skel(t)]);
+  const dhS = skel(q.dh || "");
   const hits = [];
+
+  // Free-text (kw) scoring is delegated to chipus: it handles Hebrew,
+  // transliteration, and typo tolerance in one pass across dh/t/vt.
+  // Run the query once, then map results back to DB indices for the
+  // per-record filter loop below.
+  let chipusHits = null;
+  if (q.kw && chipusIndex) {
+    chipusHits = new Map();
+    for (const res of chipusIndex.search(q.kw, { limit: DB.length })) {
+      const idx = DOC_INDEX.get(res.doc);
+      if (idx !== undefined) chipusHits.set(idx, res);
+    }
+  }
+
   for (let i = 0; i < DB.length; i++) {
     const r = DB[i], n = NORM[i];
     if (q.book && r.b !== q.book) continue;
@@ -302,37 +355,19 @@ function search(q) {
         if (all) score += 100;
       }
     }
-    if (kwToks.length) {
-      // phrase-level boost against the dibbur hamatchil
-      if (n.dh === q.kw) score += 1000;
-      else if (n.dh.startsWith(q.kw)) score += 600;
-      else if (n.dh.includes(q.kw)) score += 400;
-      else if (n.dhS === kwS) score += 800;          // ktiv-insensitive
-      else if (n.dhS.startsWith(kwS)) score += 450;
-      else if (n.dhS.includes(kwS)) score += 300;
-      let matched = 0;
-      if (kwToks.length > 1) {  // whole phrase inside body or verse
-        if (n.t.includes(q.kw)) { score += 300; matched++; }
-        else if (n.tS.includes(kwS)) { score += 250; matched++; }
-        if (n.vt.includes(q.kw)) { score += 200; matched++; }
-        else if (n.vtS.includes(kwS)) { score += 150; matched++; }
-      }
-      for (const [t, tS] of kwPairs) {
-        const inDh = wordMatch(n.dh, t) !== -1 || wordMatch(n.dhS, tS) !== -1;
-        const inT = wordMatch(n.t, t) !== -1 || n.t.includes(t);
-        const inV = wordMatch(n.vt, t) !== -1 || wordMatch(n.vtS, tS) !== -1;
-        if (inDh) { score += 60; matched++; }
-        if (inT) { score += 30; matched++; }
-        else if (inV) { score += 15; matched++; }
-      }
-      // an exact perek:passuk pin keeps that passuk's Rashis visible
-      // even when the free-text terms only appear in the verse or nowhere
-      if (!matched) {
-        if (q.perek && q.passuk) score = Math.max(score, 1);
-        else continue;
+    if (q.kw) {
+      const hit = chipusHits && chipusHits.get(i);
+      if (hit) {
+        score += hit.score;
+      } else if (q.perek && q.passuk) {
+        // exact perek:passuk pin keeps that passuk's Rashis visible
+        // even when the free-text terms match nothing
+        score = Math.max(score, 1);
+      } else {
+        continue;
       }
     }
-    if (!dhToks.length && !kwToks.length) score = 1;  // pure filter browse
+    if (!dhToks.length && !q.kw) score = 1;  // pure filter browse
     if (score > 0) hits.push({ i, score: score + weekBoost(r) + popBoost(r) });
   }
   hits.sort((a, b) => b.score - a.score || a.i - b.i);
@@ -349,9 +384,21 @@ function smartParse(raw) {
   while (i < toks.length) {
     const tok = toks[i];
     const two = toks[i + 1] !== undefined ? tok + " " + toks[i + 1] : null;
+    const isLatin = /[a-z]/i.test(tok);
     // parsha (2-word names first: לך לך, חיי שרה, כי תשא…)
     const p2 = two && PARSHAS.find(p => normalize(p.he) === two);
     if (!q.parsha && p2) { q.parsha = p2.en; q.book = p2.book; i += 2; continue; }
+    // transliterated 2-word parsha names ("lech lecha", "chayei sara")
+    if (!q.parsha && !q.book && isLatin && toks[i + 1] !== undefined) {
+      let found = null;
+      outer: for (const k1 of foldToken(tok)) {
+        for (const k2 of foldToken(toks[i + 1])) {
+          const hit = PARSHA_ALIAS2.get(k1 + "|" + k2);
+          if (hit) { found = hit; break outer; }
+        }
+      }
+      if (found) { q.parsha = found.en; q.book = found.book; i += 2; continue; }
+    }
     if (tok === "פרשת" && toks[i + 1]) {
       const pn = PARSHAS.find(p => normalize(p.he) === toks[i + 1] ||
         (toks[i + 2] && normalize(p.he) === toks[i + 1] + " " + toks[i + 2]));
@@ -362,8 +409,21 @@ function smartParse(raw) {
     }
     const b = BOOKS.find(b => b.he === tok);
     if (!q.book && !q.parsha && b && i === 0) { q.book = b.en; i++; continue; }
+    // transliterated book name at the start of the query ("bereishis" as a
+    // book falls through to the parsha check below since it's a parsha name)
+    if (!q.book && !q.parsha && isLatin && i === 0) {
+      let found = null;
+      for (const k of foldToken(tok)) { found = BOOK_ALIAS.get(k); if (found) break; }
+      if (found) { q.book = found.en; i++; continue; }
+    }
     const p1 = PARSHAS.find(p => normalize(p.he) === tok);
     if (!q.parsha && !q.book && p1 && i === 0) { q.parsha = p1.en; q.book = p1.book; i++; continue; }
+    // transliterated single-word parsha name ("noach", "toldos", "bereishis")
+    if (!q.parsha && !q.book && isLatin && i === 0) {
+      let found = null;
+      for (const k of foldToken(tok)) { found = PARSHA_ALIAS1.get(k); if (found) break; }
+      if (found) { q.parsha = found.en; q.book = found.book; i++; continue; }
+    }
     const n = parseHebNum(tok);
     if (n !== null && nums.length < 2 && (q.book || q.parsha || nums.length === 1)) {
       nums.push(n); i++; continue;
