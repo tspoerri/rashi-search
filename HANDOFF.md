@@ -1,6 +1,10 @@
-# HANDOFF — rashi-search (updated 2026-07-18, evening)
+# HANDOFF — rashi-search (updated 2026-07-19)
 
-**Next action:** Re-vendor `lib/chipus/` from `../chipus` when chipus v2 (vowel-aware ranking) lands — see ../chipus/HANDOFF.md for that thread.
+**Next action:** Either (a) re-vendor `lib/chipus/` when chipus v2 lands (see ../chipus/HANDOFF.md), or (b) start M1 of STRATEGY.md (corpus-config refactor, no behavior change) — order flexible, but land M1 against whichever chipus is current.
+
+## Expansion strategy (2026-07-19)
+- STRATEGY.md written: full plan for extending to all of Rashi (Nach = small lift, same vocalized edition; Shas = ~100K comments, needs schema v2 + sharded lazy loading + Sefaria-Export bulk build; skip responsa/Siddur). Milestones M1–M5, each shippable.
+- Before building: verify "Sefaria vocalized edition" license (unknown — repo bundles it), raw comment counts, BB 29a/Makkot 19b authorship transitions in Sefaria data.
 
 ## Current state
 - Pushed to GitHub (private): https://github.com/tspoerri/rashi-search
