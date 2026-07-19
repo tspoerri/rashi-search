@@ -98,8 +98,8 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
   <h1>Rashi Search</h1>
   <span class="count" id="count">Loading…</span>
   <nav class="tabs">
-    <button id="tab-fields" class="active">Fields</button>
-    <button id="tab-smart">Smart search</button>
+    <button id="tab-fields">Fields</button>
+    <button id="tab-smart" class="active">Smart search</button>
     <span id="kbd-wrap">
       <button id="kbd-btn" title="Hebrew keyboard">⌨ עברית</button>
       <div id="kbd"></div>
@@ -138,7 +138,7 @@ import { ChipusIndex, foldToken, tokenize, boundedEditDistance } from "./lib/chi
 let DB = [];          // records
 let NORM = [];        // normalized {dh, t, vt} + skeleton per record
 let openHit = -1;
-let mode = "fields";
+let mode = "smart";
 const WEEK = { cur: new Set(), adj: new Set() };  // this week's / adjacent parshas
 
 const BOOKS = [];     // [{en, he}]
