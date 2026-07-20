@@ -3,3 +3,5 @@ data/
 
 .claude/*.local.md
 node_modules/
+data/bavli/rashi_bavli_*
+data/bavli/text_bavli_*

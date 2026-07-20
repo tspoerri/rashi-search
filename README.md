@@ -7,7 +7,7 @@ Lightning-fast local search over all 7,816 Rashis on Chumash.
 
 ```sh
 python3 build.py                 # one-time: downloads from Sefaria into data/ (cached)
-python3 -m http.server 8641      # then open http://localhost:8641/index.html
+python3 -m http.server 8641      # then open http://localhost:8641/ (landing → chumash.html / bavli.html)
 ```
 
 ## How it works
@@ -16,7 +16,7 @@ python3 -m http.server 8641      # then open http://localhost:8641/index.html
   parsha boundaries from Sefaria's API (raw responses cached in `data/`), splits
   each comment into dibbur hamaschil (Sefaria's `<b>` tag) and body, and writes
   `data/rashi.json` (~5 MB).
-- `index.html` is the whole app. It loads the JSON once, builds two in-memory
+- `chumash.html` is the whole Chumash app (`index.html` is a small landing page linking the two apps). It loads the JSON once, builds two in-memory
   indexes per record — nikud-stripped and a "skeleton" with ו/י removed (so
   ktiv male queries like מוקדם match the vocalized ktiv chaser מקדם) — and
   scores every record per keystroke (~10–50 ms).

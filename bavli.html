@@ -42,11 +42,10 @@ input, select {
   font: inherit; padding: .45rem .6rem; border: 1px solid var(--border);
   border-radius: 8px; background: var(--panel); color: var(--ink);
 }
-input.he { direction: rtl; }
 input:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
 #f-dh { width: 13.5rem; } #f-kw { width: 13.5rem; }
 #f-masechet { width: 9rem; } #f-daf { width: 5.5rem; } #f-amud { width: 5.5rem; }
-#smartbar { display: none; }
+#fieldbar { display: none; }
 #f-smart { width: 100%; font-size: 1.1rem; padding: .6rem .8rem; }
 .hint { font-size: .75rem; color: var(--muted); margin-top: .35rem; }
 
@@ -98,9 +97,10 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 <header>
   <h1>חיפוש רש"י על הש"ס</h1>
   <span class="count" id="count">Loading…</span>
+  <span class="count"><a href="./" style="color:var(--accent)">⌂</a> · <a href="chumash.html" style="color:var(--accent)">על התורה</a></span>
   <nav class="tabs">
-    <button id="tab-fields" class="active">Fields</button>
-    <button id="tab-smart">Smart search</button>
+    <button id="tab-fields">Fields</button>
+    <button id="tab-smart" class="active">Smart search</button>
     <span id="kbd-wrap">
       <button id="kbd-btn" title="Hebrew keyboard">⌨ עברית</button>
       <div id="kbd"></div>
@@ -111,19 +111,19 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 <div id="controls">
   <div class="fields" id="fieldbar">
     <div class="field"><label for="f-dh">ד"ה</label>
-      <input id="f-dh" class="he" placeholder="מאימתי"></div>
+      <input id="f-dh" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="מאימתי"></div>
     <div class="field"><label for="f-masechet">מסכת</label>
-      <input id="f-masechet" class="he" list="masechtos-list" placeholder="All"></div>
+      <input id="f-masechet" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" list="masechtos-list" placeholder="All"></div>
     <div class="field"><label for="f-daf">דף</label>
-      <input id="f-daf" class="he" placeholder="כא / 21"></div>
+      <input id="f-daf" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="כא / 21"></div>
     <div class="field"><label for="f-amud">עמוד</label>
       <select id="f-amud"><option value="">All</option><option value="1">א</option><option value="2">ב</option></select></div>
     <div class="field"><label for="f-kw">מילים</label>
-      <input id="f-kw" class="he" placeholder="in the Rashi text"></div>
+      <input id="f-kw" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="in the Rashi text"></div>
   </div>
   <datalist id="masechtos-list"></datalist>
   <div id="smartbar">
-    <input id="f-smart" class="he" placeholder="שבת כא עמוד ב נר חנוכה">
+    <input id="f-smart" dir="auto" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="שבת כא עמוד ב נר חנוכה">
     <div class="hint">Combine masechet, daf and amud (Hebrew letters or numbers) with words from the dibbur hamatchil or the Rashi text — in any order.</div>
   </div>
 </div>
@@ -138,7 +138,7 @@ import { ChipusIndex, foldToken, tokenize, boundedEditDistance } from "./lib/chi
 let DB = [];          // records
 let NORM = [];        // normalized {dh, t, vt} + skeleton per record
 let openHit = -1;
-let mode = "fields";
+let mode = "smart";
 const DAFYOMI = { tractate: "", daf: 0 };   // today's daf-yomi tractate+daf (no amud)
 
 const TRACTATES = [];  // [{en, he, note, noteFrom}] in canonical Shas order
