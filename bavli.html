@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rashi on Bavli Search</title>
+<style>
+:root {
+  --bg: #f7f5f0; --panel: #ffffff; --ink: #2b2620; --muted: #8a8074;
+  --accent: #7a5c2e; --accent-soft: #f0e8d8; --border: #e3ddd2;
+  --hl: #fdeec7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1a17; --panel: #26231f; --ink: #e8e2d8; --muted: #9a917f;
+    --accent: #d4b476; --accent-soft: #3a3223; --border: #3a362f;
+    --hl: #4a3d1e;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: "Frank Ruhl Libre", Georgia, "Times New Roman", "SBL Hebrew", serif;
+  font-size: 17px; line-height: 1.55;
+}
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.2rem 3rem; }
+header { padding: 1.1rem 0 .4rem; display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap; }
+header h1 { font-size: 1.45rem; color: var(--accent); font-weight: 700; }
+header .count { color: var(--muted); font-size: .82rem; }
+.tabs { margin-inline-start: auto; display: flex; gap: .4rem; }
+.tabs button, #kbd-btn {
+  font: inherit; font-size: .82rem; padding: .25rem .8rem; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel); color: var(--muted);
+  border-radius: 999px;
+}
+.tabs button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+#controls { padding: .4rem 0 .9rem; }
+.fields { display: flex; gap: .6rem; flex-wrap: wrap; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: .15rem; }
+.field label { font-size: .72rem; color: var(--muted); }
+input, select {
+  font: inherit; padding: .45rem .6rem; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--panel); color: var(--ink);
+}
+input.he { direction: rtl; }
+input:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+#f-dh { width: 13.5rem; } #f-kw { width: 13.5rem; }
+#f-masechet { width: 9rem; } #f-daf { width: 5.5rem; } #f-amud { width: 5.5rem; }
+#smartbar { display: none; }
+#f-smart { width: 100%; font-size: 1.1rem; padding: .6rem .8rem; }
+.hint { font-size: .75rem; color: var(--muted); margin-top: .35rem; }
+
+/* Hebrew keyboard dropdown */
+#kbd-wrap { position: relative; display: inline-block; }
+#kbd {
+  display: none; position: absolute; top: calc(100% + 6px); inset-inline-end: 0; z-index: 20;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: .6rem; box-shadow: 0 6px 24px rgba(0,0,0,.15); width: 21rem; max-width: 90vw;
+}
+#kbd.open { display: block; }
+#kbd .krow { display: flex; gap: .25rem; justify-content: center; margin-bottom: .25rem; direction: rtl; }
+#kbd button {
+  font: inherit; font-size: 1.05rem; min-width: 2rem; padding: .3rem 0; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink);
+}
+#kbd button:hover { background: var(--accent-soft); }
+#kbd button.wide { min-width: 5rem; font-size: .8rem; color: var(--muted); }
+
+#results { display: flex; flex-direction: column; gap: .45rem; }
+.hit {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .8rem; cursor: pointer;
+}
+.hit:hover { border-color: var(--accent); }
+.hit.open { border-color: var(--accent); cursor: default; }
+.hit .sum { direction: rtl; text-align: right; }
+.hit .dh { font-weight: 700; }
+.hit .ref { font-size: .78rem; color: var(--muted); }
+.hit .snip { font-size: .82rem; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.hit.open .snip { display: none; }
+mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px; }
+.exp { display: none; direction: rtl; text-align: right; margin-top: .6rem; border-top: 1px solid var(--border); padding-top: .7rem; }
+.hit.open .exp { display: block; }
+.exp .verse {
+  font-size: 1.12rem; background: var(--accent-soft); border-radius: 8px;
+  padding: .55rem .9rem; margin-bottom: .8rem;
+}
+.exp .rashi-dh { font-weight: 700; }
+.exp .rashi-text { margin-top: .25rem; white-space: pre-wrap; }
+.exp .note { margin-top: .6rem; font-size: .78rem; color: var(--muted); font-style: italic; }
+.exp .links { margin-top: .8rem; direction: ltr; text-align: left; font-size: .82rem; }
+.exp a { color: var(--accent); }
+#empty { color: var(--muted); padding: 1rem 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>חיפוש רש"י על הש"ס</h1>
+  <span class="count" id="count">Loading…</span>
+  <nav class="tabs">
+    <button id="tab-fields" class="active">Fields</button>
+    <button id="tab-smart">Smart search</button>
+    <span id="kbd-wrap">
+      <button id="kbd-btn" title="Hebrew keyboard">⌨ עברית</button>
+      <div id="kbd"></div>
+    </span>
+  </nav>
+</header>
+
+<div id="controls">
+  <div class="fields" id="fieldbar">
+    <div class="field"><label for="f-dh">ד"ה</label>
+      <input id="f-dh" class="he" placeholder="מאימתי"></div>
+    <div class="field"><label for="f-masechet">מסכת</label>
+      <input id="f-masechet" class="he" list="masechtos-list" placeholder="All"></div>
+    <div class="field"><label for="f-daf">דף</label>
+      <input id="f-daf" class="he" placeholder="כא / 21"></div>
+    <div class="field"><label for="f-amud">עמוד</label>
+      <select id="f-amud"><option value="">All</option><option value="1">א</option><option value="2">ב</option></select></div>
+    <div class="field"><label for="f-kw">מילים</label>
+      <input id="f-kw" class="he" placeholder="in the Rashi text"></div>
+  </div>
+  <datalist id="masechtos-list"></datalist>
+  <div id="smartbar">
+    <input id="f-smart" class="he" placeholder="שבת כא עמוד ב נר חנוכה">
+    <div class="hint">Combine masechet, daf and amud (Hebrew letters or numbers) with words from the dibbur hamatchil or the Rashi text — in any order.</div>
+  </div>
+</div>
+
+<div id="results"><div id="empty">Type to search.</div></div>
+</div>
+
+<script type="module">
+"use strict";
+import { ChipusIndex, foldToken, tokenize, boundedEditDistance } from "./lib/chipus/src/index.js";
+
+let DB = [];          // records
+let NORM = [];        // normalized {dh, t, vt} + skeleton per record
+let openHit = -1;
+let mode = "fields";
+const DAFYOMI = { tractate: "", daf: 0 };   // today's daf-yomi tractate+daf (no amud)
+
+const TRACTATES = [];  // [{en, he, note, noteFrom}] in canonical Shas order
+
+let chipusIndex = null;
+let DOC_INDEX = null;               // Map<doc, i> — maps chipus result docs back to DB index
+const TRACTATE_ALIAS1 = new Map();  // folded key -> tractate en (single-word names)
+const TRACTATE_ALIAS2 = new Map();  // "key1|key2" -> tractate en (two-word names, e.g. "bava kamma")
+
+// Ashkenazi/Sephardi/academic transliteration variants beyond the plain
+// English name (which is registered automatically for every tractate).
+const TRACTATE_ALIASES = {
+  "Berakhot": ["berachos", "brachos", "berakhot", "brachot"],
+  "Shabbat": ["shabbos", "shabbat"],
+  "Eruvin": ["eiruvin"],
+  "Pesachim": ["psachim"],
+  "Rosh Hashanah": ["rosh hashana"],
+  "Yoma": [],
+  "Sukkah": ["succah", "sukka"],
+  "Beitzah": ["beitza", "beitsa"],
+  "Taanit": ["taanis"],
+  "Megillah": ["megilla"],
+  "Moed Katan": ["moed kattan"],
+  "Chagigah": ["chagiga"],
+  "Yevamot": ["yevamos"],
+  "Ketubot": ["kesubos", "ksubos", "kesuvot", "kethuboth"],
+  "Nedarim": [],
+  "Nazir": [],
+  "Sotah": ["sota"],
+  "Gittin": [],
+  "Kiddushin": ["kidushin"],
+  "Bava Kamma": ["bava kama"],
+  "Bava Metzia": ["bava metziah"],
+  "Bava Batra": ["bava basra"],
+  "Sanhedrin": [],
+  "Makkot": ["makkos"],
+  "Shevuot": ["shevuos"],
+  "Avodah Zarah": ["avoda zara"],
+  "Horayot": ["horayos"],
+  "Zevachim": [],
+  "Menachot": ["menachos"],
+  "Chullin": ["chulin"],
+  "Bekhorot": ["bechoros"],
+  "Arakhin": ["arachin"],
+  "Temurah": [],
+  "Keritot": ["kerisos"],
+  "Meilah": [],
+  "Tamid": [],
+  "Niddah": ["nidda"],
+};
+
+// A folded key claimed by two different tractates identifies nothing —
+// mirrors fuzzyAlias's ambiguity-tie rule below, but at registration time.
+const AMBIG = Symbol("ambiguous-alias");
+function aliasSet(map, key, val) {
+  const cur = map.get(key);
+  map.set(key, cur === undefined || cur === val ? val : AMBIG);
+}
+
+function registerTractatePhrase(phrase, en) {
+  const words = phrase.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 1) {
+    for (const k of foldToken(words[0])) aliasSet(TRACTATE_ALIAS1, k, en);
+  } else if (words.length === 2) {
+    for (const k1 of foldToken(words[0])) {
+      for (const k2 of foldToken(words[1])) aliasSet(TRACTATE_ALIAS2, k1 + "|" + k2, en);
+    }
+  }
+}
+// Typo fallback for alias lookup: only called after an exact-key lookup misses.
+// Scans the map's folded keys for the closest match within a bounded edit
+// distance; a tie between two different tractates is treated as no match
+// (ambiguous) rather than guessed at.
+function fuzzyAlias(map, keyCandidates) {
+  let bestD = Infinity, bestVal = null, ambiguous = false;
+  for (const cand of keyCandidates) {
+    if (cand.length < 3) continue;
+    const maxD = cand.length >= 6 ? 2 : 1;
+    for (const [key, val] of map) {
+      const d = boundedEditDistance(cand, key, maxD);
+      if (d === Infinity) continue;
+      if (d < bestD) { bestD = d; bestVal = val === AMBIG ? null : val; ambiguous = val === AMBIG; }
+      else if (d === bestD && (val === AMBIG || val !== bestVal)) ambiguous = true;
+    }
+  }
+  return ambiguous ? null : bestVal;
+}
+function buildAliases() {
+  for (const tr of TRACTATES) {
+    const phrases = [tr.en, ...(TRACTATE_ALIASES[tr.en] || [])];
+    for (const ph of phrases) registerTractatePhrase(ph, tr.en);
+  }
+}
+
+/* ---------- Hebrew utilities ---------- */
+const NIKUD_RE = /[֑-ֽֿ-ׇ]/g;   // taamim+nikud, keep maqaf
+function normalize(s) {
+  return s.replace(/־/g, " ")
+          .replace(NIKUD_RE, "")
+          .replace(/[״"׳'.,:;!?()\[\]{}]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+}
+// ktiv-insensitive skeleton: drop ו/י so מוקדם matches מֻקְדָּם
+function skel(s) {
+  return s.replace(/[וי]/g, "").replace(/\s+/g, " ").trim();
+}
+// normalize but keep a map from normalized index -> display index
+function normalizeWithMap(s) {
+  let out = "", map = [];
+  let lastSpace = true;
+  for (let i = 0; i < s.length; i++) {
+    let ch = s[i];
+    if (ch === "־") ch = " ";
+    if (NIKUD_RE.test(ch)) { NIKUD_RE.lastIndex = 0; continue; }
+    NIKUD_RE.lastIndex = 0;
+    if (/[״"׳'.,:;!?()\[\]{}]/.test(ch)) continue;
+    if (/\s/.test(ch)) {
+      if (lastSpace) continue;
+      out += " "; map.push(i); lastSpace = true;
+    } else {
+      out += ch; map.push(i); lastSpace = false;
+    }
+  }
+  return { norm: out, map };
+}
+
+const GEM = {"א":1,"ב":2,"ג":3,"ד":4,"ה":5,"ו":6,"ז":7,"ח":8,"ט":9,"י":10,
+  "כ":20,"ך":20,"ל":30,"מ":40,"ם":40,"נ":50,"ן":50,"ס":60,"ע":70,"פ":80,"ף":80,
+  "צ":90,"ץ":90,"ק":100,"ר":200,"ש":300,"ת":400};
+function parseHebNum(tok) {
+  tok = tok.replace(/[״"׳']/g, "");
+  if (/^\d+$/.test(tok)) return parseInt(tok, 10);
+  if (!tok || tok.length > 3) return null;
+  let sum = 0, prev = Infinity;
+  for (const ch of tok) {
+    const v = GEM[ch];
+    if (!v || v > prev) return null;   // must be non-increasing (e.g. קכג)
+    sum += v; prev = v;
+  }
+  return sum >= 1 && sum <= 999 ? sum : null;
+}
+function toHebNum(n) {
+  const H = [[400,"ת"],[300,"ש"],[200,"ר"],[100,"ק"],[90,"צ"],[80,"פ"],[70,"ע"],
+    [60,"ס"],[50,"נ"],[40,"מ"],[30,"ל"],[20,"כ"],[10,"י"],[9,"ט"],[8,"ח"],[7,"ז"],
+    [6,"ו"],[5,"ה"],[4,"ד"],[3,"ג"],[2,"ב"],[1,"א"]];
+  let out = "";
+  for (const [v, ch] of H) {
+    while (n >= v) { out += ch; n -= v; }
+  }
+  return out.replace(/יה$/, "טו").replace(/יו$/, "טז");
+}
+
+/* ---------- load ---------- */
+function setCount(text) { document.getElementById("count").textContent = text; }
+
+async function loadAll() {
+  setCount("Loading manifest…");
+  const manifest = await (await fetch("data/bavli/manifest.json")).json();
+  const meta = manifest.tractates || [];
+  for (const t of meta) TRACTATES.push({ en: t.en, he: t.he, note: t.note || null, noteFrom: t.noteFrom || null });
+  buildAliases();
+  fillMasechtosDatalist();
+  fetchDafYomi();  // fire and forget; fails soft, no boost until it resolves
+
+  const total = meta.length;
+  let loaded = 0;
+  setCount("Loading shards (0/" + total + ")…");
+  const shardArrays = await Promise.all(meta.map(async (t) => {
+    const arr = await (await fetch("data/bavli/" + t.file)).json();
+    loaded++;
+    setCount("Loading shards (" + loaded + "/" + total + ")…");
+    return arr;
+  }));
+  // Concatenate in canonical (manifest) order regardless of fetch completion order.
+  DB = [];
+  for (const arr of shardArrays) for (const r of arr) DB.push(r);
+
+  setCount("Building index (" + DB.length.toLocaleString("en") + " records)…");
+  await new Promise((r) => setTimeout(r, 0));  // let the status text paint before the heavy work
+
+  const t0 = performance.now();
+  NORM = DB.map((r) => {
+    const dh = normalize(r.dh), t = normalize(r.t), vt = normalize(r.vt);
+    return { dh, t, vt, dhS: skel(dh), tS: skel(t), vtS: skel(vt) };
+  });
+
+  // Winning chipus v3 ranking opts from the 2026-07-19 sweep (see chipus
+  // DESIGN-v3.md "Sweep results"): coverageWeight=20, refineWeightLatin=40.
+  // Overridable via globalThis.CHIPUS_OPTS so the eval/sweep harness can
+  // test other configs without editing this file.
+  const CHIPUS_OPTS = globalThis.CHIPUS_OPTS || { coverageWeight: 20, refineWeightLatin: 40 };
+  chipusIndex = new ChipusIndex({
+    fields: [
+      { name: "dh", weight: 3 },
+      { name: "t", weight: 1 },
+      { name: "vt", weight: 1 },
+    ],
+    ...CHIPUS_OPTS,
+  });
+  chipusIndex.add(DB);
+  DOC_INDEX = new Map();
+  DB.forEach((d, i) => DOC_INDEX.set(d, i));
+  setCount(DB.length.toLocaleString("en") + " Rashis · indexed in " + Math.round(performance.now() - t0) + " ms");
+  runSearch();
+}
+loadAll();
+
+// Today's daf yomi, via Sefaria's calendar (skipped if offline). The ref is
+// a bare daf with no amud, e.g. "Avodah Zarah 51" — tractate name is
+// everything before the trailing number.
+async function fetchDafYomi() {
+  try {
+    const d = new Date();
+    const j = await (await fetch("https://www.sefaria.org/api/calendars?year=" +
+      d.getFullYear() + "&month=" + (d.getMonth() + 1) + "&day=" + d.getDate())).json();
+    const item = j.calendar_items.find((i) => i.title.en === "Daf Yomi");
+    if (!item || !item.ref) return;
+    const m = /^(.+?)\s+(\d+)$/.exec(item.ref.trim());
+    if (!m) return;
+    const tr = TRACTATES.find((t) => t.en === m[1].trim());
+    if (tr) { DAFYOMI.tractate = tr.en; DAFYOMI.daf = parseInt(m[2], 10); }
+  } catch (e) { /* offline: no daf-yomi boost */ }
+}
+
+// Sized below the vowel-evidence quantum (see index.html's weekBoost note /
+// HANDOFF): 8 for today's daf (both amudim), 4 for the adjacent dapim — a
+// tie-breaker, never a vote.
+function dafyomiBoost(r) {
+  if (!DAFYOMI.tractate || r.b !== DAFYOMI.tractate) return 0;
+  const dd = Math.abs(r.d - DAFYOMI.daf);
+  if (dd === 0) return 8;
+  if (dd === 1) return 4;
+  return 0;
+}
+function popBoost(r) {
+  // Bavli v1 has no link-count popularity signal (lk is always 0) — this
+  // degrades gracefully to 0 rather than NaN or skewing results.
+  return Math.min(50, Math.log2(1 + (r.lk || 0)) * 3.5);
+}
+
+function fillMasechtosDatalist() {
+  const dl = document.getElementById("masechtos-list");
+  dl.innerHTML = "";
+  for (const t of TRACTATES) dl.appendChild(new Option(t.he, t.he));
+}
+function resolveTractateInput(val) {
+  val = (val || "").trim();
+  if (!val) return "";
+  const hit = TRACTATES.find((t) => t.he === val || t.en.toLowerCase() === val.toLowerCase());
+  return hit ? hit.en : "";
+}
+
+/* ---------- authorship disclaimers ---------- */
+// Nedarim/Nazir carry a whole-tractate disclaimer; Bava Batra/Makkot hand
+// off to Rashbam/Rivan partway through (noteFrom = [daf, amud] the note
+// applies from, inclusive, onward).
+function noteFor(r) {
+  const tr = TRACTATES.find((t) => t.en === r.b);
+  if (!tr || !tr.note) return null;
+  if (!tr.noteFrom) return tr.note;
+  if (r.cx) return tr.note; // provenance flag beats the daf threshold
+  const [nd, na] = tr.noteFrom;
+  if (tr.en === "Bava Batra") return null; // non-cx BB records are Rashi even at daf 29
+  return (r.d > nd || (r.d === nd && r.a >= na)) ? tr.note : null;
+}
+
+/* ---------- scoring ---------- */
+function wordMatch(hay, tok) {
+  // word-prefix match; returns index in hay or -1
+  if (!tok) return -1;
+  let i = hay.indexOf(tok);
+  while (i !== -1) {
+    if (i === 0 || hay[i - 1] === " ") return i;
+    i = hay.indexOf(tok, i + 1);
+  }
+  return -1;
+}
+
+function search(q) {
+  // q: {tractate, daf, amud, dh, kw} — dh/kw normalized strings; amud 0=both
+  const dhToks = q.dh ? q.dh.split(" ") : [];
+  const dhS = skel(q.dh || "");
+  const hits = [];
+
+  // Free-text (kw) scoring is delegated to chipus: it handles Hebrew,
+  // transliteration, and typo tolerance in one pass across dh/t/vt.
+  // Run the query once, then map results back to DB indices for the
+  // per-record filter loop below.
+  let chipusHits = null;
+  if (q.kw && chipusIndex) {
+    chipusHits = new Map();
+    for (const res of chipusIndex.search(q.kw, { limit: DB.length })) {
+      const idx = DOC_INDEX.get(res.doc);
+      if (idx !== undefined) chipusHits.set(idx, res);
+    }
+  }
+
+  for (let i = 0; i < DB.length; i++) {
+    const r = DB[i], n = NORM[i];
+    if (q.tractate && r.b !== q.tractate) continue;
+    if (q.daf && r.d !== q.daf) continue;
+    if (q.amud && r.a !== q.amud) continue;
+    let score = 0;
+    if (dhToks.length) {
+      if (n.dh === q.dh) score += 1000;
+      else if (n.dh.startsWith(q.dh)) score += 600;
+      else if (n.dh.includes(q.dh)) score += 400;
+      else if (n.dhS === dhS) score += 800;          // ktiv-insensitive
+      else if (n.dhS.startsWith(dhS)) score += 450;
+      else if (n.dhS.includes(dhS)) score += 300;
+      else {
+        let all = true, any = false;
+        for (const t of dhToks) {
+          if (wordMatch(n.dh, t) !== -1) { score += 120; any = true; }
+          else if (wordMatch(n.dhS, skel(t)) !== -1) { score += 80; any = true; }
+          else if (wordMatch(n.t, t) !== -1) { score += 15; all = false; }
+          else if (n.t.includes(t)) { score += 8; all = false; }
+          else { all = false; }
+        }
+        if (!any && score === 0) continue;
+        if (all) score += 100;
+      }
+    }
+    if (q.kw) {
+      const hit = chipusHits && chipusHits.get(i);
+      if (hit) {
+        score += hit.score;
+      } else if (q.daf && q.amud) {
+        // exact daf:amud pin keeps that amud's Rashis visible
+        // even when the free-text terms match nothing
+        score = Math.max(score, 1);
+      } else {
+        continue;
+      }
+    }
+    if (!dhToks.length && !q.kw) score = 1;  // pure filter browse
+    if (score > 0) hits.push({ i, score: score + dafyomiBoost(r) + popBoost(r) });
+  }
+  hits.sort((a, b) => b.score - a.score || a.i - b.i);
+  return hits.slice(0, 60);
+}
+
+/* ---------- smart parse ---------- */
+// Tokenize, keeping "." / ":" and a trailing Latin a/b as amud hints — the
+// general normalize() above strips those as punctuation, but here they carry
+// meaning ("שבת כא." = 21a, "כא:" = 21b, "21b" = 21b).
+function smartTokenize(raw) {
+  let s = raw.replace(/־/g, " ").replace(NIKUD_RE, "");
+  s = s.replace(/[״"׳'!?()\[\]{};,]/g, "");
+  s = s.replace(/\s+/g, " ").trim();
+  const rawToks = s.split(" ").filter(Boolean);
+  const toks = [];
+  for (let t of rawToks) {
+    let amud = 0;
+    if (t.length > 1 && t.endsWith(".")) { amud = 1; t = t.slice(0, -1); }
+    else if (t.length > 1 && t.endsWith(":")) { amud = 2; t = t.slice(0, -1); }
+    else {
+      const m = /^(\d+)([abAB])$/.exec(t);
+      if (m) { t = m[1]; amud = m[2].toLowerCase() === "a" ? 1 : 2; }
+    }
+    if (t) toks.push({ raw: t, amud });
+  }
+  return toks;
+}
+
+function smartParse(raw) {
+  const q = { tractate: "", daf: 0, amud: 0, dh: "", kw: "" };
+  const toks = smartTokenize(raw);
+  const rest = [];
+  let i = 0;
+  while (i < toks.length) {
+    const t = toks[i];
+    const tok = t.raw;
+    const next = toks[i + 1];
+    const isLatin = /[a-z]/i.test(tok);
+    const two = next ? tok + " " + next.raw : null;
+
+    // two-word Hebrew tractate name (בבא קמא, ראש השנה, מועד קטן, עבודה זרה…)
+    if (!q.tractate && two) {
+      const t2 = TRACTATES.find((tr) => tr.he === two);
+      if (t2) { q.tractate = t2.en; i += 2; continue; }
+    }
+    // transliterated two-word tractate alias ("bava kamma", "rosh hashana"…)
+    if (!q.tractate && isLatin && next && i === 0) {
+      let found = null;
+      outer: for (const k1 of foldToken(tok)) {
+        for (const k2 of foldToken(next.raw)) {
+          const hit = TRACTATE_ALIAS2.get(k1 + "|" + k2);
+          if (hit && hit !== AMBIG) { found = hit; break outer; }
+        }
+      }
+      let fuzzy = false;
+      if (!found) {
+        const cands = [];
+        for (const k1 of foldToken(tok)) for (const k2 of foldToken(next.raw)) cands.push(k1 + "|" + k2);
+        found = fuzzyAlias(TRACTATE_ALIAS2, cands);
+        fuzzy = !!found;
+      }
+      if (found) {
+        (q._softToks ||= []).push(tok, next.raw);
+        if (fuzzy) q._softFuzzy = true;
+        q.tractate = found; i += 2; continue;
+      }
+    }
+    // "מסכת X" prefix
+    if (!q.tractate && tok === "מסכת" && next) {
+      const twoWord = toks[i + 2] ? next.raw + " " + toks[i + 2].raw : null;
+      const tr = TRACTATES.find((tr) => tr.he === next.raw) ||
+                 (twoWord && TRACTATES.find((tr) => tr.he === twoWord));
+      if (tr) {
+        q.tractate = tr.en;
+        i += 1 + tr.he.split(" ").length;
+        continue;
+      }
+    }
+    // single-word Hebrew tractate exact match
+    if (!q.tractate && i === 0) {
+      const t1 = TRACTATES.find((tr) => tr.he === tok);
+      if (t1) { q.tractate = t1.en; i++; continue; }
+    }
+    // transliterated single-word tractate alias ("brachos", "shabbos"…)
+    if (!q.tractate && isLatin && i === 0) {
+      let found = null;
+      for (const k of foldToken(tok)) {
+        if (k.length < 3) continue;
+        const hit = TRACTATE_ALIAS1.get(k);
+        if (hit && hit !== AMBIG) { found = hit; break; }
+      }
+      const wasExact = !!found;
+      if (!found) found = fuzzyAlias(TRACTATE_ALIAS1, foldToken(tok));
+      if (found) {
+        (q._softToks ||= []).push(tok);
+        if (!wasExact) q._softFuzzy = true;
+        q.tractate = found; i++; continue;
+      }
+    }
+    // standalone amud markers: "עמוד ב" / "עמוד א", or ע"א/ע"ב (quotes
+    // already stripped by smartTokenize, so they arrive as "עא"/"עב")
+    if (tok === "עמוד" && next && (next.raw === "א" || next.raw === "ב")) {
+      q.amud = next.raw === "א" ? 1 : 2; i += 2; continue;
+    }
+    if ((tok === "עא" || tok === "עב") && (q.tractate || q.daf)) {
+      q.amud = tok === "עא" ? 1 : 2; i++; continue;
+    }
+    // daf number (Arabic or gematria) — only meaningful once a tractate is known
+    if (q.daf === 0 && q.tractate) {
+      const n = parseHebNum(tok);
+      if (n !== null) {
+        q.daf = n;
+        if (t.amud) q.amud = t.amud;
+        i++; continue;
+      }
+    }
+    rest.push(tok); i++;
+  }
+  // free text goes to kw: it ranks across dibbur, body, and vt (gemara line),
+  // with phrase-level dibbur boosts applied in search()
+  q.kw = rest.join(" ");
+  return q;
+}
+
+// A transliterated tractate capture is only a hypothesis: rerun the full
+// query as free text and keep the filter only if the corpus agrees
+// (top unfiltered hit falls inside the captured tractate).
+function resolveSoft(q) {
+  if (!q._softToks || q.daf) return q;
+  // Pure filter queries (no extra kw) from an EXACT alias hit are trusted
+  // as-is — there's no free text to verify against. Fuzzy hits are riskier
+  // (short-key edit-distance collisions), so always verify those.
+  if (!q.kw && !q._softFuzzy) return q;
+  const alt = { tractate: "", daf: 0, amud: 0, dh: "",
+                kw: (q._softToks.join(" ") + " " + q.kw).trim() };
+  const altHits = search(alt);
+  if (!altHits.length) return q;
+  const top = DB[altHits[0].i];
+  if (top.b === q.tractate) return q;
+  alt._softHits = altHits;
+  return alt;
+}
+
+/* ---------- rendering ---------- */
+function highlight(display, toks) {
+  if (!toks.length) return esc(display);
+  const { norm, map } = normalizeWithMap(display);
+  const spans = [];
+  for (const t of toks) {
+    if (!t) continue;
+    let idx = norm.indexOf(t);
+    while (idx !== -1) {
+      const from = map[idx];
+      const to = idx + t.length - 1 < map.length ? map[idx + t.length - 1] + 1 : display.length;
+      spans.push([from, to]);
+      idx = norm.indexOf(t, idx + 1);
+    }
+  }
+  if (!spans.length) return esc(display);
+  spans.sort((a, b) => a[0] - b[0]);
+  let out = "", pos = 0;
+  for (const [f, t] of spans) {
+    if (f < pos) continue;
+    out += esc(display.slice(pos, f)) + "<mark>" + esc(display.slice(f, t)) + "</mark>";
+    pos = t;
+  }
+  return out + esc(display.slice(pos));
+}
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function refHe(r) {
+  return r.bh + " " + toHebNum(r.d) + ' ע"' + (r.a === 1 ? "א" : "ב");
+}
+function sefariaUrl(r) {
+  // r.cx marks records from a continuation text Sefaria files separately
+  // (Bava Batra from 29a = Rashbam on Bava Batra).
+  const title = r.cx ? "Rashbam on " + r.b : "Rashi on " + r.b;
+  return "https://www.sefaria.org/" + title.replace(/ /g, "_") + "." +
+    r.d + (r.a === 1 ? "a" : "b") + "." + r.l + "." + r.i;
+}
+
+function renderResults(hits, toks) {
+  const box = document.getElementById("results");
+  openHit = -1;
+  if (!hits.length) {
+    box.innerHTML = '<div id="empty">No results.</div>';
+    return;
+  }
+  box.innerHTML = hits.map((h) => {
+    const r = DB[h.i];
+    return '<div class="hit" data-i="' + h.i + '">' +
+      '<div class="sum"><span class="dh">' + highlight(r.dh, toks) + '</span> ' +
+      '<span class="ref">· ' + refHe(r) + " · " + esc(r.bh) + "</span>" +
+      '<div class="snip">' + highlight(r.t.slice(0, 220), toks) + "</div></div>" +
+      '<div class="exp"></div></div>';
+  }).join("");
+}
+
+function toggleHit(el, toks) {
+  const i = +el.dataset.i;
+  if (el.classList.contains("open")) { el.classList.remove("open"); openHit = -1; return; }
+  document.querySelectorAll(".hit.open").forEach((o) => o.classList.remove("open"));
+  const r = DB[i];
+  const note = noteFor(r);
+  el.querySelector(".exp").innerHTML =
+    '<div class="verse">' + esc(r.vt) + "</div>" +
+    '<div><span class="rashi-dh">' + highlight(r.dh, toks) + ".</span></div>" +
+    '<div class="rashi-text">' + highlight(r.t, toks) + "</div>" +
+    (note ? '<div class="note">' + esc(note) + "</div>" : "") +
+    '<div class="links"><a href="' + sefariaUrl(r) + '" target="_blank" rel="noopener">Open in Sefaria ↗</a></div>';
+  el.classList.add("open");
+  openHit = i;
+}
+
+/* ---------- Hebrew keyboard ---------- */
+const KBD_ROWS = [
+  ["ק","ר","א","ט","ו","ן","ם","פ"],
+  ["ש","ד","ג","כ","ע","י","ח","ל","ך","ף"],
+  ["ז","ס","ב","ה","נ","מ","צ","ת","ץ"],
+];
+let lastInput = null;
+function buildKbd() {
+  const kbd = document.getElementById("kbd");
+  kbd.innerHTML = KBD_ROWS.map(row =>
+    '<div class="krow">' + row.map(ch => '<button data-ch="' + ch + '">' + ch + "</button>").join("") + "</div>"
+  ).join("") +
+  '<div class="krow"><button data-ch=" " class="wide">space</button>' +
+  '<button data-act="bs" class="wide">⌫</button>' +
+  '<button data-act="clear" class="wide">clear</button></div>';
+  kbd.addEventListener("mousedown", e => e.preventDefault());  // keep input focus
+  kbd.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const el = lastInput || defaultInput();
+    if (b.dataset.act === "clear") el.value = "";
+    else if (b.dataset.act === "bs") {
+      const p = el.selectionStart;
+      if (p > 0) {
+        el.value = el.value.slice(0, p - 1) + el.value.slice(el.selectionEnd);
+        el.setSelectionRange(p - 1, p - 1);
+      }
+    } else {
+      const p = el.selectionStart;
+      el.value = el.value.slice(0, p) + b.dataset.ch + el.value.slice(el.selectionEnd);
+      el.setSelectionRange(p + 1, p + 1);
+    }
+    el.focus();
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+}
+function defaultInput() {
+  return document.getElementById(mode === "smart" ? "f-smart" : "f-dh");
+}
+
+/* ---------- wiring ---------- */
+let currentToks = [];
+function runSearch() {
+  let q;
+  if (mode === "smart") {
+    q = resolveSoft(smartParse(document.getElementById("f-smart").value));
+  } else {
+    q = {
+      tractate: resolveTractateInput(document.getElementById("f-masechet").value),
+      daf: parseHebNum(document.getElementById("f-daf").value.trim()) || 0,
+      amud: parseInt(document.getElementById("f-amud").value, 10) || 0,
+      dh: normalize(document.getElementById("f-dh").value),
+      kw: normalize(document.getElementById("f-kw").value),
+    };
+  }
+  const hasAny = q.tractate || q.daf || q.amud || q.dh || q.kw;
+  if (!hasAny) {
+    document.getElementById("results").innerHTML = '<div id="empty">Type to search.</div>';
+    return;
+  }
+  currentToks = (q.dh + " " + q.kw).split(" ").filter(Boolean);
+  const t0 = performance.now();
+  const hits = q._softHits || search(q);
+  renderResults(hits, currentToks);
+  document.getElementById("count").textContent =
+    hits.length + " results · " + (performance.now() - t0).toFixed(1) + " ms";
+}
+
+let deb;
+function onInput() { clearTimeout(deb); deb = setTimeout(runSearch, 80); }
+
+for (const id of ["f-dh", "f-masechet", "f-daf", "f-kw", "f-smart"]) {
+  const el = document.getElementById(id);
+  el.addEventListener("input", onInput);
+  el.addEventListener("focus", () => { lastInput = el; });
+}
+document.getElementById("f-amud").addEventListener("change", runSearch);
+document.getElementById("results").addEventListener("click", e => {
+  if (e.target.closest("a")) return;           // let the Sefaria link work
+  const hit = e.target.closest(".hit");
+  if (hit) toggleHit(hit, currentToks);
+});
+document.getElementById("tab-fields").addEventListener("click", () => setMode("fields"));
+document.getElementById("tab-smart").addEventListener("click", () => setMode("smart"));
+function setMode(m) {
+  mode = m;
+  document.getElementById("tab-fields").classList.toggle("active", m === "fields");
+  document.getElementById("tab-smart").classList.toggle("active", m === "smart");
+  document.getElementById("fieldbar").style.display = m === "fields" ? "flex" : "none";
+  document.getElementById("smartbar").style.display = m === "smart" ? "block" : "none";
+  defaultInput().focus();
+  runSearch();
+}
+buildKbd();
+document.getElementById("kbd-btn").addEventListener("click", () => {
+  document.getElementById("kbd").classList.toggle("open");
+  (lastInput || defaultInput()).focus();
+});
+document.addEventListener("click", e => {
+  if (!e.target.closest("#kbd-wrap"))
+    document.getElementById("kbd").classList.remove("open");
+});
+</script>
+</body>
+</html>

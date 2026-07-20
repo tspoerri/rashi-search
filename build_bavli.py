@@ -109,7 +109,7 @@ def daf_amud(i):
     return i // 2 + 1, 1 if i % 2 == 0 else 2
 
 
-def comments_to_records(commentary, gemara, en, he):
+def comments_to_records(commentary, gemara, en, he, cont=False):
     """Convert a Daf->Line->Comment nested list into output records."""
     records = []
     for di, daf_lines in enumerate(commentary):
@@ -143,14 +143,17 @@ def comments_to_records(commentary, gemara, en, he):
                         body = plain
                 if not body:
                     continue
-                records.append({
+                rec = {
                     "b": en, "bh": he,
                     "d": daf, "a": amud, "l": line_no, "i": ci + 1,
                     "dh": dh,
                     "t": body,
                     "vt": vt,
                     "lk": 0,
-                })
+                }
+                if cont:
+                    rec["cx"] = 1  # from the continuation text (e.g. Rashbam)
+                records.append(rec)
     return records
 
 
@@ -173,7 +176,7 @@ def build_tractate(en, he):
     if cont_title:
         cont_safe = cont_title.replace(" ", "_")
         cont = get_text(cont_title, f"rashi_bavli_{cont_safe}.json")
-        records += comments_to_records(cont, gemara, en, he)
+        records += comments_to_records(cont, gemara, en, he, cont=True)
         records.sort(key=lambda r: (r["d"], r["a"], r["l"], r["i"]))
 
     return records

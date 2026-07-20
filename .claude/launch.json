@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "rashi-search",
-      "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "cd /Users/tamar/Documents/Projects/rashi-search && exec /opt/homebrew/bin/python3 -m http.server 8641"],
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8641"],
       "port": 8641
     }
   ]
