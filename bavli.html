@@ -147,6 +147,14 @@ let chipusIndex = null;
 let DOC_INDEX = null;               // Map<doc, i> — maps chipus result docs back to DB index
 const TRACTATE_ALIAS1 = new Map();  // folded key -> tractate en (single-word names)
 const TRACTATE_ALIAS2 = new Map();  // "key1|key2" -> tractate en (two-word names, e.g. "bava kamma")
+// Exact lowercase spelling -> tractate en. Checked BEFORE any folded/fuzzy
+// lookup: a curated spelling in TRACTATE_ALIASES must never be lost to a
+// fold-collision with a different tractate's folded form (e.g. "shabbos"
+// and "shevuos" both fold to $BS/$BT once vowels drop and b/v merge — that
+// makes the FOLDED keys AMBIG, but the literal spellings are not ambiguous
+// at all and must still resolve). Folding/fuzzyAlias remain the typo-only
+// fallback, tried only when an exact spelling doesn't match.
+const TRACTATE_EXACT = new Map();
 
 // Ashkenazi/Sephardi/academic transliteration variants beyond the plain
 // English name (which is registered automatically for every tractate).
@@ -200,6 +208,7 @@ function aliasSet(map, key, val) {
 
 function registerTractatePhrase(phrase, en) {
   const words = phrase.trim().split(/\s+/).filter(Boolean);
+  aliasSet(TRACTATE_EXACT, words.join(" ").toLowerCase(), en);
   if (words.length === 1) {
     for (const k of foldToken(words[0])) aliasSet(TRACTATE_ALIAS1, k, en);
   } else if (words.length === 2) {
@@ -524,14 +533,20 @@ function smartParse(raw) {
     }
     // transliterated two-word tractate alias ("bava kamma", "rosh hashana"…)
     if (!q.tractate && isLatin && next && i === 0) {
-      let found = null;
-      outer: for (const k1 of foldToken(tok)) {
-        for (const k2 of foldToken(next.raw)) {
-          const hit = TRACTATE_ALIAS2.get(k1 + "|" + k2);
-          if (hit && hit !== AMBIG) { found = hit; break outer; }
+      // Exact curated spelling wins before any folded/fuzzy lookup — see
+      // TRACTATE_EXACT's comment for why (fold collisions must never eat a
+      // correctly-spelled alias).
+      const exactHit = TRACTATE_EXACT.get((tok + " " + next.raw).toLowerCase());
+      let found = exactHit && exactHit !== AMBIG ? exactHit : null;
+      let fuzzy = false;
+      if (!found) {
+        outer: for (const k1 of foldToken(tok)) {
+          for (const k2 of foldToken(next.raw)) {
+            const hit = TRACTATE_ALIAS2.get(k1 + "|" + k2);
+            if (hit && hit !== AMBIG) { found = hit; break outer; }
+          }
         }
       }
-      let fuzzy = false;
       if (!found) {
         const cands = [];
         for (const k1 of foldToken(tok)) for (const k2 of foldToken(next.raw)) cands.push(k1 + "|" + k2);
@@ -562,13 +577,20 @@ function smartParse(raw) {
     }
     // transliterated single-word tractate alias ("brachos", "shabbos"…)
     if (!q.tractate && isLatin && i === 0) {
-      let found = null;
-      for (const k of foldToken(tok)) {
-        if (k.length < 3) continue;
-        const hit = TRACTATE_ALIAS1.get(k);
-        if (hit && hit !== AMBIG) { found = hit; break; }
+      // Exact curated spelling wins before any folded/fuzzy lookup (see
+      // TRACTATE_EXACT comment). This also rescues short names like "yoma"
+      // (folds to a 1-char key "M" that the length>=3 guard below would
+      // otherwise refuse to even attempt matching).
+      const exactHit = TRACTATE_EXACT.get(tok.toLowerCase());
+      let found = exactHit && exactHit !== AMBIG ? exactHit : null;
+      let wasExact = !!found;
+      if (!found) {
+        for (const k of foldToken(tok)) {
+          if (k.length < 3) continue;
+          const hit = TRACTATE_ALIAS1.get(k);
+          if (hit && hit !== AMBIG) { found = hit; wasExact = true; break; }
+        }
       }
-      const wasExact = !!found;
       if (!found) found = fuzzyAlias(TRACTATE_ALIAS1, foldToken(tok));
       if (found) {
         (q._softToks ||= []).push(tok);
