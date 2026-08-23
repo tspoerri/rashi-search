@@ -4,7 +4,7 @@
 
 ## Current state
 - **Nach SHIPPED (2026-08-23).** `nach.html` is a third standalone sibling app; `index.html` hub now links chumash / bavli / nach. 34 books, 20,413 Rashis, 12 MB across 34 shards in `data/nach/` (force-added for Pages; `data/` is gitignored).
-- **3 commits on main, all COMMITTED but NOT PUSHED:** `a6dedad` (wave 1: build_nach.py + lib/nach-aliases.js), `5777123` (cache relocation), `c1942a4` (wave 2: nach.html). Tree is clean. Last pushed commit is `d2643fb`.
+- **All committed AND pushed** (main = `03411ca`, clean tree): `a6dedad` wave 1 (build_nach.py + lib/nach-aliases.js), `5777123` cache relocation, `c1942a4` wave 2 (nach.html), `03411ca` handoff. Pushed 2026-08-23; check the Pages deploy picked up data/nach.
 - **Nach verified live, independently** (two separate agents, second one re-checking the first): ישעיהו ו == yeshaya 6 (30 Isaiah 6 results), תהילים כג → Psalms 23, `shmuel` alone → disambiguation prompt (no silent guess), `shmuel aleph 1` → I Samuel 1, pseudo-Rashi disclaimer renders on Chronicles/Ezra, Sefaria links 200 for multi-word and Roman-numeral titles. Zero console errors.
 - **Timings (Nach):** load 261 ms, chipus index build 7.3 s, located queries 9–18 ms, free text 527 ms. Mobile 375×812: loads fine, layout usable, ~112 MB JS heap.
 - **Data quality checked directly, not just claimed:** cx provenance count 2,202 == manifest's four pseudo-Rashi books; empty dh 0.50% (Bavli was 1.57%); zero footnote-markup leakage; Isaiah vt-alignment sample 192/200 (96%).
@@ -19,7 +19,7 @@ Confirmed symptom (Tamar, 2026-08-23): blank / reload / never finishes loading o
 4. Only if 1–3 fall short: shrink per-record footprint (drop eager NORM arrays, or pack shard text into one string with offset indices).
 
 ## Open questions
-- Push the 3 Nach commits? Repo is private and bundles Sefaria text; nothing has been pushed this session.
+- Repo is still private and bundles Sefaria text under the unverified vocalized-edition license — that blocks a public flip, not the private push (done 2026-08-23).
 - Does anyone actually type `דה"י` (unqualified Divrei Hayamim abbreviation)? Registered as AMBIG by inference; drop it if it isn't a real idiom.
 - Nach uses the same "Sefaria vocalized edition" whose license STRATEGY.md flags as unverified — still blocks any public flip of the repo.
 - Fold the three sibling apps into STRATEGY's M1 generic-corpus refactor, or keep them as siblings? Three apps now duplicate a lot of machinery.
