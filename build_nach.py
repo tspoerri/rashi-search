@@ -97,7 +97,7 @@ def clean(s):
 
 def fetch_json(url, cache_name):
     """Fetch URL with a local file cache so re-runs are free."""
-    cache = NACH / cache_name
+    cache = DATA / cache_name
     if cache.exists():
         return json.loads(cache.read_text())
     req = urllib.request.Request(url, headers={"User-Agent": "rashi-search/1.0"})
