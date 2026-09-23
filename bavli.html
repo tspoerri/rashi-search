@@ -406,7 +406,7 @@ async function loadAll() {
   setCount("Loading manifest…");
   const manifest = await (await fetch("data/bavli/manifest.json")).json();
   const meta = manifest.tractates || [];
-  for (const t of meta) TRACTATES.push({ en: t.en, he: t.he, note: t.note || null, noteFrom: t.noteFrom || null });
+  for (const t of meta) TRACTATES.push({ en: t.en, he: t.he, file: t.file, note: t.note || null, noteFrom: t.noteFrom || null });
   TRACTATE_TOTAL_RECORDS = meta.reduce((sum, t) => sum + (t.count || 0), 0);
   buildAliases();
   fillMasechtosDatalist();
