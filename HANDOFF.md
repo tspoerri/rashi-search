@@ -16,7 +16,13 @@ Two agents independently built the same fix in parallel — one on branch `bavli
 - `chumash.html` and `nach.html` not touched by this fix.
 
 ## Merge verification (2026-09-24)
-<!-- filled in after the phone-width + desktop check below -->
+Verified live after the merge, `python3 -m http.server` + the built-in browser, both at 390×844 (phone) and desktop width:
+- **Boot loads only `manifest.json`** at both widths — confirmed via network log, no per-tractate shard fetched until a search names one.
+- **Located search loads exactly one shard.** Smart search `ברכות ב` → fetches only `Berakhot.json`, 38 results in 1.9 ms, heap 24.4 MB. Fields mode with masechet `יומא` → fetches only `Yoma.json`, 60 results in 1.6 ms. No other shard fetched in either case.
+- **Cross-Shas free text (no masechet) is correctly gated.** Typing `נר חנוכה` with no tractate shows the opt-in prompt ("~80 MB of data... around 1.3 GB of heap... treat it as desktop-only") with a "Search all of Shas" button, instead of auto-loading anything.
+- **Zero console errors** across boot, both search modes, the opt-in prompt, and mode switching, at both viewport widths.
+- Not tested: actually clicking through the full "load all of Shas" path (intentionally desktop-only and expensive; the point of tonight's fix is that a phone never reaches it) and a real iOS/Android device (still open from the prior HANDOFF entry — the built-in browser is Chromium-based).
+- Pushed to `origin/main` as this merge commit right after this verification.
 
 ## Previous state (2026-08-23)
 - **Nach SHIPPED (2026-08-23).** `nach.html` is a third standalone sibling app; `index.html` hub now links chumash / bavli / nach. 34 books, 20,413 Rashis, 12 MB across 34 shards in `data/nach/` (force-added for Pages; `data/` is gitignored).
