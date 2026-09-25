@@ -90,12 +90,16 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 .exp .links { margin-top: .8rem; direction: ltr; text-align: left; font-size: .82rem; }
 .exp a { color: var(--accent); }
 #empty { color: var(--muted); padding: 1rem 0; }
-#load-all-btn {
-  font: inherit; font-size: .82rem; padding: .3rem .9rem; cursor: pointer;
-  border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent);
-  border-radius: 999px;
+#loadnote {
+  font-size: .8rem; color: var(--muted); background: var(--accent-soft);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: .5rem .7rem; margin-bottom: .6rem;
 }
-#load-all-btn:hover { background: var(--accent); color: var(--bg); }
+.bigbtn {
+  font: inherit; font-size: .95rem; padding: .5rem 1.1rem; cursor: pointer;
+  border: 1px solid var(--accent); border-radius: 999px;
+  background: var(--accent); color: var(--bg);
+}
 </style>
 </head>
 <body>
@@ -134,6 +138,7 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
   </div>
 </div>
 
+<div id="loadnote" hidden></div>
 <div id="results"><div id="empty">Type to search.</div></div>
 </div>
 
@@ -141,8 +146,9 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 "use strict";
 import { ChipusIndex, foldToken, tokenize, boundedEditDistance } from "./lib/chipus/src/index.js";
 
-let DB = [];          // records
-let NORM = [];        // normalized {dh, t, vt} + skeleton per record
+let DB = [];          // records currently in memory (union of loaded tractates)
+let NORM = [];        // {dh, dhS, t} per record, parallel to DB
+let ORD = [];         // canonical (manifest-order) sort key per DB row, parallel to DB
 let openHit = -1;
 let mode = "smart";
 const DAFYOMI = { tractate: "", daf: 0 };   // today's daf-yomi tractate+daf (no amud)
@@ -151,6 +157,16 @@ const TRACTATES = [];  // [{en, he, note, noteFrom}] in canonical Shas order
 
 let chipusIndex = null;
 let DOC_INDEX = null;               // Map<doc, i> — maps chipus result docs back to DB index
+
+// Lazy-loading state (see the "load" section for why this page is not eager).
+const SHARD_FILES = new Map();      // tractate en -> shard filename
+const LOADED = new Set();           // tractate en whose shard is in DB/NORM/chipusIndex
+const INFLIGHT = new Map();         // tractate en -> in-flight load promise
+let TOTAL_RECORDS = 0;              // manifest record count across all 36 tractates
+let fullLoaded = false;             // every tractate is in memory
+let loadingAll = false;             // the opt-in whole-Shas load is running
+let fullOptIn = false;              // the user asked for cross-Shas search this session
+let INDEX_MS = 0;                   // cumulative chipus build time, for the status line
 const TRACTATE_ALIAS1 = new Map();  // folded key -> tractate en (single-word names)
 const TRACTATE_ALIAS2 = new Map();  // "key1|key2" -> tractate en (two-word names, e.g. "bava kamma")
 // Exact lowercase spelling -> tractate en. Checked BEFORE any folded/fuzzy
@@ -307,115 +323,154 @@ function toHebNum(n) {
   return out.replace(/יה$/, "טו").replace(/יו$/, "טז");
 }
 
-/* ---------- lazy per-tractate loading ----------
- * Mobile Safari OOM-kills the tab if all 36 tractates (131 MB of JSON,
- * ~650-700 MB once expanded into JS heap + index) load and index eagerly on
- * open (see HANDOFF.md "Known problem: bavli.html crashes on mobile"). Load
- * per-tractate shards on demand instead:
- *   - a located query ("שבת כא.", "brachos 2a") resolves a single tractate
- *     BEFORE any data is needed, so only that shard (worst case ~7 MB,
- *     Shabbat) is fetched and indexed;
- *   - a cross-Shas query (no tractate captured) genuinely needs the whole
- *     corpus, so it's gated behind an explicit "load all of Shas" action
- *     rather than being the default that kills the tab (see runSearch/
- *     renderLoadAllPrompt below);
- *   - indexing yields every CHUNK records so a big shard (or the full-Shas
- *     load) never blocks the main thread long enough to trip the page
- *     watchdog or freeze the UI.
- */
-const CHUNK = 1500;
-const shardState = new Map();   // tractate en -> true (loaded) | Promise (loading in flight)
-let allLoaded = false;
-let TRACTATE_TOTAL_RECORDS = 0;
+/* ---------- load (lazy, per tractate) ---------- */
+// This page used to Promise.all all 36 shards, concatenate 121,983 records
+// into one DB, and then run a ~57 s synchronous chipus build. That is 131 MB
+// of JSON plus parallel NORM arrays plus index overhead on the main thread —
+// past iOS Safari's memory ceiling and past its page watchdog, so the tab went
+// blank or reloaded forever on a phone. Instead:
+//   1. Boot loads only manifest.json. Located queries ("ברכות ב.", "brachos 2a")
+//      resolve a tractate *before* they need any records, so they pay for one
+//      shard (7 MB worst case, Shabbat) and nothing else.
+//   2. Cross-Shas free text genuinely needs all 122K records, so it is an
+//      explicit opt-in that streams shard by shard rather than the default.
+//   3. Every shard is normalized and indexed in chunks with a yield between
+//      them, so the watchdog stays quiet and progress is legible.
+const INDEX_CHUNK = 600;    // records per yield while normalizing + indexing
+                            // (keeps each main-thread slice around 150 ms)
 
 function setCount(text) { document.getElementById("count").textContent = text; }
-function yieldNow() { return new Promise((r) => setTimeout(r, 0)); }
-
-function loadedTractateCount() {
-  let n = 0;
-  for (const t of TRACTATES) if (shardState.get(t.en) === true) n++;
-  return n;
+function setNote(text) {
+  const el = document.getElementById("loadnote");
+  el.textContent = text || "";
+  el.hidden = !text;
 }
-
-// Winning chipus v3 ranking opts from the 2026-07-19 sweep (see chipus
-// DESIGN-v3.md "Sweep results"): coverageWeight=20, refineWeightLatin=40.
-// Overridable via globalThis.CHIPUS_OPTS so the eval/sweep harness can
-// test other configs without editing this file.
-const CHIPUS_OPTS = globalThis.CHIPUS_OPTS || { coverageWeight: 20, refineWeightLatin: 40 };
-chipusIndex = new ChipusIndex({
-  fields: [
-    { name: "dh", weight: 3 },
-    { name: "t", weight: 1 },
-    { name: "vt", weight: 1 },
-  ],
-  ...CHIPUS_OPTS,
-});
-DOC_INDEX = new Map();
-
-// Append records into DB/NORM/chipusIndex/DOC_INDEX in CHUNK-sized slices,
-// yielding to the event loop between slices (fix-ladder step 3).
-async function ingestRecordsChunked(arr) {
-  for (let off = 0; off < arr.length; off += CHUNK) {
-    const slice = arr.slice(off, off + CHUNK);
-    const start = DB.length;
-    for (const r of slice) DB.push(r);
-    for (let k = start; k < DB.length; k++) {
-      const r = DB[k];
-      const dh = normalize(r.dh), t = normalize(r.t), vt = normalize(r.vt);
-      NORM.push({ dh, t, vt, dhS: skel(dh), tS: skel(t), vtS: skel(vt) });
-    }
-    chipusIndex.add(slice);
-    for (let k = start; k < DB.length; k++) DOC_INDEX.set(DB[k], k);
-    if (off + CHUNK < arr.length) await yieldNow();
+function readyCount() {
+  const n = TOTAL_RECORDS.toLocaleString("en");
+  if (fullLoaded) return n + " Rashis · all " + TRACTATES.length + " masechtos loaded";
+  if (LOADED.size) {
+    const names = TRACTATES.filter((t) => LOADED.has(t.en)).map((t) => t.he).join(", ");
+    return n + " Rashis · loaded: " + names;
   }
+  return n + " Rashis · " + TRACTATES.length + " masechtos · name one to begin";
 }
 
-// Fetch + index one tractate's shard, memoizing in-flight and completed
-// loads so concurrent callers (rapid keystrokes) share one fetch.
-function ensureShard(en) {
-  const tr = TRACTATES.find((t) => t.en === en);
-  if (!tr) return Promise.resolve();
-  const cur = shardState.get(en);
-  if (cur === true) return Promise.resolve();
-  if (cur) return cur;
-  const p = (async () => {
-    const arr = await (await fetch("data/bavli/" + tr.file)).json();
-    await ingestRecordsChunked(arr);
-    shardState.set(en, true);
-    if (loadedTractateCount() === TRACTATES.length) allLoaded = true;
-  })();
-  shardState.set(en, p);
-  return p;
-}
-
-// Load every remaining tractate, sequentially (bounds peak fetch+parse
-// memory on weak devices) with a progress callback.
-async function ensureAllShards(onProgress) {
-  const remaining = TRACTATES.filter((t) => shardState.get(t.en) !== true);
-  let done = TRACTATES.length - remaining.length;
-  if (onProgress) onProgress(done, TRACTATES.length);
-  for (const t of remaining) {
-    await ensureShard(t.en);
-    done++;
-    if (onProgress) onProgress(done, TRACTATES.length);
-  }
-  allLoaded = true;
-}
-
-async function loadAll() {
+async function boot() {
   setCount("Loading manifest…");
   const manifest = await (await fetch("data/bavli/manifest.json")).json();
   const meta = manifest.tractates || [];
-  for (const t of meta) TRACTATES.push({ en: t.en, he: t.he, file: t.file, note: t.note || null, noteFrom: t.noteFrom || null });
-  TRACTATE_TOTAL_RECORDS = meta.reduce((sum, t) => sum + (t.count || 0), 0);
+  meta.forEach((t, ord) => {
+    TRACTATES.push({ en: t.en, he: t.he, note: t.note || null, noteFrom: t.noteFrom || null,
+                     count: t.count || 0, ord });
+    SHARD_FILES.set(t.en, t.file);
+    TOTAL_RECORDS += t.count || 0;
+  });
   buildAliases();
   fillMasechtosDatalist();
   fetchDafYomi();  // fire and forget; fails soft, no boost until it resolves
-  setCount(TRACTATE_TOTAL_RECORDS.toLocaleString("en") + " Rashis across " + meta.length +
-    " masechtos · type a masechet or daf to load it");
+
+  // Winning chipus v3 ranking opts from the 2026-07-19 sweep (see chipus
+  // DESIGN-v3.md "Sweep results"): coverageWeight=20, refineWeightLatin=40.
+  // Overridable via globalThis.CHIPUS_OPTS so the eval/sweep harness can
+  // test other configs without editing this file.
+  const CHIPUS_OPTS = globalThis.CHIPUS_OPTS || { coverageWeight: 20, refineWeightLatin: 40 };
+  chipusIndex = new ChipusIndex({
+    fields: [
+      { name: "dh", weight: 3 },
+      { name: "t", weight: 1 },
+      { name: "vt", weight: 1 },
+    ],
+    ...CHIPUS_OPTS,
+  });
+  DOC_INDEX = new Map();
+  // Diagnostics hook, in the same spirit as globalThis.CHIPUS_OPTS above: lets
+  // the eval harness read load/index cost without instrumenting the page.
+  globalThis.bavliStats = () => ({
+    records: DB.length, total: TOTAL_RECORDS, indexMs: Math.round(INDEX_MS),
+    loaded: [...LOADED], fullLoaded,
+    heapMB: performance.memory ? +(performance.memory.usedJSHeapSize / 1048576).toFixed(1) : null,
+  });
+  setCount(readyCount());
   runSearch();
 }
-loadAll();
+boot();
+
+// Load one tractate's shard into DB/NORM/ORD and the chipus index. Idempotent
+// and safe to call concurrently — a second call for a tractate already in
+// flight awaits the first rather than double-indexing it.
+function ensureTractate(en, onProgress) {
+  if (LOADED.has(en)) return Promise.resolve();
+  const inflight = INFLIGHT.get(en);
+  if (inflight) return inflight;
+  const tr = TRACTATES.find((t) => t.en === en);
+  const file = SHARD_FILES.get(en);
+  if (!tr || !file) return Promise.resolve();
+  const p = (async () => {
+    if (onProgress) onProgress("Loading " + tr.he + "…");
+    const arr = await (await fetch("data/bavli/" + file)).json();
+    await addShard(tr, arr, onProgress);
+    LOADED.add(en);
+  })();
+  const tracked = p.finally(() => INFLIGHT.delete(en));
+  INFLIGHT.set(en, tracked);
+  return tracked;
+}
+
+// Normalize + index one shard in INDEX_CHUNK-sized slices, yielding to the
+// event loop between them. The yield is what keeps iOS Safari's watchdog from
+// killing the page and what lets the progress text actually paint.
+async function addShard(tr, arr, onProgress) {
+  const t0 = performance.now();
+  // Canonical sort key: manifest order, then position within the shard. Kept
+  // separate from the DB index so result ordering (the `a.i` tie-break in
+  // search()) is identical no matter which order tractates happened to load.
+  const base = tr.ord * 1e6;
+  for (let s = 0; s < arr.length; s += INDEX_CHUNK) {
+    const chunk = arr.slice(s, s + INDEX_CHUNK);
+    for (let k = 0; k < chunk.length; k++) {
+      const r = chunk[k];
+      DOC_INDEX.set(r, DB.length);
+      DB.push(r);
+      ORD.push(base + s + k);
+      // Only dh, dhS and t are ever read by search() — the old build also
+      // materialized normalized vt plus tS/vtS skeletons, three more full-text
+      // copies per record that nothing consumed. Free text goes through chipus,
+      // which indexes vt itself from the raw record.
+      const dh = normalize(r.dh);
+      NORM.push({ dh, dhS: skel(dh), t: normalize(r.t) });
+    }
+    chipusIndex.add(chunk);
+    if (onProgress) {
+      onProgress("Indexing " + tr.he + " — " +
+        Math.min(s + INDEX_CHUNK, arr.length).toLocaleString("en") + "/" +
+        arr.length.toLocaleString("en") + "…");
+    }
+    await new Promise((r) => setTimeout(r));
+  }
+  INDEX_MS += performance.now() - t0;
+}
+
+// Tier 2: cross-Shas free text is opt-in. Shards stream in canonical order and
+// the current query is re-run after each one, so results appear progressively
+// instead of after a single 131 MB stall.
+async function loadAllTractates() {
+  if (loadingAll || fullLoaded) return;
+  fullOptIn = true;
+  loadingAll = true;
+  let done = 0;
+  for (const tr of TRACTATES) {
+    await ensureTractate(tr.en, (msg) =>
+      setCount(msg + " (" + (done + 1) + "/" + TRACTATES.length + ")"));
+    done++;
+    setNote("Loading all of Shas — " + done + "/" + TRACTATES.length +
+      " masechtos · " + DB.length.toLocaleString("en") + " Rashis so far. Results update as they arrive.");
+    renderPartial();
+  }
+  loadingAll = false;
+  fullLoaded = true;
+  setNote("");
+  runSearch();
+}
 
 // Today's daf yomi, via Sefaria's calendar (skipped if offline). The ref is
 // a bare daf with no amud, e.g. "Avodah Zarah 51" — tractate name is
@@ -501,7 +556,7 @@ function search(q) {
   let chipusHits = null;
   if (q.kw && chipusIndex) {
     chipusHits = new Map();
-    for (const res of chipusIndex.search(q.kw, { limit: DB.length })) {
+    for (const res of chipusIndex.search(q.kw, { limit: Math.max(1, DB.length) })) {
       const idx = DOC_INDEX.get(res.doc);
       if (idx !== undefined) chipusHits.set(idx, res);
     }
@@ -548,7 +603,10 @@ function search(q) {
     if (!dhToks.length && !q.kw) score = 1;  // pure filter browse
     if (score > 0) hits.push({ i, score: score + dafyomiBoost(r) + popBoost(r) });
   }
-  hits.sort((a, b) => b.score - a.score || a.i - b.i);
+  // Tie-break on the canonical manifest position, not the DB index: with lazy
+  // loading the DB index depends on which tractates the user happened to load
+  // first, and ordering must not.
+  hits.sort((a, b) => b.score - a.score || ORD[a.i] - ORD[b.i]);
   return hits.slice(0, 60);
 }
 
@@ -689,17 +747,16 @@ function smartParse(raw) {
 // (top unfiltered hit falls inside the captured tractate).
 function resolveSoft(q) {
   if (!q._softToks || q.daf) return q;
+  // The verification below is a *cross-Shas* question ("does the corpus agree
+  // this is a tractate name?"), so it is only meaningful once every tractate is
+  // in memory. Under lazy loading we trust the alias instead — a located query
+  // ("brachos 2a") never reaches here anyway (q.daf returns above), and an
+  // opt-in whole-Shas load restores the original behavior exactly.
+  if (!fullLoaded) return q;
   // Pure filter queries (no extra kw) from an EXACT alias hit are trusted
   // as-is — there's no free text to verify against. Fuzzy hits are riskier
   // (short-key edit-distance collisions), so always verify those.
   if (!q.kw && !q._softFuzzy) return q;
-  // The verification below reruns the query corpus-wide and checks whether
-  // the top unfiltered hit still falls inside the captured tractate — that
-  // requires the whole corpus to be loaded to mean anything. Under lazy
-  // loading we only have whatever tractates have been searched so far, so
-  // skip verification and trust the alias match rather than second-guessing
-  // it against a partial, arbitrary subset of Shas.
-  if (!allLoaded) return q;
   const alt = { tractate: "", daf: 0, amud: 0, dh: "",
                 kw: (q._softToks.join(" ") + " " + q.kw).trim() };
   const altHits = search(alt);
@@ -824,74 +881,81 @@ function defaultInput() {
 
 /* ---------- wiring ---------- */
 let currentToks = [];
-let searchGen = 0;   // bumped on every runSearch call; guards against a slow
-                      // (shard-loading) call clobbering a newer one's render
+let searchSeq = 0;
 
-function renderLoadAllPrompt() {
-  document.getElementById("results").innerHTML =
-    '<div id="empty">Searching across all of Shas needs the full text loaded ' +
-    '(~131&nbsp;MB) — enter a masechet or daf to search just that one instantly, or ' +
-    '<button id="load-all-btn" type="button">load all of Shas</button>.</div>';
-  document.getElementById("load-all-btn").addEventListener("click", loadAllAndSearch);
+// Read the current query out of whichever input bar is active. No data is
+// touched here — smartParse resolves a tractate from the *text*, which is what
+// makes lazy loading possible.
+function currentQuery() {
+  if (mode === "smart") return smartParse(document.getElementById("f-smart").value);
+  return {
+    tractate: resolveTractateInput(document.getElementById("f-masechet").value),
+    daf: parseHebNum(document.getElementById("f-daf").value.trim()) || 0,
+    amud: parseInt(document.getElementById("f-amud").value, 10) || 0,
+    dh: normalize(document.getElementById("f-dh").value),
+    kw: normalize(document.getElementById("f-kw").value),
+  };
 }
+function hasCriteria(q) { return !!(q.tractate || q.daf || q.amud || q.dh || q.kw); }
 
-async function loadAllAndSearch() {
-  const myGen = ++searchGen;
-  document.getElementById("results").innerHTML = '<div id="empty">Loading all of Shas…</div>';
-  await ensureAllShards((done, total) => {
-    if (myGen !== searchGen) return;
-    setCount("Loading all of Shas (" + done + "/" + total + " masechtos)…");
-  });
-  if (myGen !== searchGen) return;
-  runSearch();
-}
-
-async function runSearch() {
-  const myGen = ++searchGen;
-  let q;
-  if (mode === "smart") {
-    q = smartParse(document.getElementById("f-smart").value);
-  } else {
-    q = {
-      tractate: resolveTractateInput(document.getElementById("f-masechet").value),
-      daf: parseHebNum(document.getElementById("f-daf").value.trim()) || 0,
-      amud: parseInt(document.getElementById("f-amud").value, 10) || 0,
-      dh: normalize(document.getElementById("f-dh").value),
-      kw: normalize(document.getElementById("f-kw").value),
-    };
-  }
-  const hasAny = q.tractate || q.daf || q.amud || q.dh || q.kw;
-  if (!hasAny) {
-    document.getElementById("results").innerHTML = '<div id="empty">Type to search.</div>';
-    return;
-  }
-
-  if (q.tractate) {
-    // A specific tractate is captured — load just that shard (fast, small)
-    // rather than the whole corpus.
-    if (shardState.get(q.tractate) !== true) {
-      const tr = TRACTATES.find((t) => t.en === q.tractate);
-      document.getElementById("results").innerHTML =
-        '<div id="empty">Loading ' + esc(tr ? tr.he : q.tractate) + "…</div>";
-      setCount("Loading " + (tr ? tr.he : q.tractate) + "…");
-    }
-    await ensureShard(q.tractate);
-    if (myGen !== searchGen) return;   // a newer keystroke superseded this search
-    if (mode === "smart") q = resolveSoft(q);
-  } else if (!allLoaded) {
-    // No tractate captured: this is a cross-Shas query. Don't silently load
-    // all 131 MB on a keystroke (the mobile crash this fix ladder exists
-    // for) — gate it behind an explicit action instead.
-    renderLoadAllPrompt();
-    return;
-  }
-
+function executeSearch(q) {
   currentToks = (q.dh + " " + q.kw).split(" ").filter(Boolean);
   const t0 = performance.now();
   const hits = q._softHits || search(q);
   renderResults(hits, currentToks);
-  document.getElementById("count").textContent =
-    hits.length + " results · " + (performance.now() - t0).toFixed(1) + " ms";
+  return { hits, ms: performance.now() - t0 };
+}
+
+// Cross-Shas search (no masechet named) is the one case that needs all 122K
+// records. Ask instead of assuming: this is exactly the load that used to kill
+// the tab on open.
+function renderOptIn(q) {
+  const box = document.getElementById("results");
+  const what = q.kw ? "Free-text search across all of Shas" : "Searching every masechet";
+  box.innerHTML =
+    '<div id="empty">' +
+    esc(what) + " needs all " + TOTAL_RECORDS.toLocaleString("en") +
+    " Rashis in memory — all " + TRACTATES.length + " masechtos, ~80 MB of data " +
+    "that measures around 1.3 GB of heap once indexed. Treat it as desktop-only; " +
+    "a phone will most likely run out of memory.<br><br>" +
+    'Name a masechet — e.g. <b>ברכות ב.</b> or <b>brachos 2a</b> — to search just that one, ' +
+    "or load everything:<br><br>" +
+    '<button id="load-all" class="bigbtn">Search all of Shas</button>' +
+    "</div>";
+  setCount(readyCount());
+}
+
+// Re-render against whatever is loaded so far, used while the opt-in whole-Shas
+// load streams in.
+function renderPartial() {
+  const q = currentQuery();
+  if (!hasCriteria(q)) return;
+  const { hits } = executeSearch(q);
+  setCount(hits.length + " results so far · " + DB.length.toLocaleString("en") + " Rashis loaded");
+}
+
+async function runSearch() {
+  const seq = ++searchSeq;
+  let q = currentQuery();
+  if (!hasCriteria(q)) {
+    document.getElementById("results").innerHTML = '<div id="empty">Type to search.</div>';
+    setCount(readyCount());
+    return;
+  }
+  // Tier 1: pull in exactly the one shard this query needs.
+  if (q.tractate && !LOADED.has(q.tractate)) {
+    document.getElementById("results").innerHTML = '<div id="empty">Loading…</div>';
+    await ensureTractate(q.tractate, (msg) => { if (seq === searchSeq) setCount(msg); });
+    if (seq !== searchSeq) return;   // the user kept typing; a later run owns the UI
+  }
+  if (mode === "smart") q = resolveSoft(q);
+  if (!q.tractate && !fullLoaded) {
+    if (loadingAll) { renderPartial(); return; }
+    renderOptIn(q);
+    return;
+  }
+  const { hits, ms } = executeSearch(q);
+  setCount(hits.length + " results · " + ms.toFixed(1) + " ms · " + readyCount());
 }
 
 let deb;
@@ -905,6 +969,7 @@ for (const id of ["f-dh", "f-masechet", "f-daf", "f-kw", "f-smart"]) {
 document.getElementById("f-amud").addEventListener("change", runSearch);
 document.getElementById("results").addEventListener("click", e => {
   if (e.target.closest("a")) return;           // let the Sefaria link work
+  if (e.target.closest("#load-all")) { loadAllTractates(); return; }
   const hit = e.target.closest(".hit");
   if (hit) toggleHit(hit, currentToks);
 });
