@@ -1,59 +1,17 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חיפוש רש"י</title>
-<style>
-:root {
-  --bg: #f7f5f0; --panel: #ffffff; --ink: #2b2620; --muted: #8a8074;
-  --accent: #7a5c2e; --accent-soft: #f0e8d8; --border: #e3ddd2;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1a17; --panel: #26231f; --ink: #e8e2d8; --muted: #9a917f;
-    --accent: #d4b476; --accent-soft: #3a3223; --border: #3a362f;
-  }
-}
-* { box-sizing: border-box; margin: 0; }
-body {
-  background: var(--bg); color: var(--ink);
-  font-family: "Frank Ruhl Libre", Georgia, "Times New Roman", "SBL Hebrew", serif;
-  font-size: 17px; line-height: 1.55;
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-}
-.wrap { max-width: 34rem; padding: 2rem 1.2rem; text-align: center; }
-h1 { color: var(--accent); font-size: 2.1rem; margin-bottom: .3rem; }
-p.sub { color: var(--muted); margin-bottom: 2rem; }
-.cards { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-a.card {
-  display: block; flex: 1 1 14rem; background: var(--panel);
-  border: 1px solid var(--border); border-radius: 10px;
-  padding: 1.4rem 1.2rem; text-decoration: none; color: var(--ink);
-}
-a.card:hover { border-color: var(--accent); background: var(--accent-soft); }
-a.card .t { color: var(--accent); font-weight: 700; font-size: 1.3rem; }
-a.card .d { color: var(--muted); font-size: .85rem; margin-top: .35rem; }
-</style>
+<title>Rashi Search</title>
+<link rel="stylesheet" href="lib/rashi/app.css">
 </head>
 <body>
-<div class="wrap">
-  <h1>חיפוש רש"י</h1>
-  <p class="sub">Rashi Search — חיפוש מהיר בכל פירושי רש"י</p>
-  <div class="cards">
-    <a class="card" href="chumash.html">
-      <div class="t">על התורה</div>
-      <div class="d">7,816 רש"י על חמישה חומשי תורה</div>
-    </a>
-    <a class="card" href="bavli.html">
-      <div class="t">על הש"ס</div>
-      <div class="d">כ־122,000 רש"י על תלמוד בבלי</div>
-    </a>
-    <a class="card" href="nach.html">
-      <div class="t">על נ"ך</div>
-      <div class="d">20,413 רש"י על נביאים וכתובים</div>
-    </a>
-  </div>
-</div>
+<div id="app"></div>
+<script type="module">
+// Unified app: corpus chosen by ?c=torah|nach|bavli (default torah).
+import { start, corpusFromLocation } from "./lib/rashi/app.js";
+start(corpusFromLocation());
+</script>
 </body>
 </html>
