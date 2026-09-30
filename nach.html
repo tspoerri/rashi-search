@@ -90,6 +90,16 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 .exp .links { margin-top: .8rem; direction: ltr; text-align: left; font-size: .82rem; }
 .exp a { color: var(--accent); }
 #empty { color: var(--muted); padding: 1rem 0; }
+#loadnote {
+  font-size: .8rem; color: var(--muted); background: var(--accent-soft);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: .5rem .7rem; margin-bottom: .6rem;
+}
+.bigbtn {
+  font: inherit; font-size: .95rem; padding: .5rem 1.1rem; cursor: pointer;
+  border: 1px solid var(--accent); border-radius: 999px;
+  background: var(--accent); color: var(--bg);
+}
 .ambig { color: var(--muted); padding: 1rem 0; }
 .ambig button {
   font: inherit; font-size: .85rem; margin: .3rem .3rem 0 0; padding: .3rem .8rem;
@@ -135,6 +145,7 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
   </div>
 </div>
 
+<div id="loadnote" hidden></div>
 <div id="results"><div id="empty">Type to search.</div></div>
 </div>
 
@@ -143,13 +154,22 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px
 import { ChipusIndex, foldToken, boundedEditDistance } from "./lib/chipus/src/index.js";
 import { NACH_BOOKS, AMBIG, PAIRED_BOOKS, buildExactAliases, buildFoldedAliases } from "./lib/nach-aliases.js";
 
-let DB = [];          // records
-let NORM = [];        // normalized {dh, t, vt} + skeleton per record
+let DB = [];          // records currently in memory (union of loaded books)
+let NORM = [];        // {dh, dhS, t} per record, parallel to DB
+let ORD = [];         // canonical (manifest-order) sort key per DB row, parallel to DB
 let openHit = -1;
 let mode = "smart";
 
 let chipusIndex = null;
 let DOC_INDEX = null;               // Map<doc, i> — maps chipus result docs back to DB index
+
+// Lazy-loading state (same design as bavli.html; see the "load" section).
+const BOOKS = [];                   // [{en, he, file, count, ord}] in canonical manifest order
+const LOADED = new Set();           // book en whose shard is in DB/NORM/chipusIndex
+const INFLIGHT = new Map();         // book en -> in-flight load promise
+let TOTAL_RECORDS = 0;
+let fullLoaded = false, loadingAll = false;
+let INDEX_MS = 0;
 let BOOK_EXACT = null;              // exact lowercase/literal phrase -> en | AMBIG
 let BOOK_ALIAS1 = null;             // folded key -> book en (single-word names)
 let BOOK_ALIAS2 = null;             // "key1|key2" -> book en (two-word names)
@@ -229,42 +249,47 @@ function toHebNum(n) {
   return out.replace(/יה$/, "טו").replace(/יו$/, "טז");
 }
 
-/* ---------- load ---------- */
-function setCount(text) { document.getElementById("count").textContent = text; }
+/* ---------- load (lazy, per book) ---------- */
+// This page used to fetch all 34 shards (11.6 MB), concatenate 20,413 records
+// and run one ~10 s synchronous chipus build at open — ~107 MB of heap and a
+// long main-thread block, too heavy for a phone. Now:
+//   1. Boot fetches only manifest.json.
+//   2. A located query ("ישעיהו ו", "isaiah 6") resolves a book from the query
+//      text before any records load, so it pays for exactly one shard.
+//   3. Free text with no book named is an explicit opt-in that streams every
+//      shard in canonical order, re-running the query as each lands.
+//   4. Every shard is normalized and indexed in INDEX_CHUNK slices with a yield
+//      between them, so the page never blocks the main thread for long.
+const INDEX_CHUNK = 600;
 
-async function loadAll() {
+function setCount(text) { document.getElementById("count").textContent = text; }
+function setNote(text) {
+  const el = document.getElementById("loadnote");
+  el.textContent = text || "";
+  el.hidden = !text;
+}
+function readyCount() {
+  const n = TOTAL_RECORDS.toLocaleString("en");
+  if (fullLoaded) return n + " Rashis · all " + BOOKS.length + " books loaded";
+  if (LOADED.size) {
+    const names = BOOKS.filter((b) => LOADED.has(b.en)).map((b) => b.he).join(", ");
+    return n + " Rashis · loaded: " + names;
+  }
+  return n + " Rashis · " + BOOKS.length + " books · name one to begin";
+}
+
+async function boot() {
   setCount("Loading manifest…");
   const manifest = await (await fetch("data/nach/manifest.json")).json();
-  const meta = manifest.books || [];
+  (manifest.books || []).forEach((b, ord) => {
+    BOOKS.push({ en: b.en, he: b.he, file: b.file, count: b.count || 0, ord });
+    TOTAL_RECORDS += b.count || 0;
+  });
 
   BOOK_EXACT = buildExactAliases();
   const { alias1, alias2 } = buildFoldedAliases(foldToken);
   BOOK_ALIAS1 = alias1; BOOK_ALIAS2 = alias2;
   fillSfarimDatalist();
-
-  const total = meta.length;
-  let loaded = 0;
-  setCount("Loading shards (0/" + total + ")…");
-  const t0load = performance.now();
-  const shardArrays = await Promise.all(meta.map(async (b) => {
-    const arr = await (await fetch("data/nach/" + b.file)).json();
-    loaded++;
-    setCount("Loading shards (" + loaded + "/" + total + ")…");
-    return arr;
-  }));
-  const loadMs = performance.now() - t0load;
-  // Concatenate in canonical (manifest) order regardless of fetch completion order.
-  DB = [];
-  for (const arr of shardArrays) for (const r of arr) DB.push(r);
-
-  setCount("Building index (" + DB.length.toLocaleString("en") + " records)…");
-  await new Promise((r) => setTimeout(r, 0));  // let the status text paint before the heavy work
-
-  const t0 = performance.now();
-  NORM = DB.map((r) => {
-    const dh = normalize(r.dh), t = normalize(r.t), vt = normalize(r.vt);
-    return { dh, t, vt, dhS: skel(dh), tS: skel(t), vtS: skel(vt) };
-  });
 
   // Winning chipus v3 ranking opts from the 2026-07-19 sweep (see chipus
   // DESIGN-v3.md "Sweep results"): coverageWeight=20, refineWeightLatin=40.
@@ -279,15 +304,83 @@ async function loadAll() {
     ],
     ...CHIPUS_OPTS,
   });
-  chipusIndex.add(DB);
   DOC_INDEX = new Map();
-  DB.forEach((d, i) => DOC_INDEX.set(d, i));
-  const indexMs = performance.now() - t0;
-  setCount(DB.length.toLocaleString("en") + " Rashis · loaded in " + Math.round(loadMs) +
-    " ms · indexed in " + Math.round(indexMs) + " ms");
+  // Diagnostics hook (same idea as globalThis.CHIPUS_OPTS): read load/index cost.
+  globalThis.nachStats = () => ({
+    records: DB.length, total: TOTAL_RECORDS, indexMs: Math.round(INDEX_MS),
+    loaded: [...LOADED], fullLoaded,
+    heapMB: performance.memory ? +(performance.memory.usedJSHeapSize / 1048576).toFixed(1) : null,
+  });
+  setCount(readyCount());
   runSearch();
 }
-loadAll();
+boot();
+
+// Load one book's shard. Idempotent and safe to call concurrently: a second
+// call for a book already in flight awaits the first instead of double-indexing.
+function ensureBook(en, onProgress) {
+  if (LOADED.has(en)) return Promise.resolve();
+  const inflight = INFLIGHT.get(en);
+  if (inflight) return inflight;
+  const bk = BOOKS.find((b) => b.en === en);
+  if (!bk) return Promise.resolve();
+  const p = (async () => {
+    if (onProgress) onProgress("Loading " + bk.he + "…");
+    const arr = await (await fetch("data/nach/" + bk.file)).json();
+    await addShard(bk, arr, onProgress);
+    LOADED.add(en);
+  })();
+  const tracked = p.finally(() => INFLIGHT.delete(en));
+  INFLIGHT.set(en, tracked);
+  return tracked;
+}
+
+async function addShard(bk, arr, onProgress) {
+  const t0 = performance.now();
+  // Canonical sort key (manifest order, then position in shard) keeps result
+  // ordering independent of which books happened to be loaded first.
+  const base = bk.ord * 1e6;
+  for (let s = 0; s < arr.length; s += INDEX_CHUNK) {
+    const chunk = arr.slice(s, s + INDEX_CHUNK);
+    for (let k = 0; k < chunk.length; k++) {
+      const r = chunk[k];
+      DOC_INDEX.set(r, DB.length);
+      DB.push(r);
+      ORD.push(base + s + k);
+      // Only dh, dhS and t are read by search(); free text goes through chipus,
+      // which indexes vt itself from the raw record.
+      const dh = normalize(r.dh);
+      NORM.push({ dh, dhS: skel(dh), t: normalize(r.t) });
+    }
+    chipusIndex.add(chunk);
+    if (onProgress) {
+      onProgress("Indexing " + bk.he + " — " +
+        Math.min(s + INDEX_CHUNK, arr.length).toLocaleString("en") + "/" +
+        arr.length.toLocaleString("en") + "…");
+    }
+    await new Promise((r) => setTimeout(r));
+  }
+  INDEX_MS += performance.now() - t0;
+}
+
+// Cross-Nach free text is opt-in; shards stream in canonical order and the
+// current query re-runs after each one.
+async function loadAllBooks() {
+  if (loadingAll || fullLoaded) return;
+  loadingAll = true;
+  let done = 0;
+  for (const bk of BOOKS) {
+    await ensureBook(bk.en, (msg) => setCount(msg + " (" + (done + 1) + "/" + BOOKS.length + ")"));
+    done++;
+    setNote("Loading all of Nach — " + done + "/" + BOOKS.length + " books · " +
+      DB.length.toLocaleString("en") + " Rashis so far. Results update as they arrive.");
+    renderPartial();
+  }
+  loadingAll = false;
+  fullLoaded = true;
+  setNote("");
+  runSearch();
+}
 
 function popBoost(r) {
   return Math.min(50, Math.log2(1 + (r.lk || 0)) * 3.5);
@@ -339,7 +432,7 @@ function search(q) {
   let chipusHits = null;
   if (q.kw && chipusIndex) {
     chipusHits = new Map();
-    for (const res of chipusIndex.search(q.kw, { limit: DB.length })) {
+    for (const res of chipusIndex.search(q.kw, { limit: Math.max(1, DB.length) })) {
       const idx = DOC_INDEX.get(res.doc);
       if (idx !== undefined) chipusHits.set(idx, res);
     }
@@ -386,7 +479,8 @@ function search(q) {
     if (!dhToks.length && !q.kw) score = 1;  // pure filter browse
     if (score > 0) hits.push({ i, score: score + popBoost(r) });
   }
-  hits.sort((a, b) => b.score - a.score || a.i - b.i);
+  // Tie-break on canonical manifest position, not DB index (load-order independent).
+  hits.sort((a, b) => b.score - a.score || ORD[a.i] - ORD[b.i]);
   return hits.slice(0, 60);
 }
 
@@ -650,36 +744,72 @@ function defaultInput() {
 
 /* ---------- wiring ---------- */
 let currentToks = [];
-function runSearch() {
-  let q;
-  if (mode === "smart") {
-    q = smartParse(document.getElementById("f-smart").value);
-  } else {
-    q = {
-      book: resolveSeferInput(document.getElementById("f-sefer").value),
-      perek: parseHebNum(document.getElementById("f-perek").value.trim()) || 0,
-      passuk: parseHebNum(document.getElementById("f-passuk").value.trim()) || 0,
-      dh: normalize(document.getElementById("f-dh").value),
-      kw: normalize(document.getElementById("f-kw").value),
-      ambigFamily: null,
-    };
-  }
-  if (q.ambigFamily) {
-    renderAmbig(q.ambigFamily);
-    document.getElementById("count").textContent = "Ambiguous book name";
-    return;
-  }
-  const hasAny = q.book || q.perek || q.passuk || q.dh || q.kw;
-  if (!hasAny) {
-    document.getElementById("results").innerHTML = '<div id="empty">Type to search.</div>';
-    return;
-  }
+let searchSeq = 0;
+
+// Read the query out of the active input bar. No data is touched here: the
+// book comes from the query *text*, which is what makes lazy loading possible.
+function currentQuery() {
+  if (mode === "smart") return smartParse(document.getElementById("f-smart").value);
+  return {
+    book: resolveSeferInput(document.getElementById("f-sefer").value),
+    perek: parseHebNum(document.getElementById("f-perek").value.trim()) || 0,
+    passuk: parseHebNum(document.getElementById("f-passuk").value.trim()) || 0,
+    dh: normalize(document.getElementById("f-dh").value),
+    kw: normalize(document.getElementById("f-kw").value),
+    ambigFamily: null,
+  };
+}
+function executeSearch(q) {
   currentToks = (q.dh + " " + q.kw).split(" ").filter(Boolean);
   const t0 = performance.now();
   const hits = search(q);
   renderResults(hits, currentToks);
-  document.getElementById("count").textContent =
-    hits.length + " results · " + (performance.now() - t0).toFixed(1) + " ms";
+  return { hits, ms: performance.now() - t0 };
+}
+function renderOptIn(q) {
+  const box = document.getElementById("results");
+  const what = q.kw || q.dh ? "Searching all of Nach" : "Browsing every book";
+  box.innerHTML =
+    '<div id="empty">' +
+    esc(what) + " needs all " + TOTAL_RECORDS.toLocaleString("en") + " Rashis in memory — all " +
+    BOOKS.length + " books, ~12 MB of data and roughly 110 MB of heap once indexed. " +
+    "Fine on a laptop; on a phone, prefer naming a book.<br><br>" +
+    'Name a book — e.g. <b>ישעיהו ו</b> or <b>isaiah 6</b> — to search just that one, or load everything:<br><br>' +
+    '<button id="load-all" class="bigbtn">Search all of Nach</button></div>';
+  setCount(readyCount());
+}
+function renderPartial() {
+  const q = currentQuery();
+  if (q.ambigFamily || !(q.book || q.perek || q.passuk || q.dh || q.kw)) return;
+  const { hits } = executeSearch(q);
+  setCount(hits.length + " results so far · " + DB.length.toLocaleString("en") + " Rashis loaded");
+}
+
+async function runSearch() {
+  const seq = ++searchSeq;
+  const q = currentQuery();
+  if (q.ambigFamily) {
+    renderAmbig(q.ambigFamily);
+    setCount("Ambiguous book name");
+    return;
+  }
+  if (!(q.book || q.perek || q.passuk || q.dh || q.kw)) {
+    document.getElementById("results").innerHTML = '<div id="empty">Type to search.</div>';
+    setCount(readyCount());
+    return;
+  }
+  if (q.book && !LOADED.has(q.book)) {
+    document.getElementById("results").innerHTML = '<div id="empty">Loading…</div>';
+    await ensureBook(q.book, (msg) => { if (seq === searchSeq) setCount(msg); });
+    if (seq !== searchSeq) return;   // the user kept typing; a later run owns the UI
+  }
+  if (!q.book && !fullLoaded) {
+    if (loadingAll) { renderPartial(); return; }
+    renderOptIn(q);
+    return;
+  }
+  const { hits, ms } = executeSearch(q);
+  setCount(hits.length + " results · " + ms.toFixed(1) + " ms · " + readyCount());
 }
 
 let deb;
@@ -692,6 +822,7 @@ for (const id of ["f-dh", "f-sefer", "f-perek", "f-passuk", "f-kw", "f-smart"]) 
 }
 document.getElementById("results").addEventListener("click", e => {
   if (e.target.closest("a")) return;           // let the Sefaria link work
+  if (e.target.closest("#load-all")) { loadAllBooks(); return; }
   if (e.target.closest("button")) return;      // let the ambiguous-book buttons work
   const hit = e.target.closest(".hit");
   if (hit) toggleHit(hit, currentToks);

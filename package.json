@@ -4,5 +4,8 @@
   "type": "module",
   "devDependencies": {
     "havarotjs": "0.25.4"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\" && (cd lib/chipus && npm test)"
   }
 }
