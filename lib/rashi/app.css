@@ -1,0 +1,105 @@
+:root {
+  --bg: #f7f5f0; --panel: #ffffff; --ink: #2b2620; --muted: #8a8074;
+  --accent: #7a5c2e; --accent-soft: #f0e8d8; --border: #e3ddd2;
+  --hl: #fdeec7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1a17; --panel: #26231f; --ink: #e8e2d8; --muted: #9a917f;
+    --accent: #d4b476; --accent-soft: #3a3223; --border: #3a362f;
+    --hl: #4a3d1e;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: "Frank Ruhl Libre", Georgia, "Times New Roman", "SBL Hebrew", serif;
+  font-size: 17px; line-height: 1.55;
+}
+.wrap { max-width: 52rem; margin: 0 auto; padding: 0 1.2rem 3rem; }
+header { padding: 1.1rem 0 .4rem; display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap; }
+header h1 { font-size: 1.45rem; color: var(--accent); font-weight: 700; }
+header .count { color: var(--muted); font-size: .82rem; }
+.tabs { margin-inline-start: auto; display: flex; gap: .4rem; }
+.tabs button, #kbd-btn, .corpora button {
+  font: inherit; font-size: .82rem; padding: .25rem .8rem; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel); color: var(--muted);
+  border-radius: 999px;
+}
+.tabs button.active, .corpora button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.corpora { display: flex; gap: .4rem; width: 100%; }
+#controls { padding: .4rem 0 .9rem; }
+.fields { display: flex; gap: .6rem; flex-wrap: wrap; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: .15rem; }
+.field label { font-size: .72rem; color: var(--muted); }
+input, select {
+  font: inherit; padding: .45rem .6rem; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--panel); color: var(--ink);
+}
+input:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+#f-dh, #f-kw { width: 13.5rem; }
+#f-book, #f-tractate { width: 11rem; }
+#f-parsha { width: 9rem; }
+#f-perek, #f-passuk, #f-daf { width: 5.5rem; }
+#fieldbar { display: none; }
+#f-smart { width: 100%; font-size: 1.1rem; padding: .6rem .8rem; }
+.hint { font-size: .75rem; color: var(--muted); margin-top: .35rem; }
+
+/* Hebrew keyboard dropdown */
+#kbd-wrap { position: relative; display: inline-block; }
+#kbd {
+  display: none; position: absolute; top: calc(100% + 6px); inset-inline-end: 0; z-index: 20;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: .6rem; box-shadow: 0 6px 24px rgba(0,0,0,.15); width: 21rem; max-width: 90vw;
+}
+#kbd.open { display: block; }
+#kbd .krow { display: flex; gap: .25rem; justify-content: center; margin-bottom: .25rem; direction: rtl; }
+#kbd button {
+  font: inherit; font-size: 1.05rem; min-width: 2rem; padding: .3rem 0; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink);
+}
+#kbd button:hover { background: var(--accent-soft); }
+#kbd button.wide { min-width: 5rem; font-size: .8rem; color: var(--muted); }
+
+#results { display: flex; flex-direction: column; gap: .45rem; }
+.hit {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .8rem; cursor: pointer;
+}
+.hit:hover { border-color: var(--accent); }
+.hit.open { border-color: var(--accent); cursor: default; }
+.hit .sum { direction: rtl; text-align: right; }
+.hit .dh { font-weight: 700; }
+.hit .ref { font-size: .78rem; color: var(--muted); }
+.hit .snip { font-size: .82rem; color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.hit.open .snip { display: none; }
+mark { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 1px; }
+.exp { display: none; direction: rtl; text-align: right; margin-top: .6rem; border-top: 1px solid var(--border); padding-top: .7rem; }
+.hit.open .exp { display: block; }
+.exp .verse {
+  font-size: 1.12rem; background: var(--accent-soft); border-radius: 8px;
+  padding: .55rem .9rem; margin-bottom: .8rem;
+}
+.exp .rashi-dh { font-weight: 700; }
+.exp .rashi-text { margin-top: .25rem; white-space: pre-wrap; }
+.exp .note { margin-top: .6rem; font-size: .78rem; color: var(--muted); font-style: italic; }
+.exp .links { margin-top: .8rem; direction: ltr; text-align: left; font-size: .82rem; }
+.exp a { color: var(--accent); }
+#empty { color: var(--muted); padding: 1rem 0; }
+#loadnote {
+  font-size: .8rem; color: var(--muted); background: var(--accent-soft);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: .5rem .7rem; margin-bottom: .6rem;
+}
+.bigbtn {
+  font: inherit; font-size: .95rem; padding: .5rem 1.1rem; cursor: pointer;
+  border: 1px solid var(--accent); border-radius: 999px;
+  background: var(--accent); color: var(--bg);
+}
+.ambig { color: var(--muted); padding: 1rem 0; }
+.ambig button {
+  font: inherit; font-size: .85rem; margin: .3rem .3rem 0 0; padding: .3rem .8rem;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--panel);
+  color: var(--ink); cursor: pointer;
+}
+.ambig button:hover { border-color: var(--accent); background: var(--accent-soft); }
