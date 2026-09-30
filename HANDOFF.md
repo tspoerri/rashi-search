@@ -1,4 +1,45 @@
-# HANDOFF — rashi-search (updated 2026-09-24)
+# HANDOFF — rashi-search (updated 2026-09-30)
+
+**Next action:** Tamar reviews branches `nach-lazy` and `unified` (neither merged; nothing pushed). Then decide whether to merge `unified` to `main` and deploy, and merge `translit` on top (it is Python-only plus a README edit; no overlap with the HTML/JS).
+
+## 2026-09-30: two review branches (local only, off `main` c15e4e5)
+| Branch | Commits | Contents |
+|---|---|---|
+| `nach-lazy` | 064b78f | `nach.html` gets Bavli-style lazy loading: boot fetches only `manifest.json`; a named book loads one shard; free text with no book is an opt-in "Search all of Nach"; indexing in 600-record chunks with yields; canonical-order tie-break. Adds `test/shards.test.js` and an npm `test` script. |
+| `unified` (on top of `nach-lazy`) | e667c1e + docs commit | One generic-corpus app. `lib/rashi/{store,text,aliases,app}.js` + `lib/rashi/app.css` shared; per-corpus config in `lib/rashi/corpora/{torah,nach,bavli}.js` (book lists, shard layout, query grammar, refs, notes, boosts). `index.html?c=` is the app; `chumash.html`, `nach.html`, `bavli.html` are ~10-line wrappers (URL unchanged, corpus pre-selected; switching corpus rewrites the URL to that corpus's legacy page). Adds `test/unified.test.js`. |
+
+**View locally**
+```sh
+cd ~/Documents/Projects/rashi-search && git checkout unified   # or nach-lazy
+python3 -m http.server 8651     # stop it by PID when done
+# http://localhost:8651/            unified (corpus buttons: תורה / נ"ך / ש"ס)
+# http://localhost:8651/nach.html   legacy URLs still work
+npm test
+```
+
+**Measurements (Nach, built-in browser, python http.server so bytes are uncompressed; heap = performance.memory.usedJSHeapSize, noisy +-20 MB from GC)**
+| | main `nach.html` | `nach-lazy` boot | after `ישעיהו ו` | full opt-in load |
+|---|---|---|---|---|
+| Data fetched | 11.56 MB, 35 files | manifest only (~0 MB) | 1.51 MB, 2 files | 11.56 MB (only on click) |
+| JS heap | ~107 MB (144 MB seen once, GC lag) | ~2 MB | ~25-30 MB | ~110-170 MB |
+| Main-thread index | one ~7-10 s block | none | 0.86 s total in node, worst chunk 244 ms | chunked |
+Unified build: same numbers per corpus (Nach one book ~25 MB heap; Bavli Berakhot ~50 MB; Torah 7.8K records ~105 MB, loads eagerly as before). Browser timers throttle in a hidden pane, so wall-clock index times there over-state real cost.
+
+**Verified** in the built-in browser at 375 px and desktop: search in each corpus (`ישעיהו ו`, `תהילים צ`, `nachum 1`, `nechemia 1`, `shmuel` -> disambiguation buttons -> `I Samuel 1 חנה`, `brachos 2a` = 17 results, Bavli fields mode ברכות/2 = 38 results, `lech lecha`, Torah fields parsha select sets book), open a result (verse + Sefaria link), switch corpus (URL becomes the legacy page), Bavli free-text opt-in prompt shows, all four page URLs load, zero console errors. `npm test`: 17 node tests + 29 chipus tests pass.
+
+**Behaviour notes / risks**
+- Fixed while unifying: `nach.html` `toHebNum` mapped 90 to peh (Psalms 90+ showed wrong letters); shared version uses tsadi.
+- Nahum/Nechemia fold collision is covered by a test (`nach: Nahum/Nehemiah fold collision`); Bavli exact-spelling tier (shabbos/shevuos/yoma) too.
+- `translit` is not on `main`, so its Python tests were not touched; run `python3 -m pytest translit` after merging it.
+- `lib/nach-aliases.js` now imports the shared `AMBIG` symbol from `lib/rashi/aliases.js`. A browser holding a stale cached copy of the old file next to the new modules mis-handles `shmuel` (shows "No results"); a hard reload fixes it. Expect this once after deploy.
+- Loaded corpora stay in memory when you switch away (fast switch back, more heap on a phone).
+- `data/rashi.json` (Torah) is gitignored, not tracked; `chumash` needs it present or deployed separately (pre-existing).
+- Not tested: real iOS/Android device; Sefaria daf-yomi/parsha boosts fetch live (skipped offline in tests).
+
+**Next step (this project):** review + merge `unified`, then the shared inverted-word index idea below; wire `translit` search into `lib/rashi/store.js` as a query-expansion hook.
+
+---
+# Earlier state (updated 2026-09-24)
 
 **Next action:** Start the `translit` branch work (transliterated-query support, see README "Planned").
 

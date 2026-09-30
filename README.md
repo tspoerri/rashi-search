@@ -7,7 +7,8 @@ Lightning-fast local search over all 7,816 Rashis on Chumash.
 
 ```sh
 python3 build.py                 # one-time: downloads from Sefaria into data/ (cached)
-python3 -m http.server 8641      # then open http://localhost:8641/ (landing → chumash.html / bavli.html)
+python3 -m http.server 8641      # then open http://localhost:8641/  (unified app; ?c=torah|nach|bavli, or chumash.html / nach.html / bavli.html)
+npm test                         # node tests for the shared engine + chipus
 ```
 
 ## How it works
@@ -51,3 +52,11 @@ per-tractate shards under `data/bavli/`, then open
 ## Planned
 
 - Transliterated (Latin-character) Hebrew query support.
+
+## Unified app (branch `unified`)
+
+One page, one codebase: `index.html?c=torah|nach|bavli` (default Torah) with a corpus switcher.
+`chumash.html`, `nach.html` and `bavli.html` are thin wrappers that pre-select a corpus, so old URLs keep working.
+Shared code is in `lib/rashi/` (`store.js` lazy shard loading + scoring, `text.js`, `aliases.js`, `app.js` UI);
+each corpus's book list, shard layout, query grammar and reference format lives in `lib/rashi/corpora/{torah,nach,bavli}.js`.
+Nach and Bavli load one shard per book/tractate on demand; all-corpus search is opt-in.
